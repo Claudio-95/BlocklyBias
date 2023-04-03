@@ -3302,6 +3302,30 @@
             return c;
         });
     };
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            type: "BIAS_Intersectional",
+            message0: "Check intersectional bias %1",
+            args0: [
+                {
+                    type: "input_value",
+                    name: "DATAFRAME",
+                    check: "DataFrame",
+                    value: 0
+                }],
+            output: ["DataFrame", "DataFrameSeries"], // output intersectional
+        }
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            type: "BIAS_Anchoring",
+            message0: "Check anchoring bias",
+            output: ["DataFrame", "DataFrameSeries"], // output anchoring
+        }
+    ]);
+
     Blockly.Extensions.register("text_indexOf_tooltip", Blockly.Constants.Text.TEXT_INDEXOF_TOOLTIP_EXTENSION);
     Blockly.Extensions.register("text_quotes", Blockly.Constants.Text.TEXT_QUOTES_EXTENSION);
     Blockly.Extensions.registerMutator("text_join_mutator", Blockly.Constants.Text.TEXT_JOIN_MUTATOR_MIXIN, Blockly.Constants.Text.TEXT_JOIN_EXTENSION);
