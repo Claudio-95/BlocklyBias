@@ -459,12 +459,12 @@ var VarData = {};
         throw Error("Unknown flow statement.");
     };
     /*
-     * Custom 
+     * Custom
      */
     Blockly.Python.pandas = {};
     Blockly.Python['pandas_read_csv'] = function (a) {
         Blockly.Python.definitions_.pandas = "import pandas as pd";
-        return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL]
+        return ['pd.read_csv("' + String(a).split(" ")[3] + '") # WARNING: please note that this is the relative directory of the dataset and it must be expressed based on where the dataset is located in relation to the BlocklyML root folder', Blockly.Python.ORDER_FUNCTION_CALL] //Original row: return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL]
     }
 
     Blockly.Python["create_dict"] = function (a) {
@@ -2089,7 +2089,7 @@ var VarData = {};
             if (a.getInputTargetBlock("VALUE").outputConnection.getCheck() == "DataFrame") {
                 VarData[Blockly.Python.variableDB_.getName(a.getFieldValue("VAR"), Blockly.VARIABLE_CATEGORY_NAME)] = b;
             }
-    
+
         }
         return Blockly.Python.variableDB_.getName(a.getFieldValue("VAR"), Blockly.VARIABLE_CATEGORY_NAME) + " = " + b + "\n";
     };
