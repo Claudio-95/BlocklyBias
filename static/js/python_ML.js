@@ -2096,6 +2096,18 @@ var VarData = {};
     Blockly.Python.variablesDynamic = {};
     Blockly.Python.variables_get_dynamic = Blockly.Python.variables_get;
     Blockly.Python.variables_set_dynamic = Blockly.Python.variables_set;
+
+    Blockly.Python.intersectionalBias = function (a) {
+        // copiare qui la libreria di Matteo
+    }
+
+    Blockly.Python.anchoringBias = function (a) {
+        // copiare qui la libreria di Giorgia
+    }
+
+    Blockly.Python.BIAS_Intersectional = Blockly.Python.intersectionalBias;
+    Blockly.Python.BIAS_Anchoring = Blockly.Python.anchoringBias;
+
     return Blockly.Python;
 
 });
