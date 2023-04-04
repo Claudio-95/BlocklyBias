@@ -2099,6 +2099,24 @@ var VarData = {};
 
     Blockly.Python.intersectionalBias = function (a) {
         // copiare qui la libreria di Matteo
+        Blockly.Python.definitions_.etiq_core = "from etiq_core import *;";
+        Blockly.Python.definitions_.KaggleApi = "from kaggle.api.kaggle_api_extended import KaggleApi";
+        Blockly.Python.definitions_.opendatasets = "import opendatasets as od";
+        Blockly.Python.definitions_.ZipFile = "from zipfile import ZipFile";
+        Blockly.Python.definitions_.pandas = "import pandas as pd";
+        Blockly.Python.definitions_.numpy = "import numpy as np";
+        Blockly.Python.definitions_.warnings = "import warnings";
+        Blockly.Python.definitions_.pprint = "import pprint";
+        Blockly.Python.definitions_.deepcopy = "from copy import deepcopy";
+        Blockly.Python.definitions_.matplotlib_pyplot = "import matplotlib.pyplot as plt";
+        Blockly.Python.definitions_.seaborn = "import seaborn as sns";
+        Blockly.Python.definitions_.interactiveShell = "from IPython.core.interactiveshell import InteractiveShell";
+        var b = Blockly.Python.provideFunction_("get_debias_params", [
+            "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(protected, privileged, unprivileged, positive_label, negative_label):",
+            "  return BiasParams(protected=protected, privileged=privileged, unprivileged=unprivileged,\n" +
+            "                      positive_outcome_label=positive_label, negative_outcome_label=negative_label) "
+        ]);
+        return [b, Blockly.Python.ORDER_FUNCTION_CALL];
     }
 
     Blockly.Python.anchoringBias = function (a) {

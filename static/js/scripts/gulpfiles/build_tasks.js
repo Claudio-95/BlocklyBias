@@ -432,7 +432,18 @@ function buildLangfiles(done) {
   --key_file ${path.join('msg', 'json', 'keys.json')} \
   --output_dir ${path.join('msg', 'js')} \
   --quiet ${json_files.join(' ')}`;
+  try {
+
+    // success command
     execSync(createMessagesCmd, { stdio: 'inherit' });
+    const resNpmVersion = execSync("npm -v");
+    console.log("success", resNpmVersion.toString());
+
+    // failed command, the result is printed in the catch block
+    const resHelp = execSync("HELP");
+  } catch (error) {
+    console.log(error.message);
+  }
 
   done();
 };
