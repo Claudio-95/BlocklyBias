@@ -2,7 +2,7 @@
 <strong>BlocklyBias</strong>
 </p>
 
-BlocklyBias is a visual programming tool that doesn't require programming knowledge by the user. It generates Python code from the blocks used with the interface and its purpose is to analyze biases in datasets. It is based on BlocklyML, in fact this repository is a forked project from [BlocklyML](https://github.com/chekoduadarsh/BlocklyML).
+BlocklyBias is a visual programming tool that requires no programming knowledge from the user. It generates Python code from the blocks used with the interface and its purpose is to analyze biases in datasets. It is based on BlocklyML, in fact this repository is a forked project from [BlocklyML](https://github.com/chekoduadarsh/BlocklyML).
 
 For a sample run go to sampleLayouts folder upload and try it out.
 
