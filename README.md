@@ -1,29 +1,16 @@
 <p align="center">
-  <a href="https://blocklyml.herokuapp.com/">
-<img src="https://raw.githubusercontent.com/chekoduadarsh/BlocklyML/main/media/blocklyML_Banner.png" height="80" />
-    </a>
-    </p>
-<p align="center">
-<a href="https://blocklyml.herokuapp.com/ ">Blockly ML</a>
+<strong>BlocklyBias</strong>
 </p>
-<p align="center">
-<img src="https://img.shields.io/github/license/chekoduadarsh/BlocklyML">
-<img src="https://img.shields.io/github/issues/chekoduadarsh/BlocklyML">
-<img src="https://img.shields.io/github/last-commit/chekoduadarsh/BlocklyML">
- <img src="https://github.com/chekoduadarsh/BlocklyML/actions/workflows/codeql.yml/badge.svg">
-   </p>
+
+BlocklyBias is a visual programming tool that requires no programming knowledge from the user. It generates Python code from the blocks used with the interface and its purpose is to analyze biases in datasets. It is based on BlocklyML, in fact this repository is a forked project from [BlocklyML](https://github.com/chekoduadarsh/BlocklyML).
+
+For a sample run go to sampleLayouts folder upload and try it out.
 
 
-BlocklyML is a **No Code** training ground for python and Machine Learning. This tool is designed to simplify standard machine learning implementation.
-This tool can assist anyone who wants to start with Machine Learning or python. This is a forked project from [Blockly](https://github.com/google/blockly) and adapted for machine learning and Data analytics use-cases. :brain:
-
-For a sample run go to sampleLayouts folder upload and try it out :smiley:
+<!-- Read the ![UserGuide.md](https://github.com/chekoduadarsh/BlocklyML/blob/main/UserGuide.md) for further info.
 
 
-Read the ![UserGuide.md](https://github.com/chekoduadarsh/BlocklyML/blob/main/UserGuide.md) for further info
-
-
-In the Example given below we will train a random forest for Iris Dataset
+In the Example given below we will train a random forest for Iris Dataset.
 
 
 https://user-images.githubusercontent.com/26855534/174473003-488f675f-50a0-48f1-9ef0-81987bd21166.mp4
@@ -110,4 +97,4 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 [![Forkers repo roster for @chekoduadarsh/BlocklyML](https://reporoster.com/forks/chekoduadarsh/BlocklyML)](https://github.com/chekoduadarsh/BlocklyML/network/members)
 
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/chekoduadarsh)
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/chekoduadarsh) -->
