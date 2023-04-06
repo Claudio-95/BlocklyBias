@@ -3314,7 +3314,7 @@
                     check: "DataFrame",
                     value: 0
                 }],
-            output: ["DataFrame", "DataFrameSeries"], // output intersectional
+            output: "String" // output intersectional
         }
     ]);
 
@@ -3322,7 +3322,7 @@
         {
             type: "BIAS_Anchoring",
             message0: "Check anchoring bias",
-            output: ["DataFrame", "DataFrameSeries"], // output anchoring
+            output: "String" // output anchoring
         }
     ]);
 
