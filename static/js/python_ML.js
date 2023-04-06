@@ -2098,14 +2098,17 @@ var VarData = {};
     Blockly.Python.variables_set_dynamic = Blockly.Python.variables_set;
 
     Blockly.Python.intersectionalBias = function (a) {
-        // read df
-        var b = Blockly.Python.valueToCode(a, "VALUE", Blockly.Python.ORDER_NONE) || "0";
+        // read df (check if a valid input is set)
+        var d = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE) || 0;
         if (a.getInputTargetBlock() != null){
-
-            if (a.getInputTargetBlock("VALUE").outputConnection.getCheck() == "DataFrame") {
-                VarData[Blockly.Python.variableDB_.getName(a.getFieldValue("VAR"), Blockly.VARIABLE_CATEGORY_NAME)] = b;
+            if ((a.getInputTargetBlock().outputConnection.getCheck() == "String") & (d != 0)) {
+                //do stuff (cut & paste Matteo's library)
+            } else {
+                //raise error
             }
 
+        } else {
+            //raise error
         }
         return Blockly.Python.variableDB_.getName(a.getFieldValue("VAR"), Blockly.VARIABLE_CATEGORY_NAME) + " = " + b + "\n";
         // copy here Matteo's library
