@@ -464,7 +464,15 @@ var VarData = {};
     Blockly.Python.pandas = {};
     Blockly.Python['pandas_read_csv'] = function (a) {
         Blockly.Python.definitions_.pandas = "import pandas as pd";
-        return ['pd.read_csv("' + String(a).split(" ")[3] + '") # WARNING: please note that this is the relative directory of the dataset and it must be expressed based on where the dataset is located in relation to the BlocklyML root folder', Blockly.Python.ORDER_FUNCTION_CALL] //Original row: return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL]
+        console.log(String(a).split(" ").length);
+        // it makes compatible the block with both variable and string blocks
+        if (String(a).split(" ").length > 3) {
+            // string block input
+            return ['pd.read_csv("' + String(a).split(" ")[3] + '")', Blockly.Python.ORDER_FUNCTION_CALL] //Original row: return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL]
+        } else {
+            // variable block input
+            return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL];
+        }
     }
 
     Blockly.Python["create_dict"] = function (a) {
@@ -2098,19 +2106,7 @@ var VarData = {};
     Blockly.Python.variables_set_dynamic = Blockly.Python.variables_set;
 
     Blockly.Python.intersectionalBias = function (a) {
-        // read df (check if a valid input is set)
-        var d = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE);
-        if (a.getInputTargetBlock() != null){
-            if (a.getInputTargetBlock().outputConnection.getCheck() == "String") {
-                //do stuff (cut & paste Matteo's library)
-            } else {
-                //raise error because input is not a string
-            }
-
-        } else {
-            //input is null, so do nothing
-        }
-        return Blockly.Python.variableDB_.getName(a.getFieldValue("VAR"), Blockly.VARIABLE_CATEGORY_NAME) + " = " + b + "\n";
+        var df = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE);
         // copy here Matteo's library
         Blockly.Python.definitions_.etiq_core = "from etiq_core import *;";
         Blockly.Python.definitions_.opendatasets = "import opendatasets as od";
@@ -2498,7 +2494,6 @@ var VarData = {};
             "                if result[ft][m] > out[m][3]: out[m] = (out[m][0], out[m][1], ft, result[ft][m])",
             "        return out"
     ]);
-        var df = [];
         return [b + "(" + df + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
 
