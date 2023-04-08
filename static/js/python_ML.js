@@ -2099,16 +2099,16 @@ var VarData = {};
 
     Blockly.Python.intersectionalBias = function (a) {
         // read df (check if a valid input is set)
-        var d = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE) || 0;
+        var d = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE);
         if (a.getInputTargetBlock() != null){
-            if ((a.getInputTargetBlock().outputConnection.getCheck() == "String") & (d != 0)) {
+            if (a.getInputTargetBlock().outputConnection.getCheck() == "String") {
                 //do stuff (cut & paste Matteo's library)
             } else {
-                //raise error
+                //raise error because input is not a string
             }
 
         } else {
-            //raise error
+            //input is null, so do nothing
         }
         return Blockly.Python.variableDB_.getName(a.getFieldValue("VAR"), Blockly.VARIABLE_CATEGORY_NAME) + " = " + b + "\n";
         // copy here Matteo's library
