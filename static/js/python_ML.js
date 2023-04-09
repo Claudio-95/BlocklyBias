@@ -2118,6 +2118,7 @@ var VarData = {};
         Blockly.Python.definitions_.matplotlib_pyplot = "import matplotlib.pyplot as plt";
         Blockly.Python.definitions_.seaborn = "import seaborn as sns";
         Blockly.Python.definitions_.re = "import re";
+        Blockly.Python.definitions_.datetime = "import datetime";
         Blockly.Python.definitions_.interactiveShell = "from IPython.core.interactiveshell import InteractiveShell";
         var b = Blockly.Python.provideFunction_("check_intersectional_bias", [
             "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset):",
@@ -2504,13 +2505,28 @@ var VarData = {};
             "    # Setting columns sensible to bias (default behaviour)",
             "    bias_cols = [\"race\", \"gender\", \"age\", \"sex\", \"ethnic\", \"ethnicity\", \"income\", \"salary\"]",
             "    dataset_labels= []",
+            "    # Convert \'date of birth\' or similar columns in \'Age\' column",
+            "    def fix_age(x):",
+            "        if x <= 0:",
+            "        x += 99",
+            "        return x",
+            "    def to_age(dataset_to_transform, label_to_transform):",
+            "        now = datetime.date.today() # calcola data odierna",
+            "        dob_copy = dataset_to_transform[label_to_transform] # copia del campo DOB",
+            "        dob_copy = pd.to_datetime(dob_copy, format = '%m/%d/%y') # imposta il formato corretto",
+            "        date_now = pd.to_datetime(now)",
+            "        dataset_to_transform['Age'] = (date_now - dob_copy)/np.timedelta64(1,'Y') # la differenza tra le due date, espressa in anni",
+            "        dataset_to_transform[\"Age\"] = dataset_to_transform[\"Age\"].astype(int) # imposta il tipo di dato del campo come intero",
+            "        dataset_to_transform['Age'] = dataset_to_transform['Age'].apply(fix_age) # serve per correggere un errore del parser di python nella funzione di conversione",
+            "        # to_datetime: gli anni con valori < 69 venivano attribuiti al 1900 mentre quelli >= 69 al 2000, sfasando l'età di 99 anni",
             "    for elem in dataset.columns:",
             "        dataset_labels += str(elem)",
             "    if \"DOB\" in dataset.columns:",
-            "        # transform in age",
+            "        to_age(dataset, \"DOB\")",
+            "    match_birth = re.findall(\"birth\", label, re.IGNORECASE)",
             "    for label in dataset_labels:",
-            "        if len(re.findall(\"birth\", label)) > 0:",
-            "            # transform in age"
+            "        if len(match_birth) > 0:",
+            "            to_age(dataset, match_birth[0])"
     ]);
         return [b + "(" + df + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
