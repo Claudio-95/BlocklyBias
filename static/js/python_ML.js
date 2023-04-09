@@ -2117,6 +2117,7 @@ var VarData = {};
         Blockly.Python.definitions_.deepcopy = "from copy import deepcopy";
         Blockly.Python.definitions_.matplotlib_pyplot = "import matplotlib.pyplot as plt";
         Blockly.Python.definitions_.seaborn = "import seaborn as sns";
+        Blockly.Python.definitions_.re = "import re";
         Blockly.Python.definitions_.interactiveShell = "from IPython.core.interactiveshell import InteractiveShell";
         var b = Blockly.Python.provideFunction_("check_intersectional_bias", [
             "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset):",
@@ -2492,7 +2493,24 @@ var VarData = {};
             "                if m not in out: out[m] = (ft, result[ft][m], ft, result[ft][m])",
             "                if result[ft][m] < out[m][1]: out[m] = (ft, result[ft][m], out[m][2], out[m][3])",
             "                if result[ft][m] > out[m][3]: out[m] = (out[m][0], out[m][1], ft, result[ft][m])",
-            "        return out"
+            "        return out",
+            "\n",
+            "    # Dataset clean",
+            "    listOfValuesToCheck = [\"?\", \"\\\", \"/\", \"-\"]",
+            "    for elem in listOfValuesToCheck:",
+            "        if elem in dataset.values:",
+            "            dataset.replace(elem, np.nan)",
+            "\n",
+            "    # Setting columns sensible to bias (default behaviour)",
+            "    bias_cols = [\"race\", \"gender\", \"age\", \"sex\", \"ethnic\", \"ethnicity\", \"income\", \"salary\"]",
+            "    dataset_labels= []",
+            "    for elem in dataset.columns:",
+            "        dataset_labels += str(elem)",
+            "    if \"DOB\" in dataset.columns:",
+            "        # transform in age",
+            "    for label in dataset_labels:",
+            "        if len(re.findall(\"birth\", label)) > 0:",
+            "            # transform in age"
     ]);
         return [b + "(" + df + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
