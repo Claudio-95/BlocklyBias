@@ -2496,11 +2496,12 @@ var VarData = {};
             "                if result[ft][m] > out[m][3]: out[m] = (out[m][0], out[m][1], ft, result[ft][m])",
             "        return out",
             "\n",
-            "    # Dataset clean",
+            "    # Detecting dataset NaN values",
             "    valuesToCheck = \"?\\/-\"",
             "    for elem in valuesToCheck:",
             "        if elem in dataset.values:",
             "            dataset.replace(elem, np.nan)",
+            "    #dataset.dropna()", //loss of informations?
             "\n",
             "    # Setting columns sensible to bias (default behaviour)",
             "    bias_cols = [\"race\", \"gender\", \"age\", \"sex\", \"ethnic\", \"ethnicity\", \"income\", \"salary\"]",
