@@ -2117,9 +2117,12 @@ var VarData = {};
         Blockly.Python.definitions_.deepcopy = "from copy import deepcopy";
         Blockly.Python.definitions_.matplotlib_pyplot = "import matplotlib.pyplot as plt";
         Blockly.Python.definitions_.seaborn = "import seaborn as sns";
+        Blockly.Python.definitions_.scipy = "import scipy.stats as st";
         Blockly.Python.definitions_.re = "import re";
         Blockly.Python.definitions_.datetime = "import datetime";
+        Blockly.Python.definitions_.import_math = "import math";
         Blockly.Python.definitions_.interactiveShell = "from IPython.core.interactiveshell import InteractiveShell";
+        Blockly.Python.definitions_.is_string_dtype = "from pandas.api.types import is_string_dtype";
         var b = Blockly.Python.provideFunction_("check_intersectional_bias", [
             "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset):",
             "\n",
@@ -2550,9 +2553,57 @@ var VarData = {};
             "    if len(bias_df) == 0:",
             "        result = \"No possible bias sensitive fields were found.\"",
             "        return result",
-            "    else:",
-            "        result = \"Sensitive fields were found.\"",
-            "        return result" //TO BE CONTINUED...
+            "    elif len(bias_df) == 1:",
+            "        result = \"Insufficient data were found for bias analysis.\"",
+            "        return result",
+            "    else: # Here start the real bias analysis",
+            "        # First of all define the privileged columns",
+            "        privilege_cols = [\"race\", \"gender\", \"age\", \"sex\", \"ethnic\", \"ethnicity\", \"income\", \"salary\"]",
+            "        # Search privileged columns",
+            "        privilege_df = []",
+            "        for elem in dataset.columns:",
+            "            for label in privilege_cols:",
+            "                if len(re.findall(label, elem, re.IGNORECASE)) > 0:",
+            "                    privilege_df.append(elem)",
+            "\n",
+            "        # Calculate the number of bins",
+            "        number_of_rows = len(dataset.index)",
+            "        number_of_bins = math.ceil(math.sqrt(number_of_rows))",
+            "\n",
+            "        # Calculate EDF metric",
+            "        edf_list = []",
+            "        df_edf_list = []",
+            "        for ind in range(len(bias_df)):",
+            "            attribute1_set = np.array(dataset[bias_df[ind]].unique()).tolist()",
+            "            for i in range(len(bias_df)):",
+            "                if (ind == i) or (is_string_dtype(dataset[bias_df[ind]].dtype)) or (is_string_dtype(dataset[bias_df[i]].dtype)):",
+            "                    pass",
+            "                else:",
+            "                    attribute2_set = np.array(dataset[bias_df[i]].unique()).tolist()",
+            "                    for elem in privilege_df:",
+            "                        edf = get_edf_df(dataset, bias_df[ind], bias_df[i], attribute1_set, attribute2_set, elem)",
+            "                        edf_list.append(edf)",
+            "                        df = pd.DataFrame(read_edf(edf, n = 3))",
+            "                        df_edf_list.append(df)",
+            "        edf_result = 0",
+            "        if not df_edf_list:",
+            "            pass",
+            "        else:",
+            "            max_edf = 0",
+            "            max_df_edf = df_edf_list[0]",
+            "            for elem in df_edf_list:",
+            "                if elem.iloc[0, -1:] > max_edf:",
+            "                    max_edf = elem.iloc[0, -1:]",
+            "                    max_df_edf = elem",
+            "            print(max_df_edf)",
+            "            edf_result = 1",
+            "\n",
+            "        result = \"Sensitive fields were found\"",
+            "        if edf_result == 0:",
+            "            result += \" but compatible columns cannot be found to calculate EDF metric.\"",
+            "        else:",
+            "            result += \" and these are the couple with the highest disparity value:\"",
+            "        return result"
     ]);
         return [b + "(" + df + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
