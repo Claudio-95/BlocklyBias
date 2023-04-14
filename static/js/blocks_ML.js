@@ -3318,20 +3318,62 @@
         });
     };
 
+    // Blockly.defineBlocksWithJsonArray([
+    //     {
+    //         type: "BIAS_Intersectional",
+    //         message0: "Check intersectional bias %1",
+    //         args0: [
+    //             {
+    //                 type: "input_value",
+    //                 name: "DATAFRAME",
+    //                 check: "DataFrame",
+    //                 value: 0
+    //             }],
+    //         //previousStatement: null,
+    //         //nextStatement: null,
+    //         output: "String" // output intersectional
+    //     }
+    // ]);
+
     Blockly.defineBlocksWithJsonArray([
         {
             type: "BIAS_Intersectional",
-            message0: "Check intersectional bias %1",
-            args0: [
+            tooltip: "\"Check intersectional bias\" has to read a dataframe as input and produce a final result which is graphs and an explanatory message.",
+            //setHelpUrl: "",
+            //previousStatement: null,
+            //nextStatement: null,
+            message0: "Check intersectional bias",
+            message1: "Input %1",
+            args1: [
                 {
                     type: "input_value",
                     name: "DATAFRAME",
                     check: "DataFrame",
                     value: 0
                 }],
-            //previousStatement: null,
-            //nextStatement: null,
-            output: "String" // output intersectional
+            message2: "Biased columns %1",
+            args2: [
+                {
+                    type: "input_value",
+                    name: "BIASEDCOLS",
+                    check: "Array"
+                }],
+            message3: "Privileged columns %1",
+            args3: [
+                {
+                    type: "input_value",
+                    name: "PRIVILEGEDCOLS",
+                    check: ["String", "Array"]
+                }],
+            message4: "Handle Missing Values %1",
+            args4: [
+                {
+                    type: "field_dropdown",
+                    name: "SPLIT",
+                    options: [["Delete", "dropNa"], ["Leave", "none"]]
+                }],
+            output: "String", // output intersectional
+            inputsInline: 0
         }
     ]);
 

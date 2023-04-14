@@ -464,7 +464,6 @@ var VarData = {};
     Blockly.Python.pandas = {};
     Blockly.Python['pandas_read_csv'] = function (a) {
         Blockly.Python.definitions_.pandas = "import pandas as pd";
-        console.log(String(a).split(" ").length);
         // it makes compatible the block with both variable and string blocks
         if (String(a).split(" ").length > 3) {
             // string block input
@@ -2123,8 +2122,14 @@ var VarData = {};
         Blockly.Python.definitions_.import_math = "import math";
         Blockly.Python.definitions_.interactiveShell = "from IPython.core.interactiveshell import InteractiveShell";
         Blockly.Python.definitions_.is_string_dtype = "from pandas.api.types import is_string_dtype";
+        var dropnan = 0
+        if (a.getFieldValue("SPLIT") == "dropNa") {
+            dropnan = 1
+        }
+        var biased_cols = Blockly.Python.valueToCode(a, "BIASEDCOLS", Blockly.Python.ORDER_NONE);
+        var privileged_cols = Blockly.Python.valueToCode(a, "PRIVILEGEDCOLS", Blockly.Python.ORDER_NONE);
         var b = Blockly.Python.provideFunction_("check_intersectional_bias", [
-            "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset):",
+            "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset, dropnan, biased_cols, privileged_cols):",
             "\n",
             "    def get_debias_params(protected, privileged, unprivileged, positive_label, negative_label):",
             "        return BiasParams(protected=protected, privileged=privileged, unprivileged=unprivileged,\n" +
@@ -2500,14 +2505,17 @@ var VarData = {};
             "        return out",
             "\n",
             "    # Detecting dataset NaN values",
-            "    valuesToCheck = \"?\\/-\"",
-            "    for elem in valuesToCheck:",
-            "        if elem in dataset.values:",
-            "            dataset.replace(elem, np.nan)",
-            "    #dataset.dropna()", //loss of informations?
+            "    if dropnan == 1:",
+            "        valuesToCheck = \"?\\/-\"",
+            "        for elem in valuesToCheck:",
+            "            if elem in dataset.values:",
+            "                dataset.replace(elem, np.nan)",
+            "        dataset.dropna()",
             "\n",
             "    # Setting columns sensible to bias (default behaviour)",
-            "    bias_cols = [\"race\", \"gender\", \"age\", \"sex\", \"ethnic\", \"ethnicity\", \"income\", \"salary\"]",
+            "    #bias_cols = [\"race\", \"gender\", \"age\", \"sex\", \"ethnic\", \"ethnicity\", \"income\", \"salary\"]",
+            "    bias_cols = biased_cols",
+            "    priv_cols = privileged_cols",
             "\n",
             "    # Convert \'date of birth\' or similar columns in \'Age\' column",
             "    def fix_age(x):",
@@ -2605,7 +2613,7 @@ var VarData = {};
             "            result += \" and these are the couple with the highest disparity value:\"",
             "        return result"
     ]);
-        return [b + "(" + df + ")", Blockly.Python.ORDER_FUNCTION_CALL];
+        return [b + "(" + df + ", " + dropnan + ", " + biased_cols + ", " + privileged_cols + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
 
     Blockly.Python.anchoringBias = function (a) {
