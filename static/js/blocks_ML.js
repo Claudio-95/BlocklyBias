@@ -3338,12 +3338,12 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "BIAS_Intersectional",
-            tooltip: "\"Check intersectional bias\" has to read a dataframe as input and produce a final result which is graphs and an explanatory message.",
+            tooltip: "\"Check intersectional bias\" has to read a dataframe as input and produce a final result which is graphs and an explanatory message. The privileged column can be seen as a target variable for classification, it is the column against which bias needs to be analyzed. ",
             //setHelpUrl: "",
             //previousStatement: null,
             //nextStatement: null,
             message0: "Check intersectional bias",
-            message1: "Input %1",
+            message1: "Input dataset %1",
             args1: [
                 {
                     type: "input_value",
@@ -3358,12 +3358,12 @@
                     name: "BIASEDCOLS",
                     check: "Array"
                 }],
-            message3: "Privileged columns %1",
+            message3: "Privileged column %1",
             args3: [
                 {
                     type: "input_value",
                     name: "PRIVILEGEDCOLS",
-                    check: ["String", "Array"]
+                    check: "String"
                 }],
             message4: "Handle Missing Values %1",
             args4: [
