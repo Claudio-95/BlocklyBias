@@ -2610,7 +2610,10 @@ var VarData = {};
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))",
             "    intersect_var = biased_cols[0] + \"_\" + biased_cols[1]",
             "    privilege_values = privileged_cols.unique().tolist()",     //maybe it can calculate the ideal threshold to pass to privilege_values
-            "    debias_params = get_debias_params(intersect_var, max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 1], privilege_values[0], privilege_values[1])",
+            "    debias_params = get_debias_params(intersect_var, max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 1], str(privilege_values[0]), str(privilege_values[1]))",
+            "    metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)",
+            "    df_metrics = get_df_from_metrics(metrics)",
+            "    df_disparity = get_disparity_df(metrics, debias_params, metrics_list)",
             "\n",
             "    if edf_result == 0:",
             "        result += \" but compatible columns cannot be found to calculate EDF metric.\"",
