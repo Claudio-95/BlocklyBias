@@ -2106,7 +2106,6 @@ var VarData = {};
 
     Blockly.Python.intersectionalBias = function (a) {
         var df = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE);
-        // copy here Matteo's library
         Blockly.Python.definitions_.etiq_core = "from etiq_core import *;";
         Blockly.Python.definitions_.opendatasets = "import opendatasets as od";
         Blockly.Python.definitions_.pandas = "import pandas as pd";
@@ -2122,6 +2121,8 @@ var VarData = {};
         Blockly.Python.definitions_.import_math = "import math";
         Blockly.Python.definitions_.interactiveShell = "from IPython.core.interactiveshell import InteractiveShell";
         Blockly.Python.definitions_.is_string_dtype = "from pandas.api.types import is_string_dtype";
+        Blockly.Python.definitions_.pythonwarnings = "import warnings";
+        Blockly.Python.definitions_.pythonlogging = "import logging";
         var dropnan = 0
         if (a.getFieldValue("SPLIT") == "dropNa") {
             dropnan = 1
@@ -2130,6 +2131,11 @@ var VarData = {};
         var privileged_cols = Blockly.Python.valueToCode(a, "PRIVILEGEDCOLS", Blockly.Python.ORDER_NONE);
         var b = Blockly.Python.provideFunction_("check_intersectional_bias", [
             "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset, dropnan, biased_cols, privileged_cols):",
+            "\n",
+            "    # Setting display off warning and info messages",
+            "    warnings.filterwarnings(\"ignore\")",
+            "    logger = logging.getLogger(\"etiq_core\")",
+            "    logger.setLevel(level = logging.CRITICAL)",
             "\n",
             "    def get_debias_params(protected, privileged, unprivileged, positive_label, negative_label):",
             "        return BiasParams(protected=protected, privileged=privileged, unprivileged=unprivileged,\n" +
@@ -2405,14 +2411,14 @@ var VarData = {};
             "    # Dict with modal feature values for the feature's value (bad name for var, sorry)",
             "    # the usage examples in the rest of the notebook are far more helpful than the explanation",
             "    def get_values_of(samples, feature, value, features):",
-            "       result = {}",
-            "       for sample in samples:",
-            "           subset = sample[sample[feature] == value]",
-            "       for ft in features:",
-            "           if ft not in result: result[ft] = None",
-            "           count = subset.groupby(ft).size()",
-            "           if len(count) > 0: result[ft] = count.idxmax()",
-            "       return result",
+            "        result = {}",
+            "        for sample in samples:",
+            "            subset = sample[sample[feature] == value]",
+            "        for ft in features:",
+            "            if ft not in result: result[ft] = None",
+            "            count = subset.groupby(ft).size()",
+            "            if len(count) > 0: result[ft] = count.idxmax()",
+            "        return result",
             "\n",
             "    # Same as above, but filter by the outcome of the p_feature",
             "    def get_values_of_outcome(samples, feature, value, features, p_feature, outcome):",
