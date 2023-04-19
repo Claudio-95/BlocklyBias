@@ -2626,19 +2626,17 @@ var VarData = {};
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)",
             "        df_metrics = get_df_from_metrics(metrics)",
             "        df_disparity = get_disparity_df(metrics, debias_params, metrics_list)",
-            "        print(\"The EDF (Empirical Differential Fairness) is the ratio between the ratios between positive and total cases of two groups, calculated on the data, without the contribution of a classifier.\")",
+            "        print(\"EDF (Empirical Differential Fairness) is the ratio between the ratios between positive and total cases of two groups, calculated on the data, without the contribution of a classifier.\")",
             "        print(\"EDF of the \" + biased_cols[0] + \" and \" + biased_cols[1] + \" intersection on the privileged variable \" + privileged_cols + \":\\n\")",
             "        print(max_df_edf)",
             "        print(\"\\n\")",
-            "        print(\"\")",
+            "        print(\"Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\\nThe set of all these metrics are defined here as Fairness metrics.\")",
             "        print(\"Fairness metrics for \" + df_metrics.iloc[0][\"class\"] + \" and \" + df_metrics.iloc[1][\"class\"] + \":\\n\")",
             "        print(df_metrics)",
             "        print(\"\\n\")",
-            "        print(\"\")",
+            "        print(\"Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.\")",
             "        print(\"Disparity on fairness metrics for \" + df_metrics.iloc[0][\"class\"] + \" and \" + df_metrics.iloc[1][\"class\"] + \":\\n\")",
-            "        print(df_disparity)",
-            "        print(\"\\n\")",
-            "\n"
+            "        print(df_disparity)"
     ]);
         return [b + "(" + df + ", " + dropnan + ", " + biased_cols + ", " + privileged_cols + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
