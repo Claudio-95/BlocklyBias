@@ -2632,7 +2632,7 @@ var VarData = {};
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)",
             "        df_metrics = get_df_from_metrics(metrics)",
             "        df_disparity = get_disparity_df(metrics, debias_params, metrics_list)",
-            "        print(\"\nEDF (Empirical Differential Fairness) is the ratio between the ratios between positive and total cases of two groups, calculated on the data, without the contribution of a classifier.\")",
+            "        print(\"\\n\" + \"EDF (Empirical Differential Fairness) is the ratio between the ratios between positive and total cases of two groups, calculated on the data, without the contribution of a classifier.\")",
             "        print(\"EDF of the \" + biased_cols[0] + \" and \" + biased_cols[1] + \" intersection on the privileged variable \" + privileged_cols + \":\\n\")",
             "        print(max_df_edf)",
             "        print(\"\\n\")",
@@ -2647,7 +2647,17 @@ var VarData = {};
             "        # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature",
             "        features = cat_vars",
             "        features.append(intersect_var)",
-            "        df_ratio = get_ratio_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = str(privilege_values[0]), negative_outcome = str(privilege_values[1]))"
+            "        df_ratio = get_ratio_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = str(privilege_values[0]), negative_outcome = str(privilege_values[1]))",
+            "        df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = str(privilege_values[0]), negative_outcome = str(privilege_values[1]))",
+            "        df_intersection = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)",
+            "        print(\"Ratio between positive and negative outcomes:\\n\")",
+            "        print(df_ratio)",
+            "        print(\"\\n\")",
+            "        print(\"Modal values:\\n\")",
+            "        print(df_mode)",
+            "        print(\"\\n\")",
+            "        print(\"Intersection:\\n\")",
+            "        print(df_intersection)"
     ]);
         return [b + "(" + df + ", " + dropnan + ", " + biased_cols + ", " + privileged_cols + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
