@@ -237,14 +237,14 @@ blockly.LANG = blockly.getLang();
  * List of tab names.
  * @private
  */
-blockly.TABS_ = ['blocks', 'python'];
+blockly.TABS_ = ['blocks', 'python', 'notebook'];
 
 /**
  * List of tab names with casing, for display in the UI.
  * @private
  */
 blockly.TABS_DISPLAY_ = [
-  'Blocks', 'Python', ,
+  'Blocks', 'Python', 'Notebook', ,
 ];
 
 blockly.selected = 'blocks';
@@ -272,6 +272,7 @@ blockly.tabClick = function (clickedName) {
   // Select the active tab.
   blockly.selected = clickedName;
   var selectedTab = document.getElementById('tab_' + clickedName);
+  console.log(clickedName);
   selectedTab.classList.remove('taboff');
   selectedTab.classList.add('tabon');
   // Show the selected pane.
@@ -283,8 +284,11 @@ blockly.tabClick = function (clickedName) {
   if (clickedName == 'blocks') {
     blockly.workspace.setVisible(true);
     codeMenuTab.className = 'taboff';
-  } else {
+  } else if (clickedName == 'python') {
     codeMenuTab.className = 'tabon';
+  } else {
+    blockly.workspace.setVisible(false);
+    codeMenuTab.className = 'taboff';
   }
   // Sync the menu's value with the clicked tab value if needed.
   var codeMenu = document.getElementById('code_menu');
@@ -446,7 +450,7 @@ blockly.init = function () {
 
   blockly.bindClick('trashButton',
     function () { blockly.discard(); blockly.renderContent(); });
-  blockly.bindClick('runButton', blockly.LaunchCode);
+  //blockly.bindClick('runButton', blockly.LaunchCode);
   blockly.bindClick('colabButton', blockly.OpenColab);
   blockly.bindClick('copyButton', blockly.copyCode);
   blockly.bindClick('downlaodButton', blockly.DownloadCode);
@@ -531,7 +535,7 @@ blockly.initLanguage = function () {
   document.getElementById('tab_blocks').textContent = MSG['blocks'];
 
   document.getElementById('linkButton').title = MSG['linkTooltip'];
-  document.getElementById('runButton').title = "Run frature is currently disabled";
+  //document.getElementById('runButton').title = "Run frature is currently disabled";
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 };
 

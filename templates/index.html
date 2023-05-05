@@ -55,7 +55,7 @@
         class="navbar navbar-expand-lg  navbar-expand-sm  navbar-expand-md  navbar-expand-xl navbar-light bg-light nav-colors">
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <img src="{{ url_for('static', filename='images/blocklyML_logo.png') }}" height=40 width="130"> &nbsp;
+            <img src="{{ url_for('static', filename='images/blocklyBias_logo.png') }}" height=40 width="130"> &nbsp;
             &nbsp;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item dropdown active">
@@ -100,16 +100,16 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <li><a class="dropdown-item"
-                                href="https://github.com/chekoduadarsh/BlocklyML/blob/main/README.md" target="_blank"
-                                rel="noopener noreferrer">About BlocklyML</a></li>
-                        <li><a class="dropdown-item" href="https://chekoduadarsh.github.io/" target="_blank"
+                               href="https://github.com/Claudio-95/BlocklyBias/blob/main/README.md" target="_blank"
+                               rel="noopener noreferrer">About BlocklyBias</a></li>
+                        <li><a class="dropdown-item" href="https://github.com/Claudio-95" target="_blank"
                                 rel="noopener noreferrer">About me</a></li>
-                        <li><a class="dropdown-item" href="mailto:chekodu.adarsh@gmail.com" target="_blank"
+                        <li><a class="dropdown-item" href="mailto:c.demartino1@studenti.unipi.it" target="_blank"
                                 rel="noopener noreferrer">Contact me</a></li>
                     </ul>
                 </li>
             </ul>
-            <a href="https://github.com/chekoduadarsh/BlocklyML" target="_blank"><img
+            <a href="https://github.com/Claudio-95/BlocklyBias" target="_blank"><img
                     src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="48px"
                     height="48px"></a>
 
@@ -124,7 +124,7 @@
             <td colspan=2>
                 <table width="100%">
                     <tr id="tabRow" height="1em">
-                        <td id="tab_blocks" class="tabon">...</td>
+                        <td id="tab_blocks" class="tabon">Blocks</td>
                         <td class="tabmin tab_collapse">&nbsp;</td>
 
                         <td class="tabmin tab_collapse">&nbsp;</td>
@@ -133,6 +133,14 @@
                         <td id="tab_code" class="taboff">
                             <select id="code_menu"></select>
                         </td>
+
+                        <!-- adding new part live embedded notebook -->
+                        <td class="tabmin tab_collapse">&nbsp;</td>
+                        <td class="tabmin tab_collapse">&nbsp;</td>
+
+                        <td id="tab_notebook" class="taboff tab_collapse">Notebook</td>
+                        <!-- end new part -->
+
                         <td class="tabmax">
                             <button id="downlaodButton" class="notext" title="download layout">
                                 <img src='/static/media/download.png' class="icon">
@@ -244,9 +252,9 @@
                             <button id="linkButton" class="notext" title="...">
                                 <img src='/static/media/1x1.gif' class="link icon21">
                             </button>
-                            <button id="runButton" class="notext primary" title="..." disabled>
+                            <!-- <button id="runButton" class="notext primary" title="..." disabled>
                                 <img src='/static/media/1x1.gif' class="run icon21">
-                            </button>
+                            </button> -->
                         </td>
                     </tr>
                 </table>
@@ -262,6 +270,10 @@
     <div id="content_blocks" class="content"></div>
 
     <pre><code id="content_python" class="language-python content prettyprint lang-py" ></code></pre>
+
+    <!-- adding content new part -->
+    <div id="content_notebook" class="content"></div>
+    <!-- end new part -->
 
     <xml id="toolbox">
         <category name="%{BKY_CATLOGIC}" colour="%{BKY_LOGIC_HUE}">
