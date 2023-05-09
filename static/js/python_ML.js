@@ -2129,8 +2129,9 @@ var VarData = {};
         }
         var biased_cols = Blockly.Python.valueToCode(a, "BIASEDCOLS", Blockly.Python.ORDER_NONE);
         var privileged_cols = Blockly.Python.valueToCode(a, "PRIVILEGEDCOLS", Blockly.Python.ORDER_NONE);
+        var pos_outcome = Blockly.Python.valueToCode(a, "POSOUTCOME", Blockly.Python.ORDER_NONE);
         var b = Blockly.Python.provideFunction_("check_intersectional_bias", [
-            "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset, dropnan, biased_cols, privileged_cols):",
+            "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset, dropnan, biased_cols, privileged_cols, pos_outcome):",
             "\n",
             "    # Setting display off warning and info messages",
             "    warnings.filterwarnings(\"ignore\")",
@@ -2647,8 +2648,11 @@ var VarData = {};
             "        # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature",
             "        features = cat_vars",
             "        features.append(intersect_var)",
-            "        df_ratio = get_ratio_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = str(privilege_values[0]), negative_outcome = str(privilege_values[1]))",
-            "        df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = str(privilege_values[0]), negative_outcome = str(privilege_values[1]))",
+            "        for v in privilege_values:",
+            "            if str(v) != pos_outcome:",
+            "                neg_outcome = str(v)",
+            "        df_ratio = get_ratio_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)",
+            "        df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)",
             "        df_intersection = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)",
             "        print(\"Ratio between positive and negative outcomes:\\n\")",
             "        print(df_ratio)",
@@ -2657,9 +2661,40 @@ var VarData = {};
             "        print(df_mode)",
             "        print(\"\\n\")",
             "        print(\"Intersection:\\n\")",
-            "        print(df_intersection)"
+            "        print(df_intersection)",
+            "        print(\"\\n\")",
+            "        samples = []",
+            "        for i in range(50):",
+            "            sample = dataset.sample(n = 1000, ignore_index = True)",
+            "            samples.append(sample)",
+            "        results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)",
+            "        print(\"Positive income mode:\\n\")",
+            "        print(results_pos)",
+            "        print(\"Negative income mode:\\n\")",
+            "        print(results_neg)",
+            "        print(\"\\n\")",
+            "        df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features)",
+            "        print(\"Below is a list that provides the values most frequently associated with\"+ max_df_edf.iloc[0, 0] + \", and it's useful to observe any differences in modal values between the privileged and the unprivileged group:\\n\")",
+            "        print(df_values_of_1st)",
+            "        df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features)",
+            "        print(\"Below is a list that provides the values most frequently associated with\"+ max_df_edf.iloc[0, 1] + \", and it's useful to observe any differences in modal values between the privileged and the unprivileged group:\\n\")",
+            "        print(df_values_of_2nd)",
+            "        print(\"\\n\")",
+            "        df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)",
+            "        print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 0] + \":\\n\")",
+            "        print(df_values_of_outcome_1st)",
+            "        df_values_of_outcome_2nd = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = pos_outcome)",
+            "        print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 1] + \":\\n\")",
+            "        print(df_values_of_outcome_2nd)",
+            "        print(\"\\n\")",
+            "        df_values_of_outcome_1st_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = neg_outcome)",
+            "        print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 0] + \":\\n\")",
+            "        print(df_values_of_outcome_1st_neg)",
+            "        df_values_of_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)",
+            "        print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 1] + \":\\n\")",
+            "        print(df_values_of_outcome_2nd_neg)"
     ]);
-        return [b + "(" + df + ", " + dropnan + ", " + biased_cols + ", " + privileged_cols + ")", Blockly.Python.ORDER_FUNCTION_CALL];
+        return [b + "(" + df + ", " + dropnan + ", " + biased_cols + ", " + privileged_cols + ", " + pos_outcome + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
 
     Blockly.Python.anchoringBias = function (a) {

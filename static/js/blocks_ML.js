@@ -3318,23 +3318,6 @@
         });
     };
 
-    // Blockly.defineBlocksWithJsonArray([
-    //     {
-    //         type: "BIAS_Intersectional",
-    //         message0: "Check intersectional bias %1",
-    //         args0: [
-    //             {
-    //                 type: "input_value",
-    //                 name: "DATAFRAME",
-    //                 check: "DataFrame",
-    //                 value: 0
-    //             }],
-    //         //previousStatement: null,
-    //         //nextStatement: null,
-    //         output: "String" // output intersectional
-    //     }
-    // ]);
-
     Blockly.defineBlocksWithJsonArray([
         {
             type: "BIAS_Intersectional",
@@ -3365,8 +3348,15 @@
                     name: "PRIVILEGEDCOLS",
                     check: "String"
                 }],
-            message4: "Handle Missing Values %1",
+            message4: "Positive outcome %1",
             args4: [
+                {
+                    type: "input_value",
+                    name: "POSOUTCOME",
+                    check: "String"
+                }],
+            message5: "Handle Missing Values %1",
+            args5: [
                 {
                     type: "field_dropdown",
                     name: "SPLIT",

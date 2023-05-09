@@ -388,7 +388,7 @@ button {
     background-size: cover;
     position: relative;
 }
-
+/*
 .tool-tip-popup {
     position: fixed;
     top: 10%;
@@ -396,11 +396,11 @@ button {
     right: 25%;
     overflow-y: scroll;
     z-index: 100000;
-    /* big value for bootstrap3 compatibility */
+    /* big value for bootstrap3 compatibility
     text-align: left;
     box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0.65);
-    /* dark around it */
-    background-color: #2f0743; /* For browsers that do not support gradients */
+    /* dark around it
+    background-color: #2f0743; /* For browsers that do not support gradients
     background-image: linear-gradient(to right, #41295a, #2f0743);
 }
 
@@ -434,7 +434,7 @@ button {
 }
 
 .tool-tip-upload-page {
-  
+
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -443,7 +443,7 @@ button {
 }
 
 .tool-tip-popup P {
-    
+
     color: white;
     font-weight: normal;
     font-size: 18px;
@@ -456,6 +456,7 @@ button {
     height: 10%;
     width: 30%;
 }
+*/
 
 .download-code-popup{
     display: none;
@@ -496,18 +497,18 @@ button {
     text-align: center;
 }
 
-.download-code-button{  
-    text-align: center;  
+.download-code-button{
+    text-align: center;
 }
-.download-code-form{  
-    text-align: center;  
+.download-code-form{
+    text-align: center;
 }
 
 .download-code-popup h4 {
     color: white;
 }
 .download-code-popup .btn {
-    margin: auto;  
+    margin: auto;
     background-color: #04AA6D;
     color: white;
     padding: 16px 20px;

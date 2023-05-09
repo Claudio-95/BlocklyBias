@@ -272,7 +272,6 @@ blockly.tabClick = function (clickedName) {
   // Select the active tab.
   blockly.selected = clickedName;
   var selectedTab = document.getElementById('tab_' + clickedName);
-  console.log(clickedName);
   selectedTab.classList.remove('taboff');
   selectedTab.classList.add('tabon');
   // Show the selected pane.
@@ -314,7 +313,6 @@ blockly.renderContent = function () {
     xmlTextarea.value = xmlText;
     xmlTextarea.focus();
   } else if (content.id == 'content_python') {
-    console.log("generating python code")
     VarData = {};
     blockly.attemptCodeGeneration(Blockly.Python);
   }
