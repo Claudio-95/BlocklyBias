@@ -2356,7 +2356,7 @@ var VarData = {};
             "            for ind in df.index:",
             "                ft = ind",
             "                if ft not in results_pos: results_pos[ft] = {}",
-            "                val = df.at[ind, 'mode_pos']",
+            "                val = df.at[ind, 'mode_pos']", //nel df di get_mode_ratio_df si ferma alla riga 'gender_race' nella colonna 'mode_pos', alla cella con valore 'Male_White' perché la vede come pandas.Series
             "                if val not in results_pos[ft]: results_pos[ft][val] = 0",
             "                results_pos[ft][val] += 1",
             "                if ft not in results_neg: results_neg[ft] = {}",
