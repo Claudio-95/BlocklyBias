@@ -525,3 +525,13 @@ button {
 .open-button:hover {
     opacity: 1;
 }
+
+#iframe_notebook {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+#content_notebook {
+    padding: 0;
+}
