@@ -2647,7 +2647,6 @@ var VarData = {};
             "\n",
             "        # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature",
             "        features = cat_vars",
-            "        features.append(intersect_var)",
             "        neg_outcome = \"\"",
             "        for v in privilege_values:",
             "            if str(v) != pos_outcome:",

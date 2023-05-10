@@ -12,6 +12,7 @@ functions:
     * root - returns the index page
 """
 from flask import Flask, render_template, request
+from flask_cors import CORS
 import dash_bootstrap_components as dbc
 import dash
 from dash import html
@@ -23,6 +24,7 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
+CORS(app)
 
 
 DASH_APP = dash.Dash(
