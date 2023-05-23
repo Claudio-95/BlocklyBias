@@ -17,11 +17,13 @@ import dash_bootstrap_components as dbc
 import dash
 from dash import html
 from libs.dataframe_visualizer import dataframe_visualizer
+import threading
+import subprocess
+import platform
 
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
-app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
 CORS(app)
@@ -75,6 +77,34 @@ def root():
     """
     return render_template('index.html')
 
+def run_secondary_script_windows():
+    script_path = r'server.py'
+    process = subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
+def run_third_script_windows():
+    script_path = r'jupyter.py'
+    process = subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
+
+def run_secondary_script_linux():
+    script_path = 'server.py'
+    process = subprocess.run(['gnome-terminal', '--', 'python', script_path], shell=True)
+def run_third_script_linux():
+    script_path = 'jupyter.py'
+    process = subprocess.run(['gnome-terminal', '--', 'python', script_path], shell=True)
 
 if __name__ == '__main__':
+    # the code works both with Windows and Linux
+    # the code until thread.start() runs two different process as threads, one for the main app.py and one for the server.py, which serves to simulate a Jupyter Notebook on the dedicated tab
+    operating_system = platform.system()
+    if operating_system == "Windows":
+        server_thread = threading.Thread(target=run_secondary_script_windows())
+        server_thread.start()
+        jupyter_thread = threading.Thread(target=run_third_script_windows())
+        jupyter_thread.start()
+    elif operating_system == "Linux":
+        server_thread = threading.Thread(target=run_secondary_script_linux())
+        server_thread.start()
+        jupyter_thread = threading.Thread(target=run_third_script_linux())
+        jupyter_thread.start()
+    else:
+        raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
     app.run(host='0.0.0.0')

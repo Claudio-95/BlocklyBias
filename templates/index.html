@@ -22,7 +22,7 @@
     <script src="http://pypyjs.org/pypyjs-release/lib/pypyjs.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script> <!-- old version 1.9.1 -->
 
     <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
 
@@ -272,8 +272,8 @@
     <pre><code id="content_python" class="language-python content prettyprint lang-py" ></code></pre>
 
     <!-- adding content new part -->
-    <div id="content_notebook" class="content">
-        <iframe src="https://localhost:8889/notebooks/my_notebook.ipynb" id="iframe_notebook" sandbox="allow-same-origin allow-popups allow-scripts"></iframe>
+    <div id="content_notebook" class="content"><!--<iframe src="http://localhost:5000/static/py/notebooks/my_notebook.ipynb" id="iframe_notebook" sandbox> -->
+        <iframe src="http://localhost:8888" id="iframe_notebook"></iframe>
     </div>
     <!-- end new part -->
 
