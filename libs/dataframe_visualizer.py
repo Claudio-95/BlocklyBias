@@ -6,7 +6,7 @@ from libs.dashboard import dashboard_app
 pd.set_option("display.max_rows", None)
 pd.set_option("display.max_columns", None)
 pd.set_option("display.width", None)
-#pd.set_option("display.max_colwidth", -1)
+pd.set_option("display.max_colwidth", -1)
 
 def dataframe_visualizer(code_imdict, dash_app):
     """Returns Dataframe visuualizers and list fo processed Daataframes """

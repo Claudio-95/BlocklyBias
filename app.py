@@ -12,6 +12,14 @@ functions:
     * root - returns the index page
 """
 
+import os
+import sys
+
+new_path = os.path.abspath(os.path.dirname(__file__))+'\Python310'
+sys.path.insert(0, new_path)
+print(sys.path)
+input('Press ENTER to continue')
+
 from flask import Flask, render_template, request
 from flask_cors import CORS
 import dash_bootstrap_components as dbc
@@ -21,13 +29,6 @@ from libs.dataframe_visualizer import dataframe_visualizer
 import threading
 import subprocess
 import platform
-import os
-import sys
-
-new_path = os.path.abspath(os.path.dirname(__file__))+'\Python310'
-sys.path.insert(0, new_path)
-print(sys.path)
-input('Press ENTER to continue')
 
 
 app = Flask(__name__)
