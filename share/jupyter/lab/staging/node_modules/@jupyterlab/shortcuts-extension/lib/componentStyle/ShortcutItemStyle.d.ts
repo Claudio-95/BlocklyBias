@@ -1,0 +1,18 @@
+import { UISize } from '../components/ShortcutUI';
+export declare const CellStyle: string;
+export declare const ShortcutCellStyle: string;
+export declare const EmptyShortcutCellStyle: string;
+export declare const SingleShortcutCellStyle: string;
+export declare const RowStyle: string;
+export declare function ConflictContainerStyle(showSelectors: boolean, errorSize: UISize): string;
+export declare const ErrorMessageStyle: string;
+export declare const ErrorButtonStyle: string;
+export declare const ShortcutContainerStyle: string;
+export declare const ShortcutKeysContainerStyle: string;
+export declare const ShortcutKeysStyle: string;
+export declare const OrStyle: string;
+export declare const OrTwoStyle: string;
+export declare const CommaStyle: string;
+export declare const PlusStyle: string;
+export declare const ResetStyle: string;
+export declare const SourceCellStyle: string;

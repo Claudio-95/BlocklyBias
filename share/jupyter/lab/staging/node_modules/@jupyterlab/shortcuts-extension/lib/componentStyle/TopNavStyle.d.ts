@@ -1,0 +1,18 @@
+import { UISize } from '../components/ShortcutUI';
+export declare const TopStyle: string;
+export declare const TopNavStyle: string;
+export declare const SymbolsStyle: string;
+export declare const SymbolsSmallStyle: string;
+export declare const SymbolsRowStyle: string;
+export declare const SearchContainerStyle: string;
+export declare const SearchStyle: string;
+export declare const AdvancedOptionsContainerStyle: string;
+export declare const AdvancedOptionsStyle: string;
+export declare const AdvancedOptionsSmallStyle: string;
+export declare const AdvancedOptionsRightStyle: string;
+export declare function AdvancedOptionsLinkStyle(size: UISize): string;
+export declare const HeaderRowContainerStyle: string;
+export declare const HeaderRowStyle: string;
+export declare const commandIconStyle: string;
+export declare const altIconStyle: string;
+export declare const controlIconStyle: string;

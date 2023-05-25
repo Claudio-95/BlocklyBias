@@ -11,6 +11,7 @@ functions:
     * dataframe_return - list of Dataframes from dataframe_visualizer
     * root - returns the index page
 """
+
 from flask import Flask, render_template, request
 from flask_cors import CORS
 import dash_bootstrap_components as dbc
@@ -20,6 +21,7 @@ from libs.dataframe_visualizer import dataframe_visualizer
 import threading
 import subprocess
 import platform
+import os
 
 
 app = Flask(__name__)

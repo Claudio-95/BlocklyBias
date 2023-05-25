@@ -1,0 +1,10 @@
+import { LabIcon } from '@jupyterlab/ui-components';
+export { runIcon as continueIcon, stopIcon as terminateIcon } from '@jupyterlab/ui-components';
+export declare const closeAllIcon: LabIcon;
+export declare const pauseOnExceptionsIcon: LabIcon;
+export declare const stepIntoIcon: LabIcon;
+export declare const stepOverIcon: LabIcon;
+export declare const stepOutIcon: LabIcon;
+export declare const variableIcon: LabIcon;
+export declare const viewBreakpointIcon: LabIcon;
+export declare const openKernelSourceIcon: LabIcon;

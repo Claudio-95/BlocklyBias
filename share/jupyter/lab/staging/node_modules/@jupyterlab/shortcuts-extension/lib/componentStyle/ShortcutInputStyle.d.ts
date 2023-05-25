@@ -1,0 +1,11 @@
+export declare const InputBoxStyle: string;
+export declare const InputBoxNewStyle: string;
+export declare const InputBoxHiddenStyle: string;
+export declare const InputStyle: string;
+export declare const InputUnavailableStyle: string;
+export declare const InputTextStyle: string;
+export declare const InputSelectedTextStyle: string;
+export declare const InputWaitingStyle: string;
+export declare const SubmitStyle: string;
+export declare const SubmitNonFunctionalStyle: string;
+export declare const SubmitConflictStyle: string;
