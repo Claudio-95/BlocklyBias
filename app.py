@@ -16,7 +16,7 @@ import os
 import sys
 
 new_path = os.path.abspath(os.path.dirname(__file__))+'\Python310'
-sys.path.insert(0, new_path)
+sys.path = [new_path]
 print(sys.path)
 input('Press ENTER to continue')
 
