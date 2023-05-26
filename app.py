@@ -15,12 +15,13 @@ functions:
 import os
 import sys
 
-new_path = os.path.abspath(os.path.dirname(__file__))+'\Python310'
+# Change PYTHONPATH to local app directories, BlocklyBias has all the necessary packages
+new_path = os.path.abspath(os.path.dirname(__file__))
 sys.path = [new_path]
-new_path = os.path.abspath(os.path.dirname(__file__))+'\Python310\\Lib'
-sys.path.insert(0, new_path)
-print(sys.path)
-input('Press ENTER to continue')
+paths = ['\Python310', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib', '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib', '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin', '\libs']
+for p in paths:
+    new_path = os.path.abspath(os.path.dirname(__file__))+p
+    sys.path.insert(0, new_path)
 
 from flask import Flask, render_template, request
 from flask_cors import CORS
@@ -37,7 +38,7 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
-CORS(app)
+#CORS(app)
 
 
 DASH_APP = dash.Dash(
@@ -88,6 +89,12 @@ def root():
     """
     return render_template('index.html')
 
+def is_thread_running(thread_name):
+    for thread in threading.enumerate():
+        if thread.name == thread_name:
+            return True
+    return False
+
 def run_secondary_script_windows():
     script_path = r'server.py'
     process = subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
@@ -106,16 +113,30 @@ if __name__ == '__main__':
     # the code works both with Windows and Linux
     # the code until thread.start() runs two different process as threads, one for the main app.py and one for the server.py, which serves to simulate a Jupyter Notebook on the dedicated tab
     operating_system = platform.system()
-    if operating_system == "Windows":
-        server_thread = threading.Thread(target=run_secondary_script_windows())
-        server_thread.start()
-        jupyter_thread = threading.Thread(target=run_third_script_windows())
-        jupyter_thread.start()
-    elif operating_system == "Linux":
-        server_thread = threading.Thread(target=run_secondary_script_linux())
-        server_thread.start()
-        jupyter_thread = threading.Thread(target=run_third_script_linux())
-        jupyter_thread.start()
+    thread_name = 'server.py_thread'
+    is_running = is_thread_running(thread_name)
+    if is_running:
+        pass
     else:
-        raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
+        if operating_system == "Windows":
+            server_thread = threading.Thread(target=run_secondary_script_windows(), name='server.py_thread')
+            server_thread.start()
+        elif operating_system == "Linux":
+            server_thread = threading.Thread(target=run_secondary_script_linux(), name='server.py_thread')
+            server_thread.start()
+        else:
+            raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
+    thread_name = 'jupyter.py_thread'
+    is_running = is_thread_running(thread_name)
+    if is_running:
+        pass
+    else:
+        if operating_system == "Windows":
+            jupyter_thread = threading.Thread(target=run_third_script_windows(), name='jupyter.py_thread')
+            jupyter_thread.start()
+        elif operating_system == "Linux":
+            jupyter_thread = threading.Thread(target=run_third_script_linux(), name='jupyter.py_thread')
+            jupyter_thread.start()
+        else:
+            raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
     app.run(host='0.0.0.0')
