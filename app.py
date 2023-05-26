@@ -89,11 +89,6 @@ def root():
     """
     return render_template('index.html')
 
-def is_thread_running(thread_name):
-    for thread in threading.enumerate():
-        if thread.name == thread_name:
-            return True
-    return False
 
 def run_secondary_script_windows():
     script_path = r'server.py'
@@ -113,30 +108,16 @@ if __name__ == '__main__':
     # the code works both with Windows and Linux
     # the code until thread.start() runs two different process as threads, one for the main app.py and one for the server.py, which serves to simulate a Jupyter Notebook on the dedicated tab
     operating_system = platform.system()
-    thread_name = 'server.py_thread'
-    is_running = is_thread_running(thread_name)
-    if is_running:
-        pass
+    if operating_system == "Windows":
+        server_thread = threading.Thread(target=run_secondary_script_windows(), name='server.py_thread')
+        server_thread.start()
+        jupyter_thread = threading.Thread(target=run_third_script_windows(), name='jupyter.py_thread')
+        jupyter_thread.start()
+    elif operating_system == "Linux":
+        server_thread = threading.Thread(target=run_secondary_script_linux(), name='server.py_thread')
+        server_thread.start()
+        jupyter_thread = threading.Thread(target=run_third_script_linux(), name='jupyter.py_thread')
+        jupyter_thread.start()
     else:
-        if operating_system == "Windows":
-            server_thread = threading.Thread(target=run_secondary_script_windows(), name='server.py_thread')
-            server_thread.start()
-        elif operating_system == "Linux":
-            server_thread = threading.Thread(target=run_secondary_script_linux(), name='server.py_thread')
-            server_thread.start()
-        else:
-            raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
-    thread_name = 'jupyter.py_thread'
-    is_running = is_thread_running(thread_name)
-    if is_running:
-        pass
-    else:
-        if operating_system == "Windows":
-            jupyter_thread = threading.Thread(target=run_third_script_windows(), name='jupyter.py_thread')
-            jupyter_thread.start()
-        elif operating_system == "Linux":
-            jupyter_thread = threading.Thread(target=run_third_script_linux(), name='jupyter.py_thread')
-            jupyter_thread.start()
-        else:
-            raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
+        raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
     app.run(host='0.0.0.0')
