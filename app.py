@@ -18,13 +18,13 @@ import sys
 # Change PYTHONPATH to local app directories, BlocklyBias has all the necessary packages
 new_path = os.path.abspath(os.path.dirname(__file__))
 sys.path = [new_path]
-paths = ['\Python310', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib', '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib', '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin', '\libs']
+paths = ['\Python310', '\Python310\Scripts', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib', '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib', '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin', '\libs']
 for p in paths:
     new_path = os.path.abspath(os.path.dirname(__file__))+p
     sys.path.insert(0, new_path)
 
-from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
+from flask import Flask, render_template, request #jsonify
+#from flask_cors import CORS
 import dash_bootstrap_components as dbc
 import dash
 from dash import html
@@ -33,7 +33,6 @@ import threading
 import subprocess
 import platform
 import nbformat
-import io
 
 
 app = Flask(__name__)
