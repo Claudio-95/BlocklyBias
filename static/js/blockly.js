@@ -288,6 +288,47 @@ blockly.tabClick = function (clickedName) {
   } else {
     blockly.workspace.setVisible(false);
     codeMenuTab.className = 'taboff';
+    const currentURL = window.location.href;
+    const python_script_URL = currentURL + '/static/py/write_notebook';
+    //const currentPath = window.location.pathname;
+    //const currentDirectory = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+    //console.log(currentURL, currentPath, currentDirectory);
+    //const notebook_script = document.createElement('script');
+    //notebook_script.type = 'module';
+    //notebook_script.src = window.location.href+'/static/js/test.js'
+    //document.body.appendChild(notebook_script);
+    // Getting parent node
+    var parentElement = document.getElementById("content_python");
+    // Check if the parent node has only one child
+    if (parentElement.childNodes.length === 1 && parentElement.childNodes[0].nodeType === 3) {
+      // Get the child node
+      var python_code = parentElement.textContent;
+      console.log(python_code);
+    } else {
+      var python_code = ""
+    }
+    fetch(python_script_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ python_code })
+    })
+        .then(response => {
+          if (response.ok) {
+            return response.text();
+          } else {
+            throw new Error('Error requesting notebook script.');
+          }
+
+        })
+        .then(data => {
+          console.log(data); // Server answer
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
   }
   // Sync the menu's value with the clicked tab value if needed.
   var codeMenu = document.getElementById('code_menu');

@@ -23,7 +23,7 @@ for p in paths:
     new_path = os.path.abspath(os.path.dirname(__file__))+p
     sys.path.insert(0, new_path)
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import dash_bootstrap_components as dbc
 import dash
@@ -32,6 +32,8 @@ from libs.dataframe_visualizer import dataframe_visualizer
 import threading
 import subprocess
 import platform
+import nbformat
+import io
 
 
 app = Flask(__name__)
@@ -88,6 +90,85 @@ def root():
         _render: rendered html
     """
     return render_template('index.html')
+
+
+@app.route('/static/py/write_notebook', methods=['POST'])
+def save_notebook():
+    data = request.get_json()
+    python_code = data.get('python_code')
+
+    # Creazione di un nuovo notebook
+    notebook = nbformat.v4.new_notebook()
+
+    # Divisione del codice Python in linee
+    lines = python_code.split('\n')
+    notebook = nbformat.v4.new_notebook()
+
+    import_block = []
+    print_block = []
+    code_block = []
+
+    for line in lines:
+        if line.startswith(('import', 'from')):
+            # Se ci sono import o from nel blocco corrente, aggiungili come una singola cella di import
+            if print_block:
+                print_cell = nbformat.v4.new_code_cell('\n'.join(print_block))
+                notebook.cells.append(print_cell)
+                print_block = []
+
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+
+            import_block.append(line)
+        elif line.startswith('print'):
+            # Se la linea inizia con "print", aggiungila al blocco di print
+            if import_block:
+                import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
+                notebook.cells.append(import_cell)
+                import_block = []
+
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+
+            print_block.append(line)
+        else:
+            # Se la linea non inizia con "import", "from" o "print", aggiungila al blocco di codice
+            if import_block:
+                import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
+                notebook.cells.append(import_cell)
+                import_block = []
+
+            if print_block:
+                print_cell = nbformat.v4.new_code_cell('\n'.join(print_block))
+                notebook.cells.append(print_cell)
+                print_block = []
+
+            code_block.append(line)
+
+    # Aggiungi l'ultimo blocco di codice o print o import come una cella
+    if import_block:
+        import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
+        notebook.cells.append(import_cell)
+
+    if print_block:
+        print_cell = nbformat.v4.new_code_cell('\n'.join(print_block))
+        notebook.cells.append(print_cell)
+
+    if code_block:
+        code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+        notebook.cells.append(code_cell)
+
+    file_path = os.path.abspath(os.path.dirname(__file__)) + '\static\py\\notebooks\my_notebook.ipynb'
+    # Salvataggio del notebook su file
+    with open(file_path, 'w', encoding='utf-8') as file:
+        nbformat.write(notebook, file)
+
+    return 'Notebook processed and saved.'
+
 
 
 def run_secondary_script_windows():
