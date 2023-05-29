@@ -14,16 +14,37 @@ functions:
 
 import os
 import sys
+import platform
 
-# Change PYTHONPATH to local app directories, BlocklyBias has all the necessary packages
-new_path = os.path.abspath(os.path.dirname(__file__))
-sys.path = [new_path]
-paths = ['\Python310', '\Python310\Scripts', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib', '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib', '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin', '\libs']
-for p in paths:
-    new_path = os.path.abspath(os.path.dirname(__file__))+p
-    sys.path.insert(0, new_path)
+# Change PYTHONPATH to local app directories, according to OS; BlocklyBias has all the necessary packages
+operating_system = platform.system()
+if operating_system == "Windows":
+    new_path = os.path.abspath(os.path.dirname(__file__))
+    sys.path = [new_path]
+    paths = ['\Python310', '\Python310\Scripts', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib',
+            '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib',
+            '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin',
+            '\libs']
+    for p in paths:
+        new_path = os.path.abspath(os.path.dirname(__file__)) + p
+        sys.path.insert(0, new_path)
+    print(sys.path)
+elif operating_system == "Linux":
+    new_path = os.path.abspath(os.path.dirname(__file__))
+    sys.path = [new_path]
+    paths = ['/Python310', '/Python310/Scripts', '/Python310/python310.zip', '/Python310/DLLs', '/Python310/Lib',
+            '/Python310/Lib/site-packages', '/Python310/Lib/site-packages/win32', '/Python310/Lib/site-packages/win32/lib',
+            '/Python310/Lib/site-packages/pythonwin', '/Python310/win32', '/Python310/win32lib', '/Python310/pythonwin',
+            '/libs']
+    for p in paths:
+        new_path = os.path.abspath(os.path.dirname(__file__)) + p
+        sys.path.insert(0, new_path)
+    print(sys.path)
+else:
+    raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
 
-from flask import Flask, render_template, request #jsonify
+
+from flask import Flask, render_template, request
 #from flask_cors import CORS
 import dash_bootstrap_components as dbc
 import dash
@@ -31,7 +52,6 @@ from dash import html
 from libs.dataframe_visualizer import dataframe_visualizer
 import threading
 import subprocess
-import platform
 import nbformat
 
 
@@ -96,10 +116,10 @@ def save_notebook():
     data = request.get_json()
     python_code = data.get('python_code')
 
-    # Creazione di un nuovo notebook
+    # Creating new notebook
     notebook = nbformat.v4.new_notebook()
 
-    # Divisione del codice Python in linee
+    # Dividing Python code in lines
     lines = python_code.split('\n')
     notebook = nbformat.v4.new_notebook()
 
@@ -109,7 +129,7 @@ def save_notebook():
 
     for line in lines:
         if line.startswith(('import', 'from')):
-            # Se ci sono import o from nel blocco corrente, aggiungili come una singola cella di import
+            # If there are some import or from in current block add them as single import cell
             if print_block:
                 print_cell = nbformat.v4.new_code_cell('\n'.join(print_block))
                 notebook.cells.append(print_cell)
@@ -122,7 +142,7 @@ def save_notebook():
 
             import_block.append(line)
         elif line.startswith('print'):
-            # Se la linea inizia con "print", aggiungila al blocco di print
+            # If the line starts with "print" add it to print block
             if import_block:
                 import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
                 notebook.cells.append(import_cell)
@@ -135,7 +155,7 @@ def save_notebook():
 
             print_block.append(line)
         else:
-            # Se la linea non inizia con "import", "from" o "print", aggiungila al blocco di codice
+            # If the line doesn't start with import, from or print add it to code block
             if import_block:
                 import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
                 notebook.cells.append(import_cell)
@@ -148,7 +168,7 @@ def save_notebook():
 
             code_block.append(line)
 
-    # Aggiungi l'ultimo blocco di codice o print o import come una cella
+    # Add the last code block or print line or import block as single cell
     if import_block:
         import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
         notebook.cells.append(import_cell)
@@ -162,7 +182,7 @@ def save_notebook():
         notebook.cells.append(code_cell)
 
     file_path = os.path.abspath(os.path.dirname(__file__)) + '\static\py\\notebooks\my_notebook.ipynb'
-    # Salvataggio del notebook su file
+    # Save notebook on .ipynb file
     with open(file_path, 'w', encoding='utf-8') as file:
         nbformat.write(notebook, file)
 
