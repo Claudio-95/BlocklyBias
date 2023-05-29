@@ -11,38 +11,42 @@ functions:
     * dataframe_return - list of Dataframes from dataframe_visualizer
     * root - returns the index page
 """
-
+# Change PYTHONPATH to local app directories, according to OS; BlocklyBias has all the necessary packages
 import os
 import sys
 import platform
 
-# Change PYTHONPATH to local app directories, according to OS; BlocklyBias has all the necessary packages
-operating_system = platform.system()
-if operating_system == "Windows":
-    new_path = os.path.abspath(os.path.dirname(__file__))
-    sys.path = [new_path]
-    paths = ['\Python310', '\Python310\Scripts', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib',
-            '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib',
-            '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin',
-            '\libs']
-    for p in paths:
-        new_path = os.path.abspath(os.path.dirname(__file__)) + p
-        sys.path.insert(0, new_path)
-    print(sys.path)
-elif operating_system == "Linux":
-    new_path = os.path.abspath(os.path.dirname(__file__))
-    sys.path = [new_path]
-    paths = ['/Python310', '/Python310/Scripts', '/Python310/lib-dynload', '/Python310/python310.zip', '/Python310/DLLs', '/Python310/Lib',
-            '/Python310/Lib/site-packages', '/Python310/Lib/site-packages/win32', '/Python310/Lib/site-packages/win32/lib',
-            '/Python310/Lib/site-packages/pythonwin', '/Python310/win32', '/Python310/win32lib', '/Python310/pythonwin',
-            '/libs']
-    for p in paths:
-        new_path = os.path.abspath(os.path.dirname(__file__)) + p
-        sys.path.insert(0, new_path)
-    print(sys.path)
-else:
-    raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
 
+operating_system = platform.system()
+#if operating_system == "Windows":
+    #activate_this = os.path.abspath(os.path.dirname(__file__)) + '\\blocklybias_venv'
+    #print(activate_this)
+    #new_path = os.path.abspath(os.path.dirname(__file__))
+    #sys.path = [new_path]
+    #paths = ['\Python310', '\Python310\Scripts', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib',
+    #        '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib',
+    #        '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin',
+    #        '\libs']
+    #for p in paths:
+    #    new_path = os.path.abspath(os.path.dirname(__file__)) + p
+    #    sys.path.insert(0, new_path)
+    #print(sys.path)
+#elif operating_system == "Linux":
+    #activate_this = os.path.abspath(os.path.dirname(__file__)) + '/blocklybias_venv'
+    #new_path = os.path.abspath(os.path.dirname(__file__))
+    #sys.path = [new_path]
+    #paths = ['/Python310', '/Python310/Scripts', '/Python310/lib-dynload', '/Python310/python310.zip', '/Python310/DLLs', '/Python310/Lib',
+    #        '/Python310/Lib/site-packages', '/Python310/Lib/site-packages/win32', '/Python310/Lib/site-packages/win32/lib',
+    #        '/Python310/Lib/site-packages/pythonwin', '/Python310/win32', '/Python310/win32lib', '/Python310/pythonwin',
+    #        '/libs']
+    #for p in paths:
+    #    new_path = os.path.abspath(os.path.dirname(__file__)) + p
+    #    sys.path.insert(0, new_path)
+    #print(sys.path)
+#else:
+    #raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
+
+#exec(open(activate_this).read(), {'__file__': activate_this})
 
 from flask import Flask, render_template, request
 #from flask_cors import CORS

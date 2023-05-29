@@ -10,7 +10,7 @@ def start_LabApp():
     new_directory = os.path.abspath(os.path.dirname(__file__))+'\share\jupyter\lab'
     config = {}
     if os.path.exists(config_file_path):
-        with open(config_file_path) as f:
+        with open(config_file_path) as f: # doesn't work on Linux
             config = json.load(f)
     config['ServerApp'] = {'root_dir': new_directory}
     with open(config_file_path, 'w') as f:
