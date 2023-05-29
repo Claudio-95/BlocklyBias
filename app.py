@@ -32,7 +32,7 @@ if operating_system == "Windows":
 elif operating_system == "Linux":
     new_path = os.path.abspath(os.path.dirname(__file__))
     sys.path = [new_path]
-    paths = ['/Python310', '/Python310/Scripts', '/Python310/python310.zip', '/Python310/DLLs', '/Python310/Lib',
+    paths = ['/Python310', '/Python310/Scripts', '/Python310/lib-dynload', '/Python310/python310.zip', '/Python310/DLLs', '/Python310/Lib',
             '/Python310/Lib/site-packages', '/Python310/Lib/site-packages/win32', '/Python310/Lib/site-packages/win32/lib',
             '/Python310/Lib/site-packages/pythonwin', '/Python310/win32', '/Python310/win32lib', '/Python310/pythonwin',
             '/libs']
