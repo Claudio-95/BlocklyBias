@@ -2130,7 +2130,8 @@ var VarData = {};
         var biased_cols = Blockly.Python.valueToCode(a, "BIASEDCOLS", Blockly.Python.ORDER_NONE);
         var privileged_cols = Blockly.Python.valueToCode(a, "PRIVILEGEDCOLS", Blockly.Python.ORDER_NONE);
         var pos_outcome = Blockly.Python.valueToCode(a, "POSOUTCOME", Blockly.Python.ORDER_NONE);
-        var b = Blockly.Python.provideFunction_("check_intersectional_bias", [
+        var codeString = ""; // code outside function definitions here
+        var codeString2 = Blockly.Python.provideFunction_("check_intersectional_bias", [ // the final return is codeString + codeString2, so the latter must be a simple string, without Blockly.Python.provideFunction_
             "def " + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + "(dataset, dropnan, biased_cols, privileged_cols, pos_outcome):",
             "\n",
             "    # Setting display off warning and info messages",
@@ -2696,7 +2697,7 @@ var VarData = {};
             "        print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 1] + \":\\n\")",
             "        print(df_values_of_outcome_2nd_neg)"
     ]);
-        return [b + "(" + df + ", " + dropnan + ", " + biased_cols + ", " + privileged_cols + ", " + pos_outcome + ")", Blockly.Python.ORDER_FUNCTION_CALL];
+        return [codeString2 + "(" + df + ", " + dropnan + ", " + biased_cols + ", " + privileged_cols + ", " + pos_outcome + ")", Blockly.Python.ORDER_FUNCTION_CALL];
     }
 
     Blockly.Python.anchoringBias = function (a) {
