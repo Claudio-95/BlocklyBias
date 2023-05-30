@@ -69,7 +69,7 @@ In the end you can run the application by using:
 ```shell
 python app.py
 ```
-The browser address will be displayed on the main terminal window.
+The browser address will be displayed on the main terminal window, you can click on it holding CTRL.
 
 ## Linux
 
