@@ -356,9 +356,19 @@ blockly.renderContent = function () {
   } else if (content.id == 'content_python') {
     VarData = {};
     blockly.attemptCodeGeneration(Blockly.Python);
+  } else if (content.id == 'content_notebook') {
+    VarData = {};
+    blockly.attemptCodeGenerationNotebook(Blockly.Python);
   }
-  if (typeof PR == 'object') {
-    PR.prettyPrint();
+};
+
+/**
+ * Attempt to generate the code.
+ * @param generator {!Blockly.Generator} The generator to use.
+ */
+blockly.attemptCodeGenerationNotebook = function (generator) {
+  if (blockly.checkAllGeneratorFunctionsDefined(generator)) {
+    generator.workspaceToCode(blockly.workspace);
   }
 };
 
