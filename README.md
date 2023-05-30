@@ -41,7 +41,7 @@ Open the terminal (cmd.exe) without launching it as admin, then change directory
 ```shell
 cd .\root\to\your\repo
 ```
-so, for example, if you have copied the repo in Documents/GitHub you must use:
+so, for example, if you have copied the repo in Documents\GitHub you must use:
 
 ```shell
 cd .\Documents\GitHub\BlocklyBias
@@ -125,11 +125,11 @@ If you find any error or need support please raise a issue. If you think you can
 
 Feel free to adapt it criticize it and support it the way you like!!
 
-Read : [CONTRIBUTING.md](./CONTRIBUTING.md) -->
+Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 
 # License
-[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) -->
 
 
 # Thanks to
