@@ -48,7 +48,7 @@ so, for example, if you have copied the repo in Documents\GitHub you must use:
 ```shell
 cd .\Documents\GitHub\BlocklyBias
 ```
-after this you must activate the virtual environment using:
+after this, you must activate the virtual environment using:
 
 ```shell
 blocklybias_venv\Scripts\Activate
@@ -86,7 +86,7 @@ After installing it, open the terminal without admin permissions, then change di
 ```shell
 cd ./root/to/your/repo
 ```
-after this you must activate the virtual environment using:
+after this, you must activate the virtual environment using:
 
 ```shell
 source blocklybias_venv_linux\bin\activate
