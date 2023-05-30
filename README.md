@@ -150,7 +150,7 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 
 # Thanks to
-chekoduadarsh base project of [@chekoduadarsh/BlocklyML](https://github.com/chekoduadarsh/BlocklyML)
+chekoduadarsh base project [@chekoduadarsh/BlocklyML](https://github.com/chekoduadarsh/BlocklyML)
 
 
 <!-- [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/chekoduadarsh) -->
