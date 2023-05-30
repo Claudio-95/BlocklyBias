@@ -4,38 +4,55 @@
 
 BlocklyBias is a visual programming tool that requires no programming knowledge from the user. It generates Python code from the blocks used with the interface and its purpose is to analyze biases in datasets. It is based on BlocklyML, in fact this repository is a forked project from [BlocklyML](https://github.com/chekoduadarsh/BlocklyML).
 
-For a sample run go to sampleLayouts folder upload and try it out.
+<!-- Read the ![UserGuide.md](https://github.com/chekoduadarsh/BlocklyML/blob/main/UserGuide.md) for further info. -->
 
 
-<!-- Read the ![UserGuide.md](https://github.com/chekoduadarsh/BlocklyML/blob/main/UserGuide.md) for further info.
+<!-- In the Example given below we will train a random forest for Iris Dataset.
 
 
-In the Example given below we will train a random forest for Iris Dataset.
+https://user-images.githubusercontent.com/26855534/174473003-488f675f-50a0-48f1-9ef0-81987bd21166.mp4 -->
 
+# Index of contents
 
-https://user-images.githubusercontent.com/26855534/174473003-488f675f-50a0-48f1-9ef0-81987bd21166.mp4
-
-# Table of contents
-
-- [Table of contents](#table-of-contents)
-- [Installing as BlocklyML App](#installing-as-blocklyml-app)
-    - [Flask Method](#flask-method)
-- [UI Features](#ui-features)
+- [Installing as BlocklyBias App](#installing-as-blocklybias-app)
+    -  [Windows](#windows)
+    -  [Linux](#linux)
+   <!-- - [Flask Method](#flask-method) -->
+<!--- [UI Features](#ui-features)
   - [Shortcuts](#shortcuts)
   - [Dataframe Viewer](#dataframe-viewer)
   - [Download Code](#download-code)
 - [Contribute](#contribute)
     - [This repo welcomes any kind of contributions :pray:](#this-repo-welcomes-any-kind-of-contributions-pray)
-- [License](#license)
+- [License](#license) -->
 - [Thanks to](#thanks-to)
-# Installing as BlocklyML App
-First clone this repo
+# Installing as BlocklyBias App
+First clone this repo:
 
 ```shell
-git clone https://github.com/chekoduadarsh/BlocklyML
+git clone https://github.com/Claudio-95/BlocklyBias
 ```
-After cloning the repo you can either follow the Flask Method
+Then you must activate the virtual environment (venv). 
 
+## Windows
+
+Open the terminal (cmd.exe) without launching it as admin, then change directory using:
+
+```shell
+cd .\root\to\your\repo
+```
+so, for example, if you have copied the repo in Documents/GitHub you must use:
+
+```shell
+cd .\Documents\GitHub\BlocklyBias
+```
+after this you must activate the virtual environment using:
+
+```shell
+blocklybias_venv\Scripts\Activate
+```
+
+<!-- After cloning the repo you can either follow the Flask Method
 
 ### Flask Method
 
@@ -43,14 +60,37 @@ Install the requirements from `requirements.txt` with the following command
 
 ```shell
 pip install -r requirements.txt 
-```
+``` -->
 
-then you can run the application by
+In the end you can run the application by using:
+
 ```shell
 python app.py
 ```
+The browser address will be displayed on the main terminal window.
 
-Simple as that :man_shrugging:
+## Linux
+
+Open the terminal without admin permissions, then change directory:
+
+```shell
+cd ./root/to/your/repo
+```
+after this you must activate the virtual environment using:
+
+```shell
+source blocklybias_venv_linux\bin\activate
+```
+
+In the end you can run the application by using:
+
+```shell
+python app.py
+```
+The browser address will be displayed on the main terminal window.
+
+
+<!-- Simple as that :man_shrugging:
 
 # UI Features
 
@@ -85,7 +125,7 @@ If you find any error or need support please raise a issue. If you think you can
 
 Feel free to adapt it criticize it and support it the way you like!!
 
-Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
+Read : [CONTRIBUTING.md](./CONTRIBUTING.md) -->
 
 
 # License
@@ -93,8 +133,7 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 
 # Thanks to
-[![Stargazers repo roster for @chekoduadarsh/BlocklyML](https://reporoster.com/stars/chekoduadarsh/BlocklyML)](https://github.com/chekoduadarsh/BlocklyML/stargazers)
-[![Forkers repo roster for @chekoduadarsh/BlocklyML](https://reporoster.com/forks/chekoduadarsh/BlocklyML)](https://github.com/chekoduadarsh/BlocklyML/network/members)
+chekoduadarsh base project of @chekoduadarsh/BlocklyML(https://reporoster.com/stars/chekoduadarsh/BlocklyML)](https://github.com/chekoduadarsh/BlocklyML)
 
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/chekoduadarsh) -->
+<!-- [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/chekoduadarsh) -->
