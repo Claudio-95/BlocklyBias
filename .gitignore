@@ -5,3 +5,6 @@ workspace.xml
 tasks.xml
 .idea
 .vercel
+blocklybias_venv_linux/bin/python
+blocklybias_venv_linux/bin/python3
+blocklybias_venv_linux/bin/python3.10
