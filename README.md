@@ -32,11 +32,13 @@ First clone this repo:
 ```shell
 git clone https://github.com/Claudio-95/BlocklyBias
 ```
-Then you must activate the virtual environment (venv). 
+Then you must have installed Python 3.10.4, because for now the app has been tested only on this version.
 
 ## Windows
 
-Open the terminal (cmd.exe) without launching it as admin, then change directory using:
+You can download Python from the [official website](https://www.python.org/downloads/release/python-3104/).
+
+After installing it, open the terminal (cmd.exe) without launching it as admin, then change directory using:
 
 ```shell
 cd .\root\to\your\repo
@@ -71,7 +73,15 @@ The browser address will be displayed on the main terminal window.
 
 ## Linux
 
-Open the terminal without admin permissions, then change directory:
+If you are on Ubuntu you can install Python by using:
+
+```shell
+sudo apt-get install python3.10.4
+```
+
+not sure how to install Python on Fedora and other distributions.
+
+After installing it, open the terminal without admin permissions, then change directory:
 
 ```shell
 cd ./root/to/your/repo
@@ -87,6 +97,13 @@ In the end you can run the application by using:
 ```shell
 python app.py
 ```
+
+or
+
+```shell
+python3 app.py
+```
+
 The browser address will be displayed on the main terminal window.
 
 
