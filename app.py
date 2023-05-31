@@ -130,12 +130,32 @@ def save_notebook():
     import_block = []
     print_block = []
     code_block = []
-    previous_line = None
 
-    for line_index, line_content in enumerate(lines):
-        words = line_content.strip().split()
-        line = line_content.strip()
-        if line.startswith('import') or line.startswith('from'):
+    previous_line_single_word = False
+
+    for line in lines:
+        stripped_line = line.strip()
+
+        if stripped_line and len(stripped_line.split()) == 1:
+            if previous_line_single_word:
+                if import_block:
+                    import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
+                    notebook.cells.append(import_cell)
+                    import_block = []
+
+                if print_block:
+                    print_cell = nbformat.v4.new_code_cell('\n'.join(print_block))
+                    notebook.cells.append(print_cell)
+                    print_block = []
+
+                if code_block:
+                    code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                    notebook.cells.append(code_cell)
+                    code_block = []
+
+            code_block.append(line)
+            previous_line_single_word = True
+        elif line.startswith(('import', 'from')):
             # If there are some import or from in current block add them as single import cell
             if print_block:
                 print_cell = nbformat.v4.new_code_cell('\n'.join(print_block))
@@ -148,7 +168,8 @@ def save_notebook():
                 code_block = []
 
             import_block.append(line)
-        elif len(words) == 1 and lines[index-1].startswith('print'):
+            previous_line_single_word = False
+        elif line.startswith('    print'):
             # If the line starts with "print" add it to print block
             if import_block:
                 import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
@@ -160,7 +181,8 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
 
-            print_block.append(line + line[line_index])
+            print_block.append(line)
+            previous_line_single_word = False
         else:
             # If the line doesn't start with import, from or print add it to code block
             if import_block:
@@ -174,7 +196,8 @@ def save_notebook():
                 print_block = []
 
             code_block.append(line)
-        previous_line = line_content
+            previous_line_single_word = False
+
     # Add the last code block or print line or import block as single cell
     if import_block:
         import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))

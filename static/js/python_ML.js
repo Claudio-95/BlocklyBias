@@ -2625,15 +2625,15 @@ var VarData = {};
             "    df_disparity = get_disparity_df(metrics, debias_params, metrics_list)\n"+
             "    print(\"\\n\" + \"EDF (Empirical Differential Fairness) is the ratio between the ratios between positive and total cases of two groups, calculated on the data, without the contribution of a classifier.\")\n"+
             "    print(\"EDF of the \" + biased_cols[0] + \" and \" + biased_cols[1] + \" intersection on the privileged variable \" + privileged_cols + \":\\n\")\n"+
-            "    print(max_df_edf)\n"+
+            "    max_df_edf\n"+
             "    print(\"\\n\")\n"+
             "    print(\"Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\\nThe set of all these metrics are defined here as Fairness metrics.\")\n"+
             "    print(\"Fairness metrics for \" + df_metrics.iloc[0][\"class\"] + \" and \" + df_metrics.iloc[1][\"class\"] + \":\\n\")\n"+
-            "    print(df_metrics)\n"+
+            "    df_metrics\n"+
             "    print(\"\\n\")\n"+
             "    print(\"Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.\")\n"+
             "    print(\"Disparity on fairness metrics for \" + df_metrics.iloc[0][\"class\"] + \" and \" + df_metrics.iloc[1][\"class\"] + \":\\n\")\n"+
-            "    print(df_disparity)\n"+
+            "    df_disparity\n"+
             "\n\n"+
             "    # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature\n"+
             "    features = cat_vars\n"+
@@ -2647,13 +2647,13 @@ var VarData = {};
             "    df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_intersection = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)\n"+
             "    print(\"Ratio between positive and negative outcomes:\\n\")\n"+
-            "    print(df_ratio)\n"+
+            "    df_ratio\n"+
             "    print(\"\\n\")\n"+
             "    print(\"Modal values:\\n\")\n"+
-            "    print(df_mode)\n"+
+            "    df_mode\n"+
             "    print(\"\\n\")\n"+
             "    print(\"Intersection:\\n\")\n"+
-            "    print(df_intersection)\n"+
+            "    df_intersection\n"+
             "    print(\"\\n\")\n"+
             "    samples = []\n"+
             "    for i in range(50):\n"+
@@ -2661,30 +2661,30 @@ var VarData = {};
             "        samples.append(sample)\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    print(\"Positive income mode:\\n\")\n"+
-            "    print(results_pos)\n"+
+            "    results_pos\n"+
             "    print(\"Negative income mode:\\n\")\n"+
-            "    print(results_neg)\n"+
+            "    results_neg\n"+
             "    print(\"\\n\")\n"+
             "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features)\n"+
             "    print(\"Below is a list that provides the values most frequently associated with\"+ max_df_edf.iloc[0, 0] + \", and it's useful to observe any differences in modal values between the privileged and the unprivileged group:\\n\")\n"+
-            "    print(df_values_of_1st)\n"+
+            "    df_values_of_1st\n"+
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features)\n"+
             "    print(\"Below is a list that provides the values most frequently associated with\"+ max_df_edf.iloc[0, 1] + \", and it's useful to observe any differences in modal values between the privileged and the unprivileged group:\\n\")\n"+
-            "    print(df_values_of_2nd)\n"+
+            "    df_values_of_2nd\n"+
             "    print(\"\\n\")\n"+
             "    df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
             "    print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 0] + \":\\n\")\n"+
-            "    print(df_values_of_outcome_1st)\n"+
+            "    df_values_of_outcome_1st\n"+
             "    df_values_of_outcome_2nd = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
             "    print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 1] + \":\\n\")\n"+
-            "    print(df_values_of_outcome_2nd)\n"+
+            "    df_values_of_outcome_2nd\n"+
             "    print(\"\\n\")\n"+
             "    df_values_of_outcome_1st_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
             "    print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 0] + \":\\n\")\n"+
-            "    print(df_values_of_outcome_1st_neg)\n"+
+            "    df_values_of_outcome_1st_neg\n"+
             "    df_values_of_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
             "    print(\"Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it's useful to observe the differences between the modal values of the privileged and non-privileged individuals for \" + max_df_edf.iloc[0, 1] + \":\\n\")\n"+
-            "    print(df_values_of_outcome_2nd_neg)";
+            "    df_values_of_outcome_2nd_neg";
         return codeString + codeString2;
     }
 
