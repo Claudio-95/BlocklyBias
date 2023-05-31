@@ -130,9 +130,12 @@ def save_notebook():
     import_block = []
     print_block = []
     code_block = []
+    previous_line = None
 
-    for line in lines:
-        if line.startswith(('import', 'from')):
+    for line_index, line_content in enumerate(lines):
+        words = line_content.strip().split()
+        line = line_content.strip()
+        if line.startswith('import') or line.startswith('from'):
             # If there are some import or from in current block add them as single import cell
             if print_block:
                 print_cell = nbformat.v4.new_code_cell('\n'.join(print_block))
@@ -145,7 +148,7 @@ def save_notebook():
                 code_block = []
 
             import_block.append(line)
-        elif line.startswith('print'):
+        elif len(words) == 1 and lines[index-1].startswith('print'):
             # If the line starts with "print" add it to print block
             if import_block:
                 import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
@@ -157,7 +160,7 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
 
-            print_block.append(line)
+            print_block.append(line + line[line_index])
         else:
             # If the line doesn't start with import, from or print add it to code block
             if import_block:
@@ -171,7 +174,7 @@ def save_notebook():
                 print_block = []
 
             code_block.append(line)
-
+        previous_line = line_content
     # Add the last code block or print line or import block as single cell
     if import_block:
         import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
