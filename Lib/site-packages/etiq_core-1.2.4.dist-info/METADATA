@@ -1,0 +1,60 @@
+Metadata-Version: 2.1
+Name: etiq-core
+Version: 1.2.4
+Summary: ETIQ.ai debiasing library
+Home-page: https://etiq.ai/
+Author: ETIQ AI
+Author-email: devops@etiq.ai
+License: UNKNOWN
+Keywords: ai,bias,etiq,fairness
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Environment :: MacOS X
+Classifier: Environment :: Win32 (MS Windows)
+Classifier: Framework :: IPython
+Classifier: Framework :: Jupyter
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: Other/Proprietary License
+Classifier: Natural Language :: English
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Scientific/Engineering
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: platformdirs
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: sqlalchemy (>=1.4)
+Requires-Dist: scikit-learn
+Requires-Dist: xgboost
+Requires-Dist: requests
+Requires-Dist: factory-boy
+Requires-Dist: dataclasses ; python_version == "3.6"
+
+
+# ETQ AI
+
+The ETIQ Engine helps teams who build machine learning models find and
+mitigate negative biases at the earliest possible stage, before time and money is wasted training
+a model on biased data. ETIQ helps companies avoid reputational threats, meet regulatory
+requirements such as GDPR or discrimination laws and, more generally, build services appropriate
+for a variety of groups in their consumer base.
+
+
+## Getting Started
+
+To get started with this package, view our quickstart guide at https://docs.etiq.ai/
+
+
+## Licence
+
+This library is distributed under the Creative Commons "Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)":
+
+https://creativecommons.org/licenses/by-nd/4.0/
+
+

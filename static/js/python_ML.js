@@ -2344,7 +2344,7 @@ var VarData = {};
             "        for ind in df.index:\n"+
             "            ft = ind\n"+
             "            if ft not in results_pos: results_pos[ft] = {}\n"+
-            "            val = df.at[ind, 'mode_pos']"+ //nel df di get_mode_ratio_df si ferma alla riga 'gender_race' nella colonna 'mode_pos', alla cella con valore 'Male_White' perché la vede come pandas.Series
+            "            val = df.at[ind, 'mode_pos']\n"+
             "            if val not in results_pos[ft]: results_pos[ft][val] = 0\n"+
             "            results_pos[ft][val] += 1\n"+
             "            if ft not in results_neg: results_neg[ft] = {}\n"+
@@ -2518,7 +2518,7 @@ var VarData = {};
             "    dataset_to_transform['Age'] = dataset_to_transform['Age'].apply(fix_age) # serve per correggere un errore del parser di python nella funzione di conversione\n"+
             "    # to_datetime: gli anni con valori < 69 venivano attribuiti al 1900 mentre quelli >= 69 al 2000, sfasando l'età di 99 anni\n"+
             "\n";
-        var codeString2 = "dataset = pd.read_csv(" + df + ")\n"+
+        var codeString2 = "dataset = " + df + "\n"+
             "dropnan = " + dropnan + "\n"+
             "biased_cols = " + biased_cols + "\n"+
             "privileged_cols = " + privileged_cols + "\n"+
@@ -2595,7 +2595,7 @@ var VarData = {};
             "edf_result = 0\n"+
             "if not df_edf_list:\n"+
             "    result += \" but compatible columns cannot be found to calculate EDF metric.\"\n"+
-            "    return result\n"+
+            "    raise Exception(result)\n"+
             "else:\n"+
             "    max_edf = 0\n"+
             "    max_df_edf = df_edf_list[0]\n"+
@@ -2607,7 +2607,7 @@ var VarData = {};
             "\n\n"+
             "if edf_result == 0:\n"+
             "    result += \" but compatible columns cannot be found to calculate EDF metric.\"\n"+
-            "    return result\n"+
+            "    raise Exception(result)\n"+
             "else:\n"+
             "\n\n"+
             "    # Calculate intersection, metrics and disparity\n"+
@@ -2644,8 +2644,8 @@ var VarData = {};
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features)\n"+
             "    df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
             "    df_values_of_outcome_2nd = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
-            "    df_values_of_outcome_1st_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
-            "    df_values_of_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
+            "    df_outcome_1st_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
+            "    df_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
             "max_df_edf\n"+
             "df_metrics\n"+
             "df_disparity\n"+
@@ -2658,8 +2658,8 @@ var VarData = {};
             "df_values_of_2nd\n"+
             "df_values_of_outcome_1st\n"+
             "df_values_of_outcome_2nd\n"+
-            "df_values_of_outcome_1st_neg\n"+
-            "df_values_of_outcome_2nd_neg"
+            "df_outcome_1st_neg\n"+
+            "df_outcome_2nd_neg"
         return codeString + codeString2;
     }
 
