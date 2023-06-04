@@ -76,7 +76,7 @@ The browser address will be displayed on the main terminal window, you can click
 If you are on Ubuntu you can install Python by using:
 
 ```shell
-sudo apt-get install python3.10.4
+sudo apt-get install python3.9.13
 ```
 
 not sure how to install Python on Fedora and other distributions.
