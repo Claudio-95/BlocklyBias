@@ -215,10 +215,6 @@ button {
     background-position: -21px 0px;
 }
 
-.run {
-    background-position: -42px 0px;
-}
-
 @media (max-width: 710px) {
     .tab_collapse {
         display: none;
@@ -525,6 +521,8 @@ button {
 .open-button:hover {
     opacity: 1;
 }
+
+/* Notebook tab */
 
 #iframe_notebook {
     border: none;

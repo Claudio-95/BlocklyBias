@@ -68,7 +68,7 @@
                                 onclick="getReport()">DataFrame Visualizer(Sample) </a>
                             <ul class="dropdown-menu DataFrameReportViewer">
                                 <div class="DataFrameReportViewer" id="DataFrameReportViewer">
-                                    <li><a class="dropdown-item" href="#">Report is Loading please Wait</a></li>
+                                    <li><a class="dropdown-item" href="#">Report is loading, please wait...</a></li>
                                 </div>
                             </ul>
                         </li>
@@ -86,7 +86,7 @@
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Download DataFrames</a>
                             <ul class="dropdown-menu DataFrameViewer">
                                 <div class="DataFrameDownload" id="DataFrameDownload">
-                                    <li><a class="dropdown-item" href="#">DataFrame is Loading please Wait</a>
+                                    <li><a class="dropdown-item" href="#">DataFrame is loading, please wait...</a>
                                     </li>
                                 </div>
                             </ul>
@@ -239,10 +239,13 @@
                                 </p>
                             </div> -->
 
-                            <button id="copyButton" class="notext" title="copy python code">
+                            <button id="notebookButton" class="notext" title="Write notebook">
+                                <img src='/static/media/notebook.png' class="icon">
+                            </button>
+                            <button id="copyButton" class="notext" title="Copy python code">
                                 <img src='/static/media/copy.png' class="icon">
                             </button>
-                            <button id="colabButton" class="notext" title="launch google colab">
+                            <button id="colabButton" class="notext" title="Launch google colab">
                                 <img src='/static/media/colab_favicon.ico' class="icon">
                             </button>
                             <button id="trashButton" class="notext" title="...">
@@ -252,9 +255,6 @@
                             <button id="linkButton" class="notext" title="...">
                                 <img src='/static/media/1x1.gif' class="link icon21">
                             </button>
-                            <!-- <button id="runButton" class="notext primary" title="..." disabled>
-                                <img src='/static/media/1x1.gif' class="run icon21">
-                            </button> -->
                         </td>
                     </tr>
                 </table>
@@ -272,7 +272,7 @@
     <pre><code id="content_python" class="language-python content prettyprint lang-py" ></code></pre>
 
     <!-- adding content new part -->
-    <div id="content_notebook" class="content"><!--<iframe src="http://localhost:5000/static/py/notebooks/my_notebook.ipynb" id="iframe_notebook" sandbox> -->
+    <div id="content_notebook" class="content">
         <iframe src="http://localhost:8889/" id="iframe_notebook" target="_self"></iframe>
     </div>
     <!-- end new part -->
@@ -624,23 +624,6 @@
             <block type="dataframe_Map">
                 <field type="dataframe_Map">DataFrame Map</field>
             </block>
-            <block type="skl_train_test_split">
-                <field type="skl_train_test_split">Train Test split</field>
-                <value name="TESTSIZE">
-                    <shadow type="math_number">
-                        <field name="NUM">0.2</field>
-                    </shadow>
-                </value>
-
-            </block>
-
-            <block type="Classification_Report">
-                <field type="Classification_Report">Generate Classification Report</field>
-            </block>
-            <block type="R2_Report">
-                <field type="R2_Report">Generate Regression Report</field>
-            </block>
-
         </category>
 
         <category name=Datasets colour="%{BKY_LOGIC_HUE}">
@@ -654,78 +637,6 @@
             <block type="create_dict">
             </block>
             <block type="dict_append">
-            </block>
-        </category>
-        <sep></sep>
-
-        <category name="Machine Learning (Pycaret)" colour="%{BKY_COLOUR_HUE}">
-            <block type="pycaret_setup">
-                <value name="input_column">
-                    <shadow type="text"></shadow>
-                </value>
-            </block>
-            <block type="pycaret_classifier">
-            </block>
-            <block type="pycaret_regressor">
-            </block>
-            <block type="pycaret_plot_model">
-            </block>
-            <block type="pycaret_automl">
-            </block>
-            <block type="pycaret_blend_model">
-                <value name="input_fold">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="pycaret_ensemble_model">
-                <value name="input_fold">
-                    <shadow type="math_number">
-                        <field name="NUM">5</field>
-                    </shadow>
-                </value>
-            </block>
-            <block type="pycaret_predict">
-            </block>
-            <block type="pycaret_save">
-            </block>
-            <block type="pycaret_load">
-            </block>
-        </category>
-        <sep></sep>
-        <category name="Classification Models (SKLearn)" colour="%{BKY_LOGIC_HUE}">
-
-            <block type="CLR_LogisticRegression">
-                <field type="CLR_LogisticRegression">LogisticRegression</field>
-            </block>
-            <block type="CLR_NaiveBayes">
-                <field type="CLR_NaiveBayes">Naive Bayes</field>
-            </block>
-            <block type="CLR_KNN">
-                <field type="CLR_KNN">K-Nearest Neighbours</field>
-            </block>
-            <block type="CLR_DecisionTree">
-                <field type="CLR_DecisionTree">Decision Tree</field>
-            </block>
-            <block type="CLR_RandomForest">
-                <field type="CLR_RandomForest">Random Forest</field>
-            </block>
-            <block type="CLR_SVM">
-                <field type="CLR_SVM">Support Vector Machine</field>
-            </block>
-            <block type="CLR_XGBoost">
-                <field type="CLR_XGBoost">XGBoost</field>
-            </block>
-
-        </category>
-        <category name="Regression Models (SKLearn)" colour="%{BKY_LOGIC_HUE}">
-
-            <block type="REG_LinearRegression">
-                <field type="REG_LinearRegression">Linear Regression</field>
-            </block>
-            <block type="REG_XGBRegressor">
-                <field type="REG_XGBRegressor">XGBRegressor</field>
             </block>
         </category>
         <sep></sep>

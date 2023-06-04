@@ -288,47 +288,6 @@ blockly.tabClick = function (clickedName) {
   } else {
     blockly.workspace.setVisible(false);
     codeMenuTab.className = 'taboff';
-    const currentURL = window.location.href;
-    const python_script_URL = currentURL + '/static/py/write_notebook';
-    //const currentPath = window.location.pathname;
-    //const currentDirectory = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-    //console.log(currentURL, currentPath, currentDirectory);
-    //const notebook_script = document.createElement('script');
-    //notebook_script.type = 'module';
-    //notebook_script.src = window.location.href+'/static/js/test.js'
-    //document.body.appendChild(notebook_script);
-    // Getting parent node
-    var parentElement = document.getElementById("content_python");
-    // Check if the parent node has only one child
-    if (parentElement.childNodes.length === 1 && parentElement.childNodes[0].nodeType === 3) {
-      // Get the child node
-      var python_code = parentElement.textContent;
-      console.log(python_code);
-    } else {
-      var python_code = ""
-    }
-    fetch(python_script_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ python_code })
-    })
-        .then(response => {
-          if (response.ok) {
-            return response.text();
-          } else {
-            throw new Error('Error requesting notebook script.');
-          }
-
-        })
-        .then(data => {
-          console.log(data); // Server answer
-        })
-        .catch(error => {
-          console.error(error);
-        });
-
   }
   // Sync the menu's value with the clicked tab value if needed.
   var codeMenu = document.getElementById('code_menu');
@@ -356,21 +315,9 @@ blockly.renderContent = function () {
   } else if (content.id == 'content_python') {
     VarData = {};
     blockly.attemptCodeGeneration(Blockly.Python);
-  } else if (content.id == 'content_notebook') {
-    VarData = {};
-    blockly.attemptCodeGenerationNotebook(Blockly.Python);
   }
 };
 
-/**
- * Attempt to generate the code.
- * @param generator {!Blockly.Generator} The generator to use.
- */
-blockly.attemptCodeGenerationNotebook = function (generator) {
-  if (blockly.checkAllGeneratorFunctionsDefined(generator)) {
-    generator.workspaceToCode(blockly.workspace);
-  }
-};
 
 /**
  * Attempt to generate the code and display it in the UI, pretty printed.
@@ -499,7 +446,7 @@ blockly.init = function () {
 
   blockly.bindClick('trashButton',
     function () { blockly.discard(); blockly.renderContent(); });
-  //blockly.bindClick('runButton', blockly.LaunchCode);
+  blockly.bindClick('notebookButton', blockly.notebookCode);
   blockly.bindClick('colabButton', blockly.OpenColab);
   blockly.bindClick('copyButton', blockly.copyCode);
   blockly.bindClick('downlaodButton', blockly.DownloadCode);
@@ -584,7 +531,6 @@ blockly.initLanguage = function () {
   document.getElementById('tab_blocks').textContent = MSG['blocks'];
 
   document.getElementById('linkButton').title = MSG['linkTooltip'];
-  //document.getElementById('runButton').title = "Run frature is currently disabled";
   document.getElementById('trashButton').title = MSG['trashTooltip'];
 };
 
@@ -607,11 +553,6 @@ blockly.runJS = function () {
   } catch (e) {
     console.log(MSG['badCode'].replace('%1', e));
   }
-};
-
-
-blockly.LaunchCode = function () {
-  alert("Run is not yet supported!! Please download .ipynb and use in Google Colab");
 };
 
 blockly.DownloadCode = function () {
@@ -741,6 +682,56 @@ blockly.copyCode = function () {
   copyText.select();
   copyText.setSelectionRange(0, 99999);
   document.execCommand('copy');
+};
+
+/**
+ * Attempt to generate the code.
+ * @param generator {!Blockly.Generator} The generator to use.
+ */
+blockly.attemptCodeGenerationNotebook = function (generator) {
+  if (blockly.checkAllGeneratorFunctionsDefined(generator)) {
+    var code = generator.workspaceToCode(blockly.workspace);
+    var content_python = document.getElementById("content_python");
+    content_python.textContent = code;
+  } else {
+    console.error("Can't generate Python code.");
+  }
+};
+
+blockly.notebookCode = function () {
+  blockly.attemptCodeGenerationNotebook(Blockly.Python);
+  const currentURL = window.location.href;
+  const python_script_URL = currentURL + '/static/py/write_notebook';
+  // Getting parent node
+  var parentElement = document.getElementById("content_python");
+  // Check if the parent node has only one child
+  if (parentElement.childNodes.length === 1 && parentElement.childNodes[0].nodeType === 3) {
+    // Get the child node
+    var python_code = parentElement.textContent;
+  } else {
+    var python_code = ""
+  }
+  fetch(python_script_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ python_code })
+  })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error('Error requesting notebook script.');
+        }
+
+      })
+      .then(data => {
+        console.log(data); // Server answer
+      })
+      .catch(error => {
+        console.error(error);
+      });
 };
 /**
  * Discard all blocks from the workspace.

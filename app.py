@@ -122,7 +122,6 @@ def save_notebook():
 
     # Creating new notebook
     notebook = nbformat.v4.new_notebook()
-    notebook.metadata['trusted'] = True
 
     # Dividing Python code in lines
     lines = python_code.split('\n')
