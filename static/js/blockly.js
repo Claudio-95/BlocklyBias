@@ -446,7 +446,7 @@ blockly.init = function () {
 
   blockly.bindClick('trashButton',
     function () { blockly.discard(); blockly.renderContent(); });
-  blockly.bindClick('notebookButton', blockly.notebookCode);
+  blockly.bindClick('rename_notebook', blockly.notebookCode);
   blockly.bindClick('colabButton', blockly.OpenColab);
   blockly.bindClick('copyButton', blockly.copyCode);
   blockly.bindClick('downlaodButton', blockly.DownloadCode);
@@ -560,7 +560,7 @@ blockly.DownloadCode = function () {
   var xml_text = Blockly.Xml.domToText(xml);
 
   var fileType = "xml"
-  var fileName = "blocklyML.xml"
+  var fileName = "blocklybias.xml"
   var blob = new Blob([xml_text], { type: fileType });
 
   var a = document.createElement('a');
@@ -699,6 +699,11 @@ blockly.attemptCodeGenerationNotebook = function (generator) {
 };
 
 blockly.notebookCode = function () {
+  var notebook_name = document.getElementById("file-name").value;
+  if (notebook_name == "") {
+    notebook_name = "my_notebook";
+  }
+  console.log(notebook_name);
   blockly.attemptCodeGenerationNotebook(Blockly.Python);
   const currentURL = window.location.href;
   const python_script_URL = currentURL + '/static/py/write_notebook';
@@ -716,7 +721,10 @@ blockly.notebookCode = function () {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ python_code })
+    body: JSON.stringify({
+      python_code,
+      notebook_name: notebook_name
+    })
   })
       .then(response => {
         if (response.ok) {
@@ -732,6 +740,7 @@ blockly.notebookCode = function () {
       .catch(error => {
         console.error(error);
       });
+  $('#notebookModal').modal('hide');
 };
 /**
  * Discard all blocks from the workspace.

@@ -119,6 +119,7 @@ def root():
 def save_notebook():
     data = request.get_json()
     python_code = data.get('python_code')
+    notebook_name = request.json['notebook_name']
 
     # Creating new notebook
     notebook = nbformat.v4.new_notebook()
@@ -293,7 +294,7 @@ def save_notebook():
         code_cell.metadata = {'source_hidden': True}
         notebook.cells.append(code_cell)
 
-    file_path = os.path.abspath(os.path.dirname(__file__)) + '\static\py\\notebooks\my_notebook.ipynb'
+    file_path = os.path.abspath(os.path.dirname(__file__)) + '\static\py\\notebooks\\' + notebook_name + '.ipynb'
     # Save notebook on .ipynb file
     with open(file_path, 'w', encoding='utf-8') as file:
         nbformat.write(notebook, file)
@@ -332,4 +333,4 @@ if __name__ == '__main__':
         jupyter_thread.start()
     else:
         raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', use_reloader=False)

@@ -119,6 +119,32 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
 
+    <!-- Modal -->
+    <div class="modal fade" id="notebookModal" tabindex="-1" role="dialog" aria-labelledby="notebookModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notebookModalLabel">Saving notebook .ipynb</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="file-name" class="col-form-label">File name:</label>
+                            <input type="text" class="form-control" id="file-name">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="rename_notebook" data-dismiss="modal">Save notebook</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <table width="100%" height="95%">
         <tr>
             <td colspan=2>
@@ -239,7 +265,8 @@
                                 </p>
                             </div> -->
 
-                            <button id="notebookButton" class="notext" title="Write notebook">
+                            <!-- Button trigger modal -->
+                            <button id="notebookButton" type="button" class="notext" title="Write notebook" data-toggle="modal" data-target="#notebookModal">
                                 <img src='/static/media/notebook.png' class="icon">
                             </button>
                             <button id="copyButton" class="notext" title="Copy python code">
@@ -645,9 +672,11 @@
             <block type="BIAS_Intersectional">
                 <field type="BIAS_Intersectional">Check intersectional bias</field>
             </block>
+            <!--
             <block type="BIAS_Anchoring">
                 <field type="BIAS_Anchoring">Check anchoring bias</field>
             </block>
+            -->
         </category>
         <sep></sep>
 

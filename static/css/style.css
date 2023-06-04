@@ -178,6 +178,9 @@ button {
     margin: 1px 5px;
 }
 
+.navbar-nav .nav-link:hover, .navbar-nav .dropdown-menu:hover {
+    cursor: pointer;
+}
 
 /* Sprited icons. */
 

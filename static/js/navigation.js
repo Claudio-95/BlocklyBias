@@ -301,7 +301,7 @@ function displayHTMLReport(a) {
         data: String(VarData[String(a.title)]),
         type: 'POST',
         success: function (response) {
-            
+
            window.open("/visualizer", "_blank");
         }
     });
@@ -323,7 +323,7 @@ function closeDownloadCode() {
 
 function downloadView() {
     document.getElementById("download-code-popup").style.display = "block";
-}
+};
 
 
 function downloadPyIpynbCode() {
@@ -338,7 +338,7 @@ function downloadPyIpynbCode() {
     }
 
     document.getElementById("download-code-popup").style.display = "none";
-}
+};
 
 
 $(document).keyup(function (e) {

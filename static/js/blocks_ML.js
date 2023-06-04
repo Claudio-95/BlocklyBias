@@ -2782,7 +2782,7 @@
             //previousStatement: null,
             //nextStatement: null,
             message0: "Check intersectional bias",
-            message1: "Input dataset %1",
+            message1: "Input dataframe %1",
             args1: [
                 {
                     type: "input_value",
@@ -2823,6 +2823,7 @@
         }
     ]);
 
+    /*
     Blockly.defineBlocksWithJsonArray([
         {
             type: "BIAS_Anchoring",
@@ -2830,6 +2831,7 @@
             output: "String" // output anchoring
         }
     ]);
+    */
 
     Blockly.Extensions.register("text_indexOf_tooltip", Blockly.Constants.Text.TEXT_INDEXOF_TOOLTIP_EXTENSION);
     Blockly.Extensions.register("text_quotes", Blockly.Constants.Text.TEXT_QUOTES_EXTENSION);

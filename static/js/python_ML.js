@@ -1656,6 +1656,7 @@ var VarData = {};
         return codeString + codeString2;
     }
 
+    /*
     Blockly.Python.anchoringBias = function (a) {
         // copy here Giorgia's library
         var b = Blockly.Python.provideFunction_("do_null", [
@@ -1663,9 +1664,10 @@ var VarData = {};
         ]);
         return b;
     }
+    */
 
     Blockly.Python.BIAS_Intersectional = Blockly.Python.intersectionalBias;
-    Blockly.Python.BIAS_Anchoring = Blockly.Python.anchoringBias;
+    //Blockly.Python.BIAS_Anchoring = Blockly.Python.anchoringBias;
 
     return Blockly.Python;
 
