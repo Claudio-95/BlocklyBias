@@ -32,7 +32,7 @@ First clone this repo:
 ```shell
 git clone https://github.com/Claudio-95/BlocklyBias
 ```
-Then you must have installed Python 3.10.4, because for now the app has been tested only on this version.
+Then you must have installed Python 3.9.x, because for now the app has been tested only on this version.
 
 ## Windows
 
