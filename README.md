@@ -32,7 +32,7 @@ First clone this repo:
 ```shell
 git clone https://github.com/Claudio-95/BlocklyBias
 ```
-Then you must have installed Python 3.10.4, because for now the app has been tested only on this version.
+Then you must have installed Python 3.9.x, because for now the app has been tested only on this version.
 
 ## Windows
 
@@ -76,7 +76,7 @@ The browser address will be displayed on the main terminal window, you can click
 If you are on Ubuntu you can install Python by using:
 
 ```shell
-sudo apt-get install python3.10.4
+sudo apt-get install python3.9.13
 ```
 
 not sure how to install Python on Fedora and other distributions.
