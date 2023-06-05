@@ -86,24 +86,30 @@ sudo apt-get install python3.9
 
 Not sure how to install Python on Fedora and other distributions.
 
-After installing it, open the terminal without admin permissions, then change directory:
+After installing it, open the terminal without admin permissions, then install the 'venv' package:
+
+```shell
+sudo apt-get install python3-venv
+```
+
+then change directory:
 
 ```shell
 cd ./root/to/your/repo
 ```
-after this, you must activate the virtual environment using:
+after this, you must build the virtual environment:
+
+```shell
+python3 -m venv blocklybias_venv_linux
+```
+
+then activate the virtual environment using:
 
 ```shell
 source blocklybias_venv_linux/bin/activate
 ```
 
 In the end you can run the application by using:
-
-```shell
-python app.py
-```
-
-or
 
 ```shell
 python3 app.py
