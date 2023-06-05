@@ -294,7 +294,12 @@ def save_notebook():
         code_cell.metadata = {'source_hidden': True}
         notebook.cells.append(code_cell)
 
-    file_path = os.path.abspath(os.path.dirname(__file__)) + '\static\py\\notebooks\\' + notebook_name + '.ipynb'
+    if operating_system == "Windows":
+    	file_path = os.path.abspath(os.path.dirname(__file__)) + '\static\py\\notebooks\\' + notebook_name + '.ipynb'
+    elif operating_system == "Linux":
+    	file_path = os.path.abspath(os.path.dirname(__file__)) + '/static/py/notebooks/' + notebook_name + '.ipynb'
+    else:
+    	raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
     # Save notebook on .ipynb file
     with open(file_path, 'w', encoding='utf-8') as file:
         nbformat.write(notebook, file)
@@ -311,9 +316,9 @@ def run_third_script_windows():
     process = subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
 
 def run_secondary_script_linux():
-    subprocess.run(['python', 'server.py'])
+    subprocess.run(['gnome-terminal', '--', 'python3', 'server.py'])
 def run_third_script_linux():
-    subprocess.run(['python', 'jupyter.py'])
+    subprocess.run(['gnome-terminal', '--', 'python3', 'jupyter.py'])
 
 if __name__ == '__main__':
     # the code works both with Windows and Linux
