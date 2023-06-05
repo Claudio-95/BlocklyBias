@@ -7,3 +7,4 @@ tasks.xml
 .vercel
 blocklybias_venv_linux/
 jupyter_server_config.json
+static/py/notebooks
