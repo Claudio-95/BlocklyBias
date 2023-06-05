@@ -78,8 +78,13 @@ If you are on Ubuntu you can install Python by using:
 ```shell
 sudo apt-get install python3.9.13
 ```
+or Python 3.9 for Debian:
 
-not sure how to install Python on Fedora and other distributions.
+```shell
+sudo apt-get install python3.9
+```
+
+Not sure how to install Python on Fedora and other distributions.
 
 After installing it, open the terminal without admin permissions, then change directory:
 
