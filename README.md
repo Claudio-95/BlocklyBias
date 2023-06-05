@@ -94,7 +94,7 @@ cd ./root/to/your/repo
 after this, you must activate the virtual environment using:
 
 ```shell
-source blocklybias_venv_linux\bin\activate
+source blocklybias_venv_linux/bin/activate
 ```
 
 In the end you can run the application by using:
