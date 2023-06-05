@@ -25,6 +25,7 @@ https://user-images.githubusercontent.com/26855534/174473003-488f675f-50a0-48f1-
 - [Contribute](#contribute)
     - [This repo welcomes any kind of contributions :pray:](#this-repo-welcomes-any-kind-of-contributions-pray)
 - [License](#license) -->
+- [Tested on](#testedon)
 - [Thanks to](#thanks-to)
 # Installing as BlocklyBias App
 First clone this repo:
@@ -172,6 +173,11 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 # License
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) -->
 
+# Tested on
+
+- Windows 11 version 22H2
+- Debian 11.7.0 64bit
+- Ubuntu 2004 on WSL 
 
 # Thanks to
 chekoduadarsh base project [@chekoduadarsh/BlocklyML](https://github.com/chekoduadarsh/BlocklyML)
