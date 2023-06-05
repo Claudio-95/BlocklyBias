@@ -311,11 +311,9 @@ def run_third_script_windows():
     process = subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
 
 def run_secondary_script_linux():
-    script_path = 'server.py'
-    process = subprocess.run(['gnome-terminal', '--', 'python', script_path], shell=True)
+    subprocess.run(['python', 'server.py'])
 def run_third_script_linux():
-    script_path = 'jupyter.py'
-    process = subprocess.run(['gnome-terminal', '--', 'python', script_path], shell=True)
+    subprocess.run(['python', 'jupyter.py'])
 
 if __name__ == '__main__':
     # the code works both with Windows and Linux
