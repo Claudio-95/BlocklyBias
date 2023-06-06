@@ -25,6 +25,7 @@ https://user-images.githubusercontent.com/26855534/174473003-488f675f-50a0-48f1-
 - [Contribute](#contribute)
     - [This repo welcomes any kind of contributions :pray:](#this-repo-welcomes-any-kind-of-contributions-pray)
 - [License](#license) -->
+- [Tested on](#tested-on)
 - [Thanks to](#thanks-to)
 # Installing as BlocklyBias App
 First clone this repo:
@@ -32,37 +33,36 @@ First clone this repo:
 ```shell
 git clone https://github.com/Claudio-95/BlocklyBias
 ```
-Then you must have installed Python 3.9.x, because for now the app has been tested only on this version.
+Then you must have installed Python 3.9.x, because for now the app has been tested only on this version.  
+Important: make sure you are using the Python 3.9.x interpreter by default, otherwise some packages won't be able to download and the app won't work properly!
 
 ## Windows
 
-You can download Python from the [official website](https://www.python.org/downloads/release/python-3104/).
+You can download Python from the [official website](https://www.python.org/downloads/release/python-3913/).
 
-After installing it, open the terminal (cmd.exe) without launching it as admin, then change directory using:
+After installing it, open the terminal `cmd.exe` without launching it as admin, then change directory using:
 
 ```shell
 cd .\root\to\your\repo
 ```
+
 so, for example, if you have copied the repo in Documents\GitHub you must use:
 
 ```shell
 cd .\Documents\GitHub\BlocklyBias
 ```
+
 after this, you must activate the virtual environment using:
 
 ```shell
 blocklybias_venv\Scripts\Activate
 ```
 
-<!-- After cloning the repo you can either follow the Flask Method
-
-### Flask Method
-
-Install the requirements from `requirements.txt` with the following command
+Then, install the requirements from `requirements.txt` with the following command:
 
 ```shell
-pip install -r requirements.txt 
-``` -->
+pip install -r requirements.txt
+```
 
 In the end you can run the application by using:
 
@@ -73,6 +73,7 @@ The browser address will be displayed on the main terminal window, you can click
 
 ## Linux
 
+Open the terminal.  
 If you are on Ubuntu you can install Python by using:
 
 ```shell
@@ -113,7 +114,14 @@ Now you have to install some packages through pip, you can use this command:
 ```shell
 pip install package_name
 ```
+
 where 'package_name' is the package that you want install. Use this command to install flask, dash_bootstrap_components, pandas, seaborn, nbformat, notebook, jupyterlab, opendatasets, scipy, etiq_core.
+
+After installing these packages you need to run:
+
+```shell
+pip install --force-reinstall 'sqlalchemy<2.0.0'
+```
 
 In the end you can run the application by using:
 
@@ -165,6 +173,11 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 # License
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) -->
 
+# Tested on
+
+- Windows 11 22H2 version
+- Debian 11.7.0 64bit
+- Ubuntu 2004 on WSL 
 
 # Thanks to
 chekoduadarsh base project [@chekoduadarsh/BlocklyML](https://github.com/chekoduadarsh/BlocklyML)
