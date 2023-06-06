@@ -109,18 +109,10 @@ then activate the virtual environment using:
 ```shell
 source blocklybias_venv_linux/bin/activate
 ```
-Now you have to install some packages through pip, you can use this command:
+Then, install the requirements from `requirements_linux.txt` with the following command:
 
 ```shell
-pip install package_name
-```
-
-where 'package_name' is the package that you want install. Use this command to install flask, dash_bootstrap_components, pandas, seaborn, nbformat, notebook, jupyterlab, opendatasets, scipy, etiq_core.
-
-After installing these packages you need to run:
-
-```shell
-pip install --force-reinstall 'sqlalchemy<2.0.0'
+pip install -r requirements_linux.txt
 ```
 
 In the end you can run the application by using:
