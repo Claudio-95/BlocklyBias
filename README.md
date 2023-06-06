@@ -168,6 +168,7 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 # Tested on
 
 - Windows 11 22H2 version
+- Windows 10
 - Debian 11.7.0 64bit
 - Ubuntu 2004 on WSL 
 
