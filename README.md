@@ -34,10 +34,11 @@ First clone this repo:
 git clone https://github.com/Claudio-95/BlocklyBias
 ```
 Then you must have installed Python 3.9.x, because for now the app has been tested only on this version.
+Important: make sure you are using the Python 3.9.x interpreter by default, otherwise some packages won't be able to download and the app won't work properly!
 
 ## Windows
 
-You can download Python from the [official website](https://www.python.org/downloads/release/python-3104/).
+You can download Python from the [official website](https://www.python.org/downloads/release/python-3913/).
 
 After installing it, open the terminal (cmd.exe) without launching it as admin, then change directory using:
 
