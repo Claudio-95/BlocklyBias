@@ -45,26 +45,24 @@ After installing it, open the terminal (cmd.exe) without launching it as admin, 
 ```shell
 cd .\root\to\your\repo
 ```
+
 so, for example, if you have copied the repo in Documents\GitHub you must use:
 
 ```shell
 cd .\Documents\GitHub\BlocklyBias
 ```
+
 after this, you must activate the virtual environment using:
 
 ```shell
 blocklybias_venv\Scripts\Activate
 ```
 
-<!-- After cloning the repo you can either follow the Flask Method
-
-### Flask Method
-
-Install the requirements from `requirements.txt` with the following command
+Then, install the requirements from `requirements.txt` with the following command:
 
 ```shell
-pip install -r requirements.txt 
-``` -->
+pip install -r requirements.txt
+```
 
 In the end you can run the application by using:
 
