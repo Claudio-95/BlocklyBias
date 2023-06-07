@@ -45,6 +45,7 @@ def start_jupyter():
             "Content-Security-Policy": "frame-ancestors 'self' *"
         }
     }
+    jupyter_app.disable_check_xsrf = True
     jupyter_app.use_redirect_file = False # open the notebooks always in the same tab
     jupyter_app.generate_config_file()
     jupyter_app.initialize()  # initialize the Jupyter app
