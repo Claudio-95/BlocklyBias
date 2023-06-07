@@ -1480,13 +1480,6 @@ var VarData = {};
             "            if result[ft][m] > out[m][3]: out[m] = (out[m][0], out[m][1], ft, result[ft][m])\n"+
             "    return out\n"+
             "\n\n"+
-            "def to_num(x):\n"+
-            "    threshold = dataset[privileged_cols].unique().tolist()\n"+
-            "    if (x == threshold[0]):\n"+
-            "        return 1\n"+
-            "    else:\n"+
-            "        return 0\n"+
-            "\n\n"+
             "# Convert \'date of birth\' or similar columns in \'Age\' column\n"+
             "def fix_age(x):\n"+
             "    if x <= 0:\n"+
@@ -1579,7 +1572,8 @@ var VarData = {};
             "        else:\n"+
             "            attribute2_set = np.array(dataset[biased_cols[i]].unique()).tolist()\n"+
             "            new_privileged_cols = privileged_cols + \"_01\"\n"+
-            "            dataset[new_privileged_cols] = dataset[privileged_cols].apply(to_num)   # .apply must be replaced with another method, performance issue\n"+
+            "            threshold = dataset[privileged_cols].unique().tolist()\n"+
+            "            dataset[new_privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int) # for each row check if the value is equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
             "            edf = get_edf_df(dataset, biased_cols[ind], biased_cols[i], attribute1_set, attribute2_set, new_privileged_cols)\n"+
             "            edf_list.append(edf)\n"+
             "            df = pd.DataFrame(read_edf(edf, n = 3))\n"+
