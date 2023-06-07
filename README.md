@@ -101,13 +101,13 @@ cd ./root/to/your/repo
 after this, you must build the virtual environment:
 
 ```shell
-python3 -m venv blocklybias_venv_linux
+python3 -m venv blocklybias_venv
 ```
 
 then activate the virtual environment using:
 
 ```shell
-source blocklybias_venv_linux/bin/activate
+source blocklybias_venv/bin/activate
 ```
 Then, install the requirements from `requirements_linux.txt` with the following command:
 
