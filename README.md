@@ -112,7 +112,7 @@ source blocklybias_venv_linux/bin/activate
 Then, install the requirements from `requirements_linux.txt` with the following command:
 
 ```shell
-pip install -r requirements_linux.txt
+pip3 install -r requirements_linux.txt
 ```
 
 In the end you can run the application by using:
