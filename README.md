@@ -52,6 +52,12 @@ so, for example, if you have copied the repo in Documents\GitHub you must use:
 cd .\Documents\GitHub\BlocklyBias
 ```
 
+After that you have to create the virtual environment, using the command:
+
+```shell
+python -m venv blocklybias_venv
+```
+
 after this, you must activate the virtual environment using:
 
 ```shell
