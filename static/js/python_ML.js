@@ -474,6 +474,13 @@ var VarData = {};
         }
     }
 
+    Blockly.Python['dataframe_print'] = function (a) {
+        var df = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE);
+        var codeString = "df_print = " + df + "\n"+
+            "df_print\n";
+        return codeString;
+    }
+
     Blockly.Python["create_dict"] = function (a) {
 
         var b = 1,

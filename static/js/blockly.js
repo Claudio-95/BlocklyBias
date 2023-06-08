@@ -703,7 +703,6 @@ blockly.notebookCode = function () {
   if (notebook_name == "") {
     notebook_name = "my_notebook";
   }
-  console.log(notebook_name);
   blockly.attemptCodeGenerationNotebook(Blockly.Python);
   const currentURL = window.location.href;
   const python_script_URL = currentURL + '/static/py/write_notebook';

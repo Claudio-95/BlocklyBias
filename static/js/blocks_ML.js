@@ -1066,6 +1066,19 @@
         "helpUrl": "https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"
     }]);
 
+    Blockly.defineBlocksWithJsonArray([{
+        "type": "dataframe_print",
+        "message0": 'Print DataFrame %1',
+        "args0": [
+            {
+                "type": "input_value",
+                "name": "DATAFRAME",
+                "check": "DataFrame"
+            }
+        ],
+        "output": "DataFrame",
+        "tooltip": "Print DataFrame in notebook"
+    }]);
 
     Blockly.defineBlocksWithJsonArray([
         {

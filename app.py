@@ -130,6 +130,7 @@ def save_notebook():
 
     import_block = []
     code_block = []
+    print_df_block = []
     markdown_code = '# Intersectional bias analysis'
     first_cell = nbformat.v4.new_markdown_cell(markdown_code)
     notebook.cells.append(first_cell)
@@ -144,6 +145,21 @@ def save_notebook():
                 code_block = []
 
             import_block.append(line)
+        elif line.startswith(('df_print')) and len(print_df_block) != 1 and len(line.split()) == 1:
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+            if import_block:
+                import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
+                notebook.cells.append(import_cell)
+                import_block = []
+
+            print_df_block.append(line)
+            print(print_df_block)
+            code_cell = nbformat.v4.new_code_cell('\n'.join(print_df_block))
+            notebook.cells.append(code_cell)
+            print_df_block = []
         elif line.startswith('max_df_edf', 0, (len(line))):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
