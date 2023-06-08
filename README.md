@@ -17,6 +17,7 @@ https://user-images.githubusercontent.com/26855534/174473003-488f675f-50a0-48f1-
 - [Installing as BlocklyBias App](#installing-as-blocklybias-app)
     -  [Windows](#windows)
     -  [Linux](#linux)
+- [How to import files into Jupyter Notebook](#how-to-import-files-into-jupyter-notebook)
    <!-- - [Flask Method](#flask-method) -->
 <!--- [UI Features](#ui-features)
   - [Shortcuts](#shortcuts)
@@ -175,6 +176,11 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 # License
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) -->
+
+# How to import files into Jupyter Notebook
+
+To import a file into Jupyter Notebook, either a .csv dataset or a notebook, simply paste the file into the `./BlocklyBias/static/py/notebooks/` directory on Linux or `.\BlocklyBias\static\py\notebooks\` on Windows.  
+`BlocklyBias` is the folder where you installed BlocklyBias.
 
 # Tested on
 
