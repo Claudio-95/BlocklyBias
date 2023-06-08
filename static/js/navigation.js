@@ -310,7 +310,7 @@ function displayHTMLReport(a) {
 };
 
 function closeForm() {
-    document.getElementById("myForm").style.display = "none";
+    //document.getElementById("form_layout").style.display = "none";
 };
 
 function closeToolTip() {
@@ -318,7 +318,7 @@ function closeToolTip() {
 };
 
 function closeDownloadCode() {
-    document.getElementById("download-code-popup").style.display = "none";
+    //document.getElementById("download-code-popup").style.display = "none";
 };
 
 function downloadView() {

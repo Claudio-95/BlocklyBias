@@ -81,7 +81,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
-                        <li><a class="dropdown-item" onclick="downloadView()">Download Code</a></li>
+                        <li><a class="dropdown-item" onclick="downloadView()" data-toggle="modal" data-target="#downloadCodeModal">Download Code</a></li>
                         <li><a class="dropdown-item" onclick="blockly.DownloadCode()">Download layout</a></li>
                         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Download DataFrames</a>
                             <ul class="dropdown-menu DataFrameViewer">
@@ -119,7 +119,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/navigation.js') }}"></script>
 
-    <!-- Modal -->
+    <!-- Notebook modal -->
     <div class="modal fade" id="notebookModal" tabindex="-1" role="dialog" aria-labelledby="notebookModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -172,55 +172,79 @@
                                 <img src='/static/media/download.png' class="icon">
                             </button>
                             <div class="upload-btn-wrapper">
-                                <button id="uplaodButton" onclick="blockly.UploadXml()" class="notext"
-                                    title="Upload saved layout">
+                                <button id="uplaodButton" data-toggle="modal" data-target="#layoutModal" class="notext" title="Upload saved layout" onclick="blockly.UploadXml()">
                                     <img src='/static/media/upload.png' class="icon">
                                 </button>
                             </div>
 
-                            <div class="form-popup" id="myForm">
-                                <form class="form-container" name="urlForm">
-                                    <h1>Upload</h1>
-
-                                    <div class="drop-zone" id="">
-                                        <span class="drop-zone__prompt">Drop file here or click to upload</span>
-                                        <input type="file" name="myFile" class="drop-zone__input">
+                            <!-- Layout modal -->
+                            <div class="modal fade" id="layoutModal" tabindex="-1" role="dialog" aria-labelledby="layoutModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="layoutModalLabel">Upload Blockly layout</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-popup" id="form_layout">
+                                                <form class="form-container" name="urlForm">
+                                                    <div class="form-group">
+                                                        <div class="drop-zone">
+                                                            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+                                                            <input type="file" name="myFile" class="drop-zone__input">
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="form-group">
+                                                        <label for="url" class="col-form-label"><b>Enter layout URL</b></label>
+                                                        <input type="text" placeholder="Enter Url" class="form-control" name="url" required
+                                                               value="https://raw.githubusercontent.com/Claudio-95/BlocklyBias/main/sampleLayouts/bias_detection/blocklybias.xml">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" onclick="blockly.UploadFromUrl()" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <!-- onclick="closeForm()" -->
+                                        </div>
                                     </div>
-                                    </br>
-                                    <hr class="hr1">
-                                    </br>
-                                    <label for="url"><b>Enter Layout Url</b></label>
-                                    <input type="text" placeholder="Enter Url" name="url" required
-                                        value="https://raw.githubusercontent.com/chekoduadarsh/BlocklyML/main/sampleLayouts/machine%20learning/Pycaret/Pycaret_RF_IRIS.xml">
-
-
-                                    <button type="button" onclick="blockly.UploadFromUrl()" class="btn">Upload</button>
-                                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-                                </form>
-                            </div>
-                            <div class="download-code-popup" id="download-code-popup">
-                                <a href="#" class="download-code-close" onclick=closeDownloadCode()></a>
-                                <h2>Download Code 💾</h2>
-
-                                </br>
-                                </br>
-
-                                <div class="download-code-form" id="download-code-form">
-
-                                    <input type="text" id="download-code-fname" name="fname">
-                                    <select id="download-code-extention" name="extention">
-                                        <option value=".py">.py</option>
-                                        <option value=".ipynb">.ipynb</option>
-                                    </select>
-                                    </br>
-                                    </br>
-                                    <div class="download-code-button" id="download-code-button">
-                                        <button type="button" class="btn"
-                                            onclick=downloadPyIpynbCode()>Download</button>
-                                    </div>
-
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="downloadCodeModal" tabindex="-1" role="dialog" aria-labelledby="downloadCodeModalLabel" aria-hidden="true">
+                                <div class="download-code-popup" id="download-code-popup">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="downloadCodeModalLabel">Download Code 💾</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="download-code-form" id="download-code-form">
+                                                        <div class="form-group">
+                                                            <label for="download-code-fname" class="col-form-label">File name:</label>
+                                                            <input type="text" id="download-code-fname" class="form-control" name="fname">
+                                                            <select id="download-code-extention" name="extention">
+                                                                <option value=".py">.py</option>
+                                                                <option value=".ipynb">.ipynb</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" class="download-code-button" id="download-code-button" onclick=downloadPyIpynbCode() data-dismiss="modal">Download</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- <div class="tool-tip-popup" id="tip-popup">
                                 <a href="#" class="tool-tip-close" onclick=closeToolTip()></a>
                                 <h2>Tool Tip 💡</h2>

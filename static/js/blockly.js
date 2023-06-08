@@ -576,18 +576,18 @@ blockly.DownloadCode = function () {
 blockly.UploadXml = function () {
 
 
-  document.getElementById("myForm").style.display = "block";
+  document.getElementById("form_layout").style.display = "block";
 
   $(document).keyup(function (e) {
     if (e.key === "Escape") { // escape key maps to keycode `27`
-      document.getElementById("myForm").style.display = "none";
+      //document.getElementById("form_layout").style.display = "none";
+      document.getElementById("layoutModal").setAttribute("data-dismiss", "modal");
     }
   });
 
 
   document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 
-    console.log(inputElement)
 
     var eventChanger = false;
 
@@ -603,7 +603,8 @@ blockly.UploadXml = function () {
             var xml = Blockly.Xml.textToDom(fr.result);
             Blockly.Xml.domToWorkspace(xml, blockly.workspace);
             fr = new FileReader();
-            document.getElementById("myForm").style.display = "none";
+            //document.getElementById("form_layout").style.display = "none";
+            document.getElementById("layoutModal").setAttribute("data-dismiss", "modal");
           }
 
         }
@@ -641,7 +642,8 @@ blockly.UploadXml = function () {
           fr.onload = function () {
             var xml = Blockly.Xml.textToDom(fr.result);
             Blockly.Xml.domToWorkspace(xml, blockly.workspace);
-            document.getElementById("myForm").style.display = "none";
+            //document.getElementById("form_layout").style.display = "none";
+            document.getElementById("layoutModal").setAttribute("data-dismiss", "modal");
           }
         }
       }
@@ -664,7 +666,8 @@ blockly.UploadFromUrl = function () {
     })
   })
 
-  document.getElementById("myForm").style.display = "none";
+  //document.getElementById("form_layout").style.display = "none";
+  document.getElementById("layoutModal").setAttribute("data-dismiss", "modal");
 };
 
 
@@ -739,7 +742,7 @@ blockly.notebookCode = function () {
       .catch(error => {
         console.error(error);
       });
-  $('#notebookModal').modal('hide');
+  document.getElementById("notebookModal").setAttribute("data-dismiss", "modal");
 };
 /**
  * Discard all blocks from the workspace.

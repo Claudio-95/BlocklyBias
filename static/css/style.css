@@ -261,8 +261,8 @@ button {
     box-sizing: border-box;
 }
 
-
-/* The popup form - hidden by default */
+/*
+The popup form - hidden by default
 
 .form-popup {
     display: none;
@@ -272,10 +272,10 @@ button {
     height: 50%;
     width: 50%;
     z-index: 100000;
-    /* big value for bootstrap3 compatibility */
+    big value for bootstrap3 compatibility
     text-align: left;
     box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0.65);
-    /* dark around it */
+    dark around it
 }
 
 .form-popup h1 {
@@ -294,9 +294,11 @@ button {
     width: 150px;
     text-align: center;
 }
+*/
 
+/*
 
-/* Add styles to the form container */
+Add styles to the form container
 
 .form-container {
     padding: 10px;
@@ -304,7 +306,7 @@ button {
 }
 
 
-/* Full-width input fields */
+Full-width input fields
 
 .form-container input[type=text],
 .form-container input[type=password] {
@@ -316,7 +318,7 @@ button {
 }
 
 
-/* When the inputs get focus, do something */
+When the inputs get focus, do something
 
 .form-container input[type=text]:focus,
 .form-container input[type=password]:focus {
@@ -325,7 +327,7 @@ button {
 }
 
 
-/* Set a style for the submit/login button */
+Set a style for the submit/login button
 
 .form-container .btn {
     background-color: #04AA6D;
@@ -339,19 +341,21 @@ button {
 }
 
 
-/* Add a red background color to the cancel button */
+Add a red background color to the cancel button
 
 .form-container .cancel {
     background-color: red;
 }
 
 
-/* Add some hover effects to buttons */
+Add some hover effects to buttons
 
 .form-container .btn:hover,
 .open-button:hover {
     opacity: 1;
 }
+
+*/
 
 .drop-zone {
     max-width: 100%;
@@ -456,7 +460,7 @@ button {
     width: 30%;
 }
 */
-
+/*
 .download-code-popup{
     display: none;
     position: fixed;
@@ -466,11 +470,11 @@ button {
     left:35%;
     overflow-y: scroll;
     z-index: 100000;
-    /* big value for bootstrap3 compatibility */
+    big value for bootstrap3 compatibility
     text-align: left;
     box-shadow: 0 0 0 1600px rgba(0, 0, 0, 0.65);
-    /* dark around it */
-    background-color: #2f0743; /* For browsers that do not support gradients */
+    dark around it
+    background-color: #2f0743;For browsers that do not support gradients
     background-image: linear-gradient(to right, #41295a, #2f0743);
 }
 
@@ -518,12 +522,14 @@ button {
 
 
 
-/* Add some hover effects to buttons */
+Add some hover effects to buttons
 
 .download-code-popup .btn:hover,
 .open-button:hover {
     opacity: 1;
 }
+
+*/
 
 /* Notebook tab */
 
