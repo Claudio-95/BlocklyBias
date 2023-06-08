@@ -179,7 +179,7 @@ Read : [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 # How to import files into Jupyter Notebook
 
-To import a file into Jupyter Notebook, either a .csv dataset or a notebook, simply paste the file into the `./BlocklyBias/static/py/notebooks/` directory on Linux or `.\BlocklyBias\static\py\notebooks\` on Windows.  
+To import a file into Jupyter Notebook, for example a .csv dataset or a notebook, simply paste the file into the `./BlocklyBias/static/py/notebooks/` directory on Linux or `.\BlocklyBias\static\py\notebooks\` on Windows.  
 `BlocklyBias` is the folder where you installed BlocklyBias.
 
 # Tested on
