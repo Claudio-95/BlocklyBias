@@ -1115,6 +1115,7 @@ var VarData = {};
         Blockly.Python.definitions_.is_string_dtype = "from pandas.api.types import is_string_dtype";
         Blockly.Python.definitions_.pythonwarnings = "import warnings";
         Blockly.Python.definitions_.pythonlogging = "import logging";
+        Blockly.Python.definitions_.markdown = "from IPython.display import Markdown as md";
         var dropnan = 0
         if (a.getFieldValue("SPLIT") == "dropNa") {
             dropnan = 1
@@ -1414,7 +1415,7 @@ var VarData = {};
             "# Removes the feature most closely related to the p_feature among the features in relevant_features\n"+
             "# Returns a pair with the data changed and the index removed\n"+
             "def remove_max_corr(data, relevant_features, p_feature):\n"+
-            "    corr = data.corr().abs()\n"+
+            "    corr = data.corr(numeric_only = True).abs()\n"+
             "    corr.drop([p_feature], axis = 0, inplace = True)\n"+
             "    for i in corr.index:\n"+
             "        if i not in relevant_features:\n"+
@@ -1445,7 +1446,7 @@ var VarData = {};
             "    metrics_in = get_disparity_df(etiq_wrapper_run(data, debias_params, cont_vars, cat_vars, p_feature, metrics), debias_params, metrics_list)\n"+
             "    for m in metrics_list:\n"+
             "        old[m] = metrics_in.loc[m]['disparity']\n"+
-            "    corr = data.corr().abs()\n"+
+            "    corr = data.corr(numeric_only = True).abs()\n"+
             "    corr.drop([p_feature], axis = 0, inplace = True)\n"+
             "    for i in corr.index:\n"+
             "        if i not in relevant_features:\n"+
@@ -1606,26 +1607,28 @@ var VarData = {};
             "\n\n"+
             "    # Calculate intersection, metrics and disparity\n"+
             "    data_copy = get_intersection(dataset, biased_cols[0], biased_cols[1])\n"+
+            "    intersect_var = biased_cols[0] + \"_\" + biased_cols[1]\n"+
             "    cont_vars = []\n"+
             "    for label in dataset.columns:\n"+
-            "        if dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
+            "        if label == intersect_var or label == privileged_cols:\n"+
+            "            pass\n"+
+            "        elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
             "            cont_vars.append(label)\n"+
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
-            "    intersect_var = biased_cols[0] + \"_\" + biased_cols[1]\n"+
             "    privilege_values = dataset[privileged_cols].unique().tolist()\n"+
-            "    debias_params = get_debias_params(intersect_var, max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 1], str(privilege_values[0]), str(privilege_values[1]))\n"+
-            "    metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)\n"+
-            "    df_metrics = get_df_from_metrics(metrics)\n"+
-            "    df_disparity = get_disparity_df(metrics, debias_params, metrics_list)\n"+
-            "\n\n"+
-            "    # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature\n"+
-            "    features = cat_vars\n"+
             "    neg_outcome = \"\"\n"+
             "    for v in privilege_values:\n"+
             "        if str(v) != pos_outcome:\n"+
             "            neg_outcome = str(v)\n"+
             "    if not neg_outcome:\n"+
             "        raise ValueError(\"The value of the negative outcome could not be found. Please check that the privilege variable contains exactly two values.\")\n"+
+            "    debias_params = get_debias_params(intersect_var, max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 1], pos_outcome, neg_outcome)\n"+
+            "    metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)\n"+
+            "    df_metrics = get_df_from_metrics(metrics)\n"+
+            "    df_disparity = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "\n\n"+
+            "    # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature\n"+
+            "    features = cat_vars\n"+
             "    df_ratio = get_ratio_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_intersection = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)\n"+
@@ -1640,20 +1643,44 @@ var VarData = {};
             "    df_values_of_outcome_2nd = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
             "    df_outcome_1st_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
             "    df_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
+            "\n"+
+            "    # Here starts the features removal to verify any improvements in fairness and equity in the groups\n"+
+            "    dataset = " + df + "\n"+
+            "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
+            "    threshold = [pos_outcome, neg_outcome]\n"+
+            "    dataset[privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int)\n"+
+            "    conditions = [\n"+
+            "        dataset[intersect_var] == max_df_edf.iloc[0, 0],\n"+
+            "        dataset[intersect_var] == max_df_edf.iloc[0, 1]\n"+
+            "    ]\n"+
+            "    choices = [1, -1]\n"+
+            "    dataset[intersect_var] = np.select(conditions, choices, default = 0)\n"+
+            "    cont_vars = []\n"+
+            "    for label in dataset.columns:\n"+
+            "        if label == intersect_var or label == privileged_cols:\n"+
+            "            pass\n"+
+            "        elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
+            "            cont_vars.append(label)\n"+
+            "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
+            "    debias_params = get_debias_params(intersect_var, \'1\', \'-1\', \'1\', \'0\')\n"+
+            "    metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_initial)\n"+
+            "    res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_short)\n"+
+            "    df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
             "max_df_edf\n"+
             "df_metrics\n"+
             "df_disparity\n"+
             "df_ratio\n"+
             "df_mode\n"+
             "df_intersection\n"+
-            "results_pos\n"+
-            "results_neg\n"+
-            "df_values_of_1st\n"+
-            "df_values_of_2nd\n"+
-            "df_values_of_outcome_1st\n"+
-            "df_values_of_outcome_2nd\n"+
-            "df_outcome_1st_neg\n"+
-            "df_outcome_2nd_neg"
+            "pd.DataFrame(results_pos)\n"+
+            "pd.DataFrame(results_neg)\n"+
+            "pd.DataFrame(df_values_of_1st,index=[0])\n"+
+            "pd.DataFrame(df_values_of_2nd,index=[0])\n"+
+            "pd.DataFrame(df_values_of_outcome_1st,index=[0])\n"+
+            "pd.DataFrame(df_values_of_outcome_2nd,index=[0])\n"+
+            "pd.DataFrame(df_outcome_1st_neg,index=[0])\n"+
+            "pd.DataFrame(df_outcome_2nd_neg,index=[0])\n"+
+            "df_dis_change_max"
         return codeString + codeString2;
     }
 

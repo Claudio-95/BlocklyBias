@@ -148,7 +148,7 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
 
-            import_block.append(line+"\nfrom IPython.display import Markdown as md\n") # Da sistemare
+            import_block.append(line)
         elif line.startswith(('df_print')) and len(print_df_block) != 1 and len(line.split()) == 1:
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
@@ -199,7 +199,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('df_ratio', 0, (len(line))):
             #markdown_code = f'## Ratio\nRatio between positive and negative outcomes:'
-            markdown_code = 'md(\"## Ratio</h2><br>Ratio between positive and negative outcomes:)'
+            markdown_code = 'md(\"## Ratio</h2><br>Ratio between positive and negative outcomes:\")'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -209,7 +209,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('df_mode', 0, (len(line))):
             #markdown_code = f'## Mode'
-            markdown_code = 'md(\"## Mode)'
+            markdown_code = 'md(\"## Mode\")'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -219,7 +219,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('df_intersection', 0, (len(line))):
             #markdown_code = f'## Intersection'
-            markdown_code = 'md(\"## Intersection)'
+            markdown_code = 'md(\"## Intersection\")'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -247,9 +247,9 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_values_of_1st', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(df_values_of_1st,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern #1\nBelow is a list that provides the values most frequently associated with {{{{ max_df_edf.iloc[0, 0] }}}}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:'
-            markdown_code = 'md(\"## Frequent pattern #1</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(max_df_edf.iloc[0, 0]))'
+            markdown_code = 'md(\"## Frequent pattern {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -257,9 +257,9 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_values_of_2nd', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(df_values_of_2nd,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern #2\nBelow is a list that provides the values most frequently associated with {{{{ max_df_edf.iloc[0, 1] }}}}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:'
-            markdown_code = 'md(\"## Frequent pattern #2</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(max_df_edf.iloc[0, 1]))'
+            markdown_code = 'md(\"## Frequent pattern {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(max_df_edf.iloc[0, 1], max_df_edf.iloc[0, 1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -267,9 +267,9 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_values_of_outcome_1st', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(df_values_of_outcome_1st,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern positive privileged #1\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ max_df_edf.iloc[0, 0] }}}}:'
-            markdown_code = 'md(\"## Frequent pattern positive privileged #1</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 0]))'
+            markdown_code = 'md(\"## Frequent pattern positive privileged {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -277,9 +277,9 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_values_of_outcome_2nd', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(df_values_of_outcome_2nd,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern positive privileged #2\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ max_df_edf.iloc[0, 1] }}}}:'
-            markdown_code = 'md(\"## Frequent pattern positive privileged #2</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 1]))'
+            markdown_code = 'md(\"## Frequent pattern positive privileged {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 1], max_df_edf.iloc[0, 1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -287,9 +287,9 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_outcome_1st_neg', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(df_outcome_1st_neg,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern negative privileged #1\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ max_df_edf.iloc[0, 0] }}}}:'
-            markdown_code = 'md(\"## Frequent pattern negative privileged #1</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 0]))'
+            markdown_code = 'md(\"## Frequent pattern negative privileged {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -297,9 +297,18 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_outcome_2nd_neg', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(df_outcome_2nd_neg,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern negative privileged #2\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ max_df_edf.iloc[0, 1] }}}}:'
-            markdown_code = 'md(\"## Frequent pattern negative privileged #2</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 1]))'
+            markdown_code = 'md(\"## Frequent pattern negative privileged {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(max_df_edf.iloc[0, 1], max_df_edf.iloc[0, 1]))'
+            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
+            notebook.cells.append(markdown_cell)
+            code_block.append(line)
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+        elif line.startswith('df_dis_change_max', 0, (len(line))):
+            markdown_code = 'md(\"## Feature removal and reanalysis</h2><br>Here are the features related to the privilege variable {} whose removal results in the largest change in the value of the privilege variable:\".format(privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
