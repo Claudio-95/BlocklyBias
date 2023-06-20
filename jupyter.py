@@ -20,11 +20,13 @@ def start_LabApp():
     new_directory = os.path.abspath(os.path.dirname(__file__))+'\share\jupyter\lab'
     config = {}
     if os.path.exists(config_file_path):
-        with open(config_file_path) as f: # doesn't work on Linux
+        with open(config_file_path) as f:
             config = json.load(f)
-    config['ServerApp'] = {'root_dir': new_directory}
-    with open(config_file_path, 'w') as f:
-        json.dump(config, f, indent=4)
+            config['ServerApp'] = {'root_dir': new_directory}
+    else:
+        config['ServerApp'] = {'root_dir': new_directory}
+        with open(new_directory, 'w') as f:
+            json.dump(config, f, indent=4)
     print('JupyterLab directory modified successfully.')
     #LabApp.default_url = '/share/jupyter/lab' # set the server directory
     #LabApp.launch_instance()
