@@ -620,6 +620,68 @@ var VarData = {};
         return [d + ".map(" + b + ")", Blockly.Python.ORDER_ATOMIC];
     };
 
+    Blockly.Python['dataframe_change_column_type'] = function (a) {
+        var c = Blockly.Python.ORDER_NONE;
+        var column = Blockly.Python.valueToCode(a, "COLUMN", c) || "";
+        var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
+        var type = Blockly.Python.valueToCode(a, "VALUE", c) || "";
+        var codeString = "def change_column_type(df, label, x):\n" +
+        "    if x == 'object' or x == 'str' or x == 'mixed':\n" +
+        "        df[label] = df[label].apply(str)\n" +
+        "    elif 'int' in x:\n" +
+        "        df[label] = df[label].apply(int)\n" +
+        "    elif 'float' in x:\n" +
+        "        df[label] = df[label].apply(float)\n" +
+        "    elif 'datetime' in x:\n" +
+        "        df[label] = pd.to_datetime(df[label], format='%Y%m%d')\n" +
+        "    else:\n" +
+        "        raise Exception(\"Invalid type entered.\")\n" +
+        "df = " + df + "\n" +
+        "column = " + column + "\n" +
+        "to_change = " + type + "\n" +
+        "if type(column) == list:\n" +
+        "    for label in column:\n" +
+        "        change_column_type(df, label, to_change)\n" +
+        "else:\n" +
+        "    change_column_type(df, label, to_change)"
+        if (column == "" || df == "" || type == "") {
+            return ["", Blockly.Python.ORDER_NONE]
+        }
+        return [codeString, Blockly.Python.ORDER_ATOMIC];
+    };
+
+    Blockly.Python['dataframe_Binarization'] = function (a) {
+        var c = Blockly.Python.ORDER_NONE;
+        var column = Blockly.Python.valueToCode(a, "COLUMN", c) || "";
+        var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
+        var condition = { EQ: "==", NEQ: "!=", LT: "<", LTE: "<=", GT: ">", GTE: ">=" }[a.getFieldValue("OP")];
+        var threshold = Blockly.Python.valueToCode(a, "VALUE", c) || "";
+        var value1 = Blockly.Python.valueToCode(a, "VALUE1", c) || "";
+        var value2 = Blockly.Python.valueToCode(a, "VALUE2", c) || "";
+        var codeString = "df = " + df + "\n" +
+            "threshold = " + threshold + "\n" +
+            "condition = '" + condition + "'\n" +
+            "# Modify the column values based on the user supplied threshold and conditional expression\n" +
+            "mask = None\n" +
+            "if condition == \"<=\":\n" +
+            "    mask = df[" + column + "] <= threshold\n" +
+            "elif condition == \">=\":\n" +
+            "    mask = df[" + column + "] >= threshold\n" +
+            "elif condition == \"<\":\n" +
+            "    mask = df[" + column + "] < threshold\n" +
+            "elif condition == \">\":\n" +
+            "    mask = df[" + column + "] > threshold\n" +
+            "else:\n" +
+            "    print(\"Invalid conditional expression!\")\n" +
+            "if mask is not None:\n" +
+            "    df.loc[mask, " + column + "] = " + value1 + "\n" +
+            "    df.loc[~mask, " + column + "] = " + value2
+        if (column == "" || df == "" || condition == "" || threshold == "") {
+            return ["", Blockly.Python.ORDER_NONE]
+        }
+        return [codeString, Blockly.Python.ORDER_ATOMIC];
+    };
+
     Blockly.Python.math = {};
     Blockly.Python.addReservedWords("math,random,Number");
     Blockly.Python.math_number = function (a) {
@@ -1505,6 +1567,7 @@ var VarData = {};
             "    # to_datetime: gli anni con valori < 69 venivano attribuiti al 1900 mentre quelli >= 69 al 2000, sfasando l'età di 99 anni\n"+
             "\n";
         var codeString2 = "dataset = " + df + "\n"+
+            "df_copy = dataset\n"+
             "dropnan = " + dropnan + "\n"+
             "biased_cols = " + biased_cols + "\n"+
             "privileged_cols = " + privileged_cols + "\n"+
@@ -1527,7 +1590,7 @@ var VarData = {};
             "    for elem in valuesToCheck:\n"+
             "        if elem in dataset.values:\n"+
             "            dataset.replace(elem, np.nan)\n"+
-            "    dataset.dropna()\n"+
+            "    dataset = dataset.dropna()\n"+
             "\n\n"+
             "if \"DOB\" in dataset_labels:\n"+
             "    to_age(dataset, \"DOB\")\n"+
@@ -1645,7 +1708,7 @@ var VarData = {};
             "    df_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
             "\n"+
             "    # Here starts the features removal to verify any improvements in fairness and equity in the groups\n"+
-            "    dataset = " + df + "\n"+
+            "    dataset = df_copy\n"+
             "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
             "    threshold = [pos_outcome, neg_outcome]\n"+
             "    dataset[privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int)\n"+

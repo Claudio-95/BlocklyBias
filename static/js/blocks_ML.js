@@ -1051,6 +1051,100 @@
         }
     ]);
 
+    Blockly.defineBlocksWithJsonArray([
+        {
+            type: "dataframe_change_column_type",
+            message0: "DataFrame Change column type",
+            message1: "Column to Select %1 ",
+            tooltip: "Change the column type (for instance from int to str)",
+            args1: [
+                {
+                    type: "input_value",
+                    name: "COLUMN",
+                    check: ["String", "Array"],
+                    value: 0
+                }],
+            message2: "Input Dataframe %1",
+            args2: [
+                {
+                    type: "input_value",
+                    name: "DATAFRAME",
+                    check: "DataFrame",
+                    value: 0
+                }],
+            message3: "Change to %1",
+            args3: [
+                {
+                    type: "input_value",
+                    name: "VALUE",
+                    check: "String",
+                    value: 0
+                }],
+            output: ["DataFrame", "DataFrameSeries"]
+        }
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            type: "dataframe_Binarization",
+            message0: "DataFrame Binarization",
+            message1: "Column to Select %1 ",
+            tooltip: "Replace all the values of DataFrame Column based on a given threshold",
+
+            args1: [
+                {
+                    type: "input_value",
+                    name: "COLUMN",
+                    check: "String",
+                    value: 0
+                }],
+            message2: "Input Dataframe %1",
+            args2: [
+                {
+                    type: "input_value",
+                    name: "DATAFRAME",
+                    check: "DataFrame",
+                    value: 0
+                }],
+            message3: "Threshold %1 %2",
+            args3: [
+                {   type: "field_dropdown",
+                    name: "OP",
+                    options: [
+                        ["=", "EQ"],
+                        ["\u2260", "NEQ"],
+                        ["\u200f<", "LT"],
+                        ["\u200f\u2264", "LTE"],
+                        ["\u200f>", "GT"],
+                        ["\u200f\u2265", "GTE"],
+                    ]
+                },
+                {
+                    type: "input_value",
+                    name: "VALUE",
+                    check: "Number",
+                    value: 0
+                }],
+            message4: "Value for threshold reached %1",
+            args4: [
+                {
+                    type: "input_value",
+                    name: "VALUE1",
+                    check: "String",
+                    value: 0
+                }],
+            message5: "Value for threshold not reached %1",
+            args5: [
+                {
+                    type: "input_value",
+                    name: "VALUE2",
+                    check: "String",
+                    value: 0
+                }],
+            output: ["DataFrame", "DataFrameSeries"]
+        }
+    ]);
+
     Blockly.defineBlocksWithJsonArray([{
         "type": "pandas_read_csv",
         "message0": 'Read DataFrame %1',
