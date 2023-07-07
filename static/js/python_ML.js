@@ -643,7 +643,7 @@ var VarData = {};
         "    for label in column:\n" +
         "        change_column_type(df, label, to_change)\n" +
         "else:\n" +
-        "    change_column_type(df, label, to_change)"
+        "    change_column_type(df, column, to_change)"
         if (column == "" || df == "" || type == "") {
             return ["", Blockly.Python.ORDER_NONE]
         }
@@ -672,7 +672,7 @@ var VarData = {};
             "elif condition == \">\":\n" +
             "    mask = df[" + column + "] > threshold\n" +
             "else:\n" +
-            "    print(\"Invalid conditional expression!\")\n" +
+            "    raise Exception(\"Invalid conditional expression!\")\n" +
             "if mask is not None:\n" +
             "    df.loc[mask, " + column + "] = " + value1 + "\n" +
             "    df.loc[~mask, " + column + "] = " + value2
@@ -1160,7 +1160,7 @@ var VarData = {};
 
     Blockly.Python.intersectionalBias = function (a) {
         var df = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_NONE);
-        Blockly.Python.definitions_.etiq_core = "from etiq_core import *;";
+        Blockly.Python.definitions_.etiq_core = "from etiq_core import *";
         Blockly.Python.definitions_.opendatasets = "import opendatasets as od";
         Blockly.Python.definitions_.pandas = "import pandas as pd";
         Blockly.Python.definitions_.numpy = "import numpy as np";
@@ -1230,7 +1230,7 @@ var VarData = {};
             "        df = pd.DataFrame(data = d)\n"+
             "        return df\n"+
             "    else:\n"+
-            "        return null\n"+
+            "        return None\n"+
             "\n\n"+
             "# Create a dataframe from metrics_result with one row for metrics in metrics_in, columns are the parameters in biasParams_in and one column\n"+
             "# for the calculated disparity as a ratio\n"+
@@ -1251,7 +1251,7 @@ var VarData = {};
             "        df = df.set_index('metric')\n"+
             "        return df\n"+
             "    else:\n"+
-            "        return null\n"+
+            "        return None\n"+
             "\n\n"+
             "# Intersects feature1 and feature2 in dataset data. Calculate the EDF on the p_feature of the entries in the subgroups obtained by joining\n"+
             "# attributes1 and attributes2. If in_place modifies d (intersects the columns but does NOT delete the originals)\n"+
@@ -1629,8 +1629,6 @@ var VarData = {};
             "    raise Exception(\"The specified privileged column is not in the dataset\")\n"+
             "\n\n"+
             "# Calculate the number of bins\n"+
-            "number_of_rows = len(dataset.index)\n"+
-            "number_of_bins = math.ceil(math.sqrt(number_of_rows))\n"+
             "\n\n"+
             "# Calculate EDF metric\n"+
             "edf_list = []\n"+
