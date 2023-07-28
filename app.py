@@ -227,7 +227,7 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('results_pos', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(results_pos)', 0, (len(line))):
             #markdown_code = f'## Positive privileged mode\nPositive mode for {{{{ privileged_cols }}}}:'
             markdown_code = 'md(\"## Positive privileged mode</h2><br>Positive mode for {}:\".format(privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
@@ -237,7 +237,7 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('results_neg', 0, (len(line))):
+        elif line.startswith('pd.DataFrame(results_neg)', 0, (len(line))):
             #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
             markdown_code = 'md(\"## Negative privileged mode</h2><br>Negative mode for {}:\".format(privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)

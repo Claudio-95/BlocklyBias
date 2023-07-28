@@ -526,9 +526,9 @@ var VarData = {};
         }
         var DataFrame = Blockly.Python.valueToCode(a, "DATAFRAME", Blockly.Python.ORDER_UNARY_SIGN)
         if (a.getInputTargetBlock("COLUMN").outputConnection.getCheck() == "String") {
-            return [DataFrame + ".drop([" + columns + "], axis = 1)", Blockly.Python.ORDER_ATOMIC];
+            return [DataFrame + " = " + DataFrame + ".drop([" + columns + "], axis = 1)", Blockly.Python.ORDER_ATOMIC];
         } if (a.getInputTargetBlock("COLUMN").outputConnection.getCheck() == "Array") {
-            return [DataFrame + ".drop([" + columns + "], axis = 1)", Blockly.Python.ORDER_ATOMIC];
+            return [DataFrame + " = " + DataFrame + ".drop(" + columns + ", axis = 1)", Blockly.Python.ORDER_ATOMIC];
         } if (columns == "" || DataFrame == "") {
             return ["", Blockly.Python.ORDER_ATOMIC];
         }
@@ -617,7 +617,7 @@ var VarData = {};
             return ["", Blockly.Python.ORDER_NONE]
         }
 
-        return [d + ".map(" + b + ")", Blockly.Python.ORDER_ATOMIC];
+        return [d + " = " + d + ".map(" + b + ")", Blockly.Python.ORDER_ATOMIC];
     };
 
     Blockly.Python['dataframe_change_column_type'] = function (a) {
@@ -661,6 +661,7 @@ var VarData = {};
         var codeString = "df = " + df + "\n" +
             "threshold = " + threshold + "\n" +
             "condition = '" + condition + "'\n" +
+            df + "[" + column + "_bin" + "] = \"\"" +
             "# Modify the column values based on the user supplied threshold and conditional expression\n" +
             "mask = None\n" +
             "if condition == \"<=\":\n" +
@@ -674,8 +675,8 @@ var VarData = {};
             "else:\n" +
             "    raise Exception(\"Invalid conditional expression!\")\n" +
             "if mask is not None:\n" +
-            "    df.loc[mask, " + column + "] = " + value1 + "\n" +
-            "    df.loc[~mask, " + column + "] = " + value2
+            "    df.loc[mask, " + column + "_bin" + "] = " + value1 + "\n" +
+            "    df.loc[~mask, " + column + "_bin" + "] = " + value2
         if (column == "" || df == "" || condition == "" || threshold == "") {
             return ["", Blockly.Python.ORDER_NONE]
         }
@@ -1219,7 +1220,10 @@ var VarData = {};
             "# Create a dataframe from metrics_result of two rows (privileged and unprivileged), the columns are the metrics in debias_params (set globally)\n"+
             "def get_df_from_metrics(metrics_result):\n"+
             "    m = deepcopy(metrics_result)\n"+
-            "    item = m.popitem()\n"+
+            "    try:\n"+
+            "        item = m.popitem()\n"+
+            "    except KeyError:\n"+
+            "        raise Exception(\"Error: Dictionary is empty. This can be caused by a small dataset. Try with a bigger dataset.\")\n"+
             "    if(item[1] is not None):\n"+
             "        l = item[1]\n"+
             "        d = {'privilege':['privileged', 'unprivileged']}\n"+
@@ -1549,23 +1553,7 @@ var VarData = {};
             "            if result[ft][m] < out[m][1]: out[m] = (ft, result[ft][m], out[m][2], out[m][3])\n"+
             "            if result[ft][m] > out[m][3]: out[m] = (out[m][0], out[m][1], ft, result[ft][m])\n"+
             "    return out\n"+
-            "\n\n"+
-            "# Convert \'date of birth\' or similar columns in \'Age\' column\n"+
-            "def fix_age(x):\n"+
-            "    if x <= 0:\n"+
-            "        x += 99\n"+
-            "    return x\n"+
-            "\n\n"+
-            "def to_age(dataset_to_transform, label_to_transform):\n"+
-            "    now = datetime.date.today() # calcola data odierna\n"+
-            "    dob_copy = dataset_to_transform[label_to_transform] # copia del campo DOB\n"+
-            "    dob_copy = pd.to_datetime(dob_copy, format = '%m/%d/%y') # imposta il formato corretto\n"+
-            "    date_now = pd.to_datetime(now)\n"+
-            "    dataset_to_transform[\"Age\"] = (date_now - dob_copy)/np.timedelta64(1,'Y') # la differenza tra le due date, espressa in anni\n"+
-            "    dataset_to_transform[\"Age\"] = dataset_to_transform[\"Age\"].astype(int) # imposta il tipo di dato del campo come intero\n"+
-            "    dataset_to_transform['Age'] = dataset_to_transform['Age'].apply(fix_age) # serve per correggere un errore del parser di python nella funzione di conversione\n"+
-            "    # to_datetime: gli anni con valori < 69 venivano attribuiti al 1900 mentre quelli >= 69 al 2000, sfasando l'età di 99 anni\n"+
-            "\n";
+            "\n\n";
         var codeString2 = "dataset = " + df + "\n"+
             "df_copy = dataset\n"+
             "dropnan = " + dropnan + "\n"+
@@ -1584,6 +1572,7 @@ var VarData = {};
             "    raise Exception(\"The privileged variable is not in the dataset.\")\n"+
             "if pos_outcome not in dataset[privileged_cols].unique():\n"+
             "    raise Exception(\"The positive outcome is not a possible value of the privileged variable.\")\n"+
+            "\n"+
             "# Detecting dataset NaN values\n"+
             "if dropnan == 1:\n"+
             "    valuesToCheck = \"?\\/-\"\n"+
@@ -1591,19 +1580,6 @@ var VarData = {};
             "        if elem in dataset.values:\n"+
             "            dataset.replace(elem, np.nan)\n"+
             "    dataset = dataset.dropna()\n"+
-            "\n\n"+
-            "if \"DOB\" in dataset_labels:\n"+
-            "    to_age(dataset, \"DOB\")\n"+
-            "match_birth = []\n"+
-            "for label in dataset_labels:\n"+
-            "    if len(re.findall(\"birth\", label, re.IGNORECASE)) > 0:\n"+
-            "        match_birth.append(label)\n"+
-            "if len(match_birth) > 0:\n"+
-            "    to_age(dataset, match_birth[0])\n"+
-            "\n\n"+
-            "# Clean columns from space characters at the beginning and at the end of the string\n"+
-            "for elem in dataset.columns:\n"+
-            "    elem = elem.strip()\n"+
             "\n\n"+
             "# Check that the input biased columns are in dataset\n"+
             "error_message = 1\n"+
@@ -1619,7 +1595,6 @@ var VarData = {};
             "\n\n"+
             "# Here start the real bias analysis\n"+
             "result = \"\"\n"+
-            "result = \"Sensitive fields were found\"\n"+
             "# Check that the input privileged column is in dataset\n"+
             "error_message = 1\n"+
             "for label in dataset.columns:\n"+
@@ -1628,25 +1603,19 @@ var VarData = {};
             "if error_message == 1:\n"+
             "    raise Exception(\"The specified privileged column is not in the dataset\")\n"+
             "\n\n"+
-            "# Calculate the number of bins\n"+
-            "\n\n"+
             "# Calculate EDF metric\n"+
             "edf_list = []\n"+
             "df_edf_list = []\n"+
-            "for ind in range(len(biased_cols)):\n"+
-            "    attribute1_set = np.array(dataset[biased_cols[ind]].unique()).tolist()\n"+
-            "    for i in range(len(biased_cols)):\n"+
-            "        if (ind == i) or not (is_string_dtype(dataset[biased_cols[ind]].dtype)) or not (is_string_dtype(dataset[biased_cols[i]].dtype)):\n"+
-            "            pass\n"+
-            "        else:\n"+
-            "            attribute2_set = np.array(dataset[biased_cols[i]].unique()).tolist()\n"+
-            "            new_privileged_cols = privileged_cols + \"_01\"\n"+
-            "            threshold = dataset[privileged_cols].unique().tolist()\n"+
-            "            dataset[new_privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int) # for each row check if the value is equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
-            "            edf = get_edf_df(dataset, biased_cols[ind], biased_cols[i], attribute1_set, attribute2_set, new_privileged_cols)\n"+
-            "            edf_list.append(edf)\n"+
-            "            df = pd.DataFrame(read_edf(edf, n = 3))\n"+
-            "            df_edf_list.append(df)\n"+
+            "attribute1_set = np.array(dataset[biased_cols[0]].unique()).tolist()\n"+
+            "attribute2_set = np.array(dataset[biased_cols[1]].unique()).tolist()\n"+
+            "new_privileged_cols = privileged_cols + \"_01\"\n"+
+            "threshold = dataset[privileged_cols].unique().tolist()\n"+
+            "dataset[new_privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int) # for each row check if the value is equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
+            "edf = get_edf_df(dataset, biased_cols[0], biased_cols[1], attribute1_set, attribute2_set, new_privileged_cols)\n"+
+            "edf_list.append(edf)\n"+
+            "df = pd.DataFrame(read_edf(edf, n = 3))\n"+
+            "df_edf_list.append(df)\n"+
+            "\n"+
             "# Setting final message\n"+
             "edf_result = 0\n"+
             "if not df_edf_list:\n"+
