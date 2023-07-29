@@ -658,10 +658,11 @@ var VarData = {};
         var threshold = Blockly.Python.valueToCode(a, "VALUE", c) || "";
         var value1 = Blockly.Python.valueToCode(a, "VALUE1", c) || "";
         var value2 = Blockly.Python.valueToCode(a, "VALUE2", c) || "";
+        var new_column = Blockly.Python.valueToCode(a, "VALUE3", c) || "";
         var codeString = "df = " + df + "\n" +
             "threshold = " + threshold + "\n" +
             "condition = '" + condition + "'\n" +
-            df + "[" + column + "_bin" + "] = \"\"" +
+            df + "[" + new_column + "] = \"\"" +
             "# Modify the column values based on the user supplied threshold and conditional expression\n" +
             "mask = None\n" +
             "if condition == \"<=\":\n" +
@@ -675,8 +676,8 @@ var VarData = {};
             "else:\n" +
             "    raise Exception(\"Invalid conditional expression!\")\n" +
             "if mask is not None:\n" +
-            "    df.loc[mask, " + column + "_bin" + "] = " + value1 + "\n" +
-            "    df.loc[~mask, " + column + "_bin" + "] = " + value2
+            "    df.loc[mask, " + new_column + "] = " + value1 + "\n" +
+            "    df.loc[~mask, " + new_column + "] = " + value2
         if (column == "" || df == "" || condition == "" || threshold == "") {
             return ["", Blockly.Python.ORDER_NONE]
         }
@@ -1201,6 +1202,7 @@ var VarData = {};
             "metrics_sshort = [accuracy, demographic_parity, equal_opportunity]\n"+
             "metrics_list = ['accuracy','demographic_parity','equal_opportunity', 'individual_fairness']\n"+
             "metrics_list_short = ['accuracy','demographic_parity','equal_opportunity']\n"+
+            "\n"+
             "# Wrapper to avoid having to call the clean classifier, dl and pipe, returns metrics\n"+
             "def etiq_wrapper_run(data, debias_params, cont_val, cat_val, p_feature, metrics):\n"+
             "    xgb = DefaultXGBoostClassifier()\n"+

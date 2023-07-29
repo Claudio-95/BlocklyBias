@@ -1089,7 +1089,7 @@
             type: "dataframe_Binarization",
             message0: "DataFrame Binarization",
             message1: "Column to Select %1 ",
-            tooltip: "Replace all the values of DataFrame Column based on a given threshold",
+            tooltip: "Create a new column with all values from the selected DataFrame column based on the given threshold",
 
             args1: [
                 {
@@ -1138,6 +1138,14 @@
                 {
                     type: "input_value",
                     name: "VALUE2",
+                    check: "String",
+                    value: 0
+                }],
+            message6: "New column name %1",
+            args6: [
+                {
+                    type: "input_value",
+                    name: "VALUE3",
                     check: "String",
                     value: 0
                 }],
@@ -2884,7 +2892,7 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "BIAS_Intersectional",
-            tooltip: "\"Check intersectional bias\" has to read a dataframe as input and produce a final result which is graphs and an explanatory message. The privileged column can be seen as a target variable for classification, it is the column against which bias needs to be analyzed. ",
+            tooltip: "Read a dataframe as input and produce a final result which is graphs and an explanatory message. The privileged column can be seen as a target variable for classification, it is the column against which bias needs to be analyzed",
             //setHelpUrl: "",
             //previousStatement: null,
             //nextStatement: null,
