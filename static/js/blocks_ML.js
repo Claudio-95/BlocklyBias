@@ -1056,7 +1056,7 @@
             type: "dataframe_change_column_type",
             message0: "DataFrame Change column type",
             message1: "Column to Select %1 ",
-            tooltip: "Change the column type (for instance from int to str)",
+            tooltip: "Change the column type. Possible types are: object, str, mixed, int, float, datetime",
             args1: [
                 {
                     type: "input_value",

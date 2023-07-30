@@ -129,7 +129,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body text-left">
                     <form>
                         <div class="form-group">
                             <label for="file-name" class="col-form-label">File name:</label>
@@ -180,7 +180,7 @@
                             <!-- Layout modal -->
                             <div class="modal fade" id="layoutModal" tabindex="-1" role="dialog" aria-labelledby="layoutModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
+                                    <div class="modal-content text-left">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="layoutModalLabel">Upload Blockly layout</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -216,7 +216,7 @@
                             <div class="modal fade" id="downloadCodeModal" tabindex="-1" role="dialog" aria-labelledby="downloadCodeModalLabel" aria-hidden="true">
                                 <div class="download-code-popup" id="download-code-popup">
                                     <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
+                                        <div class="modal-content text-left">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="downloadCodeModalLabel">Download Code 💾</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -289,6 +289,25 @@
                                 </p>
                             </div> -->
 
+                            <!-- Discard blocks modal -->
+                            <div class="modal fade" id="discardBlocksModal" tabindex="-1" role="dialog" aria-labelledby="discardBlocksModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="discardBlocksModalLabel">Confirm deletion</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-left"></div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" id="abort-discard" data-dismiss="modal">No</button>
+                                            <button type="button" class="btn btn-primary" id="discard-blocks" data-dismiss="modal">Yes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- Button trigger modal -->
                             <button id="notebookButton" type="button" class="notext" title="Write notebook" data-toggle="modal" data-target="#notebookModal">
                                 <img src='/static/media/notebook.png' class="icon">
@@ -299,7 +318,7 @@
                             <button id="colabButton" class="notext" title="Launch google colab">
                                 <img src='/static/media/colab_favicon.ico' class="icon">
                             </button>
-                            <button id="trashButton" class="notext" title="...">
+                            <button id="trashButton" class="notext" title="Discard all blocks" data-toggle="modal" data-target="#discardBlocksModal" onclick="CountBlocks()">
                                 <img src='/static/media/1x1.gif' class="trash icon21">
                             </button>
 

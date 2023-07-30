@@ -444,7 +444,7 @@ blockly.init = function () {
 
   blockly.tabClick(blockly.selected);
 
-  blockly.bindClick('trashButton',
+  blockly.bindClick('discard-blocks',
     function () { blockly.discard(); blockly.renderContent(); });
   blockly.bindClick('rename_notebook', blockly.notebookCode);
   blockly.bindClick('colabButton', blockly.OpenColab);
@@ -748,13 +748,9 @@ blockly.notebookCode = function () {
  * Discard all blocks from the workspace.
  */
 blockly.discard = function () {
-  var count = blockly.workspace.getAllBlocks(false).length;
-  if (count < 2 ||
-    window.confirm(Blockly.Msg['DELETE_ALL_BLOCKS'].replace('%1', count))) {
-    blockly.workspace.clear();
-    if (window.location.hash) {
-      window.location.hash = '';
-    }
+  blockly.workspace.clear();
+  if (window.location.hash) {
+    window.location.hash = '';
   }
 };
 

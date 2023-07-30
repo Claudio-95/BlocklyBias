@@ -347,3 +347,22 @@ $(document).keyup(function (e) {
         document.getElementById("download-code-popup").style.display = "none";
     }
 });
+
+function CountBlocks () {
+    var count = blockly.workspace.getAllBlocks(false).length;
+    if (count == 1) {
+        document.getElementById('discardBlocksModal').querySelector('.modal-body').innerHTML = 'Delete the block?';
+        document.getElementById("abort-discard").style.display = "inline-block";
+        document.getElementById("discard-blocks").style.display = "inline-block";
+    }
+    else if (count > 2) {
+        document.getElementById('discardBlocksModal').querySelector('.modal-body').innerHTML = 'Delete all ' + count + ' blocks?';
+        document.getElementById("abort-discard").style.display = "inline-block";
+        document.getElementById("discard-blocks").style.display = "inline-block";
+    }
+    else {
+        document.getElementById('discardBlocksModal').querySelector('.modal-body').innerHTML = 'There are no blocks to clear';
+        document.getElementById("abort-discard").style.display = "none";
+        document.getElementById("discard-blocks").style.display = "none";
+    }
+}

@@ -1222,10 +1222,7 @@ var VarData = {};
             "# Create a dataframe from metrics_result of two rows (privileged and unprivileged), the columns are the metrics in debias_params (set globally)\n"+
             "def get_df_from_metrics(metrics_result):\n"+
             "    m = deepcopy(metrics_result)\n"+
-            "    try:\n"+
-            "        item = m.popitem()\n"+
-            "    except KeyError:\n"+
-            "        raise Exception(\"Error: Dictionary is empty. This can be caused by a small dataset. Try with a bigger dataset.\")\n"+
+            "    item = m.popitem()\n"+
             "    if(item[1] is not None):\n"+
             "        l = item[1]\n"+
             "        d = {'privilege':['privileged', 'unprivileged']}\n"+
@@ -1613,7 +1610,10 @@ var VarData = {};
             "new_privileged_cols = privileged_cols + \"_01\"\n"+
             "threshold = dataset[privileged_cols].unique().tolist()\n"+
             "dataset[new_privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int) # for each row check if the value is equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
-            "edf = get_edf_df(dataset, biased_cols[0], biased_cols[1], attribute1_set, attribute2_set, new_privileged_cols)\n"+
+            "try:\n"+
+            "    edf = get_edf_df(dataset, biased_cols[0], biased_cols[1], attribute1_set, attribute2_set, new_privileged_cols)\n"+
+            "except TypeError:\n"+
+            "    raise Exception(\"The two biased columns must be of the same type \'string\'\")\n"+
             "edf_list.append(edf)\n"+
             "df = pd.DataFrame(read_edf(edf, n = 3))\n"+
             "df_edf_list.append(df)\n"+
@@ -1621,7 +1621,7 @@ var VarData = {};
             "# Setting final message\n"+
             "edf_result = 0\n"+
             "if not df_edf_list:\n"+
-            "    result += \" but compatible columns cannot be found to calculate EDF metric.\"\n"+
+            "    result += \" but compatible columns cannot be found to calculate EDF metric\"\n"+
             "    raise Exception(result)\n"+
             "else:\n"+
             "    max_edf = 0\n"+
@@ -1633,7 +1633,7 @@ var VarData = {};
             "    edf_result = 1\n"+
             "\n\n"+
             "if edf_result == 0:\n"+
-            "    result += \" but compatible columns cannot be found to calculate EDF metric.\"\n"+
+            "    result += \" but compatible columns cannot be found to calculate EDF metric\"\n"+
             "    raise Exception(result)\n"+
             "else:\n"+
             "\n\n"+
@@ -1655,9 +1655,14 @@ var VarData = {};
             "    if not neg_outcome:\n"+
             "        raise ValueError(\"The value of the negative outcome could not be found. Please check that the privilege variable contains exactly two values.\")\n"+
             "    debias_params = get_debias_params(intersect_var, max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 1], pos_outcome, neg_outcome)\n"+
-            "    metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)\n"+
-            "    df_metrics = get_df_from_metrics(metrics)\n"+
-            "    df_disparity = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "    try:\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)\n"+
+            "        df_metrics = get_df_from_metrics(metrics)\n"+
+            "        df_disparity = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "    except KeyError: # for little datasets\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
+            "        df_metrics = get_df_from_metrics(metrics)\n"+
+            "        df_disparity = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
             "\n\n"+
             "    # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature\n"+
             "    features = cat_vars\n"+
@@ -1665,9 +1670,14 @@ var VarData = {};
             "    df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_intersection = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)\n"+
             "    samples = []\n"+
-            "    for i in range(50):\n"+
-            "        sample = dataset.sample(n = 1000, ignore_index = True)\n"+
-            "        samples.append(sample)\n"+
+            "    try:\n"+
+            "        for i in range(50):\n"+
+            "            sample = dataset.sample(n = 1000, ignore_index = True)\n"+
+            "            samples.append(sample)\n"+
+            "    except ValueError: # for little datasets\n"+
+            "        for i in range(50):\n"+
+            "            sample = dataset.sample(n = 100, ignore_index = True)\n"+
+            "            samples.append(sample)\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features)\n"+
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features)\n"+
@@ -1696,8 +1706,12 @@ var VarData = {};
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
             "    debias_params = get_debias_params(intersect_var, \'1\', \'-1\', \'1\', \'0\')\n"+
             "    metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_initial)\n"+
-            "    res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_short)\n"+
-            "    df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
+            "    try:\n"+
+            "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_short)\n"+
+            "        df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
+            "    except KeyError: # for little datasets\n"+
+            "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_sshort)\n"+
+            "        df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
             "max_df_edf\n"+
             "df_metrics\n"+
             "df_disparity\n"+
