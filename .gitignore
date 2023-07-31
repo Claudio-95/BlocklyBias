@@ -9,3 +9,4 @@ blocklybias_venv_linux/
 jupyter_server_config.json
 static/py/notebooks
 blocklybias_venv/
+static/js/blockly.backup.js

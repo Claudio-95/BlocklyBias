@@ -573,6 +573,9 @@ blockly.DownloadCode = function () {
   document.body.removeChild(a);
   setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
 };
+
+blockly.isUploadXmlRunning = false;
+
 blockly.UploadXml = function () {
 
 
@@ -588,69 +591,81 @@ blockly.UploadXml = function () {
 
   document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
 
+    if (!blockly.isUploadXmlRunning) {
+      console.log('aperta queryselector foreach');
 
-    var eventChanger = false;
-
-    inputElement.addEventListener("change", (e) => {
-      if(!eventChanger){  //hot fix
+      inputElement.addEventListener("input", (e) => {
+        e.stopPropagation();
+        console.log('dentro eventlistener change');
         if (inputElement.files.length) {
+          console.log('dentro input files length change');
           const input = e.target
           var file = input.files[0]
           var fr = new FileReader();
 
           fr.readAsText(file)
           fr.onload = function () {
+            console.log('dentro load document change');
             var xml = Blockly.Xml.textToDom(fr.result);
             Blockly.Xml.domToWorkspace(xml, blockly.workspace);
             fr = new FileReader();
-            //document.getElementById("form_layout").style.display = "none";
             document.getElementById("layoutModal").setAttribute("data-dismiss", "modal");
           }
 
+          }
+      });
+      const dropZoneElement = inputElement.closest(".drop-zone");
+      dropZoneElement.addEventListener("click", (e) => {
+        e.stopPropagation();
+        console.log('dentro eventlistener click');
+        console.log(e);
+        inputElement.click();
+
+      });
+      dropZoneElement.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        console.log('dentro eventlistener dragover');
+        dropZoneElement.classList.add("drop-zone--over");
+      });
+
+      ["dragleave"].forEach((type) => {
+        console.log('dentro foreach dragleave dragend');
+        dropZoneElement.addEventListener(type, (e) => {
+          console.log('dentro eventlistener dragleave dragend');
+          dropZoneElement.classList.remove("drop-zone--over");
+        });
+      });
+
+      dropZoneElement.addEventListener("drop", (e) => {
+        console.log('dentro eventlistener drop');
+        e.preventDefault();
+        var files = e.dataTransfer.files;
+        if (e.dataTransfer.files.length) {
+          console.log('dentro files length drop');
+          //var files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
+          inputElement.files = files;
+          var file = files[0]
+          if (typeof file !== "undefined") {
+            console.log('dentro not undefined drop');
+            var fr = new FileReader();
+
+            fr.readAsText(file)
+
+            fr.onload = function () {
+              console.log('dentro load document drop');
+              var xml = Blockly.Xml.textToDom(fr.result);
+              Blockly.Xml.domToWorkspace(xml, blockly.workspace);
+              //document.getElementById("form_layout").style.display = "none";
+              document.getElementById("layoutModal").setAttribute("data-dismiss", "modal");
+            }
+          }
         }
-      eventChanger = true
-    }
-    });
-    const dropZoneElement = inputElement.closest(".drop-zone");
-    dropZoneElement.addEventListener("click", (e) => {
-      inputElement.click();
 
-    });
-    dropZoneElement.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      dropZoneElement.classList.add("drop-zone--over");
-    });
-
-    ["dragleave", "dragend"].forEach((type) => {
-      dropZoneElement.addEventListener(type, (e) => {
+        console.log('vicino a remove eventlistener drop');
         dropZoneElement.classList.remove("drop-zone--over");
       });
-    });
-
-    dropZoneElement.addEventListener("drop", (e) => {
-      e.preventDefault();
-      var files = e.dataTransfer.files;
-      if (e.dataTransfer.files.length) {
-        //var files = e.target.files || (e.dataTransfer && e.dataTransfer.files);
-        inputElement.files = files;
-        var file = files[0]
-        if (typeof file !== "undefined") {
-          var fr = new FileReader();
-
-          fr.readAsText(file)
-
-          fr.onload = function () {
-            var xml = Blockly.Xml.textToDom(fr.result);
-            Blockly.Xml.domToWorkspace(xml, blockly.workspace);
-            //document.getElementById("form_layout").style.display = "none";
-            document.getElementById("layoutModal").setAttribute("data-dismiss", "modal");
-          }
-        }
-      }
-
-      dropZoneElement.classList.remove("drop-zone--over");
-    });
-
+    };
+    blockly.isUploadXmlRunning = true;
   });
 
 };
