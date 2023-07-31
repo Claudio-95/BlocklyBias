@@ -163,6 +163,21 @@ def save_notebook():
             code_cell = nbformat.v4.new_code_cell('\n'.join(print_df_block))
             notebook.cells.append(code_cell)
             print_df_block = []
+        elif line.startswith("if not corr:", 0, (len(line))):
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+            code_block.append(line)
+        elif line.startswith('plt.show()', 0, (len(line))):
+            code_block.append(line)
+            markdown_code = 'md(\"## Correlation matrix</h2><br>Calculated on the entire dataset\")'
+            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
+            notebook.cells.append(markdown_cell)
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
         elif line.startswith('max_df_edf', 0, (len(line))):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))

@@ -1592,6 +1592,16 @@ var VarData = {};
             "elif count_bias_cols == 1:\n"+
             "    raise Exception(\"One specified biased column is not in the dataset\")\n"+
             "\n\n"+
+            "# Set the size of the chart\n" +
+            "plt.figure(figsize = [10, 10])\n" +
+            "\n" +
+            "try:\n"+
+            "    # Correlation calculation (Pearson) and matrix\n"+
+            "    corr = df.corr()\n"+
+            "    matrix = np.triu(corr)\n"+
+            "except ValueError:\n"+
+            "    corr = \"\"\n"+
+            "\n\n"+
             "# Here start the real bias analysis\n"+
             "result = \"\"\n"+
             "# Check that the input privileged column is in dataset\n"+
@@ -1726,7 +1736,12 @@ var VarData = {};
             "pd.DataFrame(df_values_of_outcome_2nd,index=[0])\n"+
             "pd.DataFrame(df_outcome_1st_neg,index=[0])\n"+
             "pd.DataFrame(df_outcome_2nd_neg,index=[0])\n"+
-            "df_dis_change_max"
+            "df_dis_change_max\n"+
+            "if not corr:\n"+
+            "    pass\n"+
+            "else:\n"+
+            "    sns.heatmap(corr, annot = True, mask = matrix, cmap = 'BuPu')\n"+
+            "    plt.show()"
         return codeString + codeString2;
     }
 
