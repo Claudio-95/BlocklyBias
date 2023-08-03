@@ -1592,15 +1592,14 @@ var VarData = {};
             "elif count_bias_cols == 1:\n"+
             "    raise Exception(\"One specified biased column is not in the dataset\")\n"+
             "\n\n"+
-            "# Set the size of the chart\n" +
-            "plt.figure(figsize = [10, 10])\n" +
-            "\n" +
             "try:\n"+
             "    # Correlation calculation (Pearson) and matrix\n"+
-            "    corr = df.corr()\n"+
+            "    corr = df.corr(numeric_only = True)\n"+
             "    matrix = np.triu(corr)\n"+
+            "    corr_done = True\n"+
             "except ValueError:\n"+
             "    corr = \"\"\n"+
+            "    corr_done = False\n"+
             "\n\n"+
             "# Here start the real bias analysis\n"+
             "result = \"\"\n"+
@@ -1737,17 +1736,18 @@ var VarData = {};
             "pd.DataFrame(df_outcome_1st_neg,index=[0])\n"+
             "pd.DataFrame(df_outcome_2nd_neg,index=[0])\n"+
             "df_dis_change_max\n"+
-            "if not corr:\n"+
+            "if not corr_done:\n"+
             "    pass\n"+
             "else:\n"+
-            "    sns.heatmap(corr, annot = True, mask = matrix, cmap = 'BuPu')\n"+
+            "    plt.figure(figsize = [10, 10])\n"+
+            "    sns.heatmap(corr, annot_kws = {\"size\": 25 / np.sqrt(len(corr))}, annot = True, mask = matrix, cmap = 'BuPu')\n"+
+            "    plt.title(\"Correlation matrix for numeric data only\")\n"+
             "    plt.show()"
         return codeString + codeString2;
     }
 
     /*
     Blockly.Python.anchoringBias = function (a) {
-        // copy here Giorgia's library
         var b = Blockly.Python.provideFunction_("do_null", [
             "pass"
         ]);
