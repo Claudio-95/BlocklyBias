@@ -1719,14 +1719,13 @@ var VarData = {};
             "            cont_vars.append(label)\n"+
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
             "    debias_params = get_debias_params(intersect_var, \'1\', \'-1\', \'1\', \'0\')\n"+
-            "    dataset = dataset.drop([privileged_cols], axis = 1)\n"+
             "    remove_corr_metrics_short_used = False\n"+
             "    try:\n"+
-            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, new_privileged_cols, metrics_short)\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_short)\n"+
             "        dis_df = get_disparity_df(metrics, debias_params, metrics_list)\n"+
             "    except KeyError: # for little datasets\n"+
             "        remove_corr_metrics_short_used = True\n"+
-            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, new_privileged_cols, metrics_sshort)\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
             "        dis_df = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
             "        remove_corr_metrics_short_used = True\n"+
             "    try:\n"+
