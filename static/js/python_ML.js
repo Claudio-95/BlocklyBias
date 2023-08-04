@@ -1591,7 +1591,11 @@ var VarData = {};
             "    raise Exception(\"The specified biased columns are not in the dataset\")\n"+
             "elif count_bias_cols == 1:\n"+
             "    raise Exception(\"One specified biased column is not in the dataset\")\n"+
-            "\n\n"+
+            "\n"+
+            "metrics_short_used = False\n"+
+            "samples_short_used = False\n"+
+            "metrics_short_disparity_used = False\n"+
+            "\n"+
             "try:\n"+
             "    # Correlation calculation (Pearson) and matrix\n"+
             "    corr = dataset.corr(numeric_only = True)\n"+
@@ -1655,6 +1659,7 @@ var VarData = {};
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
             "        df_metrics = get_df_from_metrics(metrics)\n"+
             "        df_disparity = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
+            "        metrics_short_used = True\n"+
             "\n\n"+
             "    # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature\n"+
             "    features = cat_vars\n"+
@@ -1670,6 +1675,7 @@ var VarData = {};
             "        for i in range(50):\n"+
             "            sample = dataset.sample(n = 100, ignore_index = True)\n"+
             "            samples.append(sample)\n"+
+            "            samples_short_used = True\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features)\n"+
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features)\n"+
@@ -1704,6 +1710,12 @@ var VarData = {};
             "    except KeyError: # for little datasets\n"+
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_sshort)\n"+
             "        df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
+            "        metrics_short_disparity_used = True\n"+
+            "\n"+
+            "if metrics_short_used and samples_short_used and metrics_short_disparity_used:\n"+
+            "elif metrics_short_used:\n"+
+            "elif samples_short_used:\n"+
+            "elif metrics_short_disparity_used:\n"+
             "df_edf\n"+
             "df_metrics\n"+
             "df_disparity\n"+
