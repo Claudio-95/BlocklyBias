@@ -1620,7 +1620,7 @@ var VarData = {};
             "attribute2_set = np.array(dataset[biased_cols[1]].unique()).tolist()\n"+
             "new_privileged_cols = privileged_cols + \"_01\"\n"+
             "threshold = dataset[privileged_cols].unique().tolist()\n"+
-            "dataset[new_privileged_cols] = (dataset[privileged_cols] != threshold[0]).astype(int) # for each row check if the value is equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
+            "dataset[new_privileged_cols] = (dataset[privileged_cols] != threshold[0]).astype(int) # for each row check if the value is not equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
             "try:\n"+
             "    edf = get_edf_df(dataset, biased_cols[0], biased_cols[1], attribute1_set, attribute2_set, new_privileged_cols)\n"+
             "except TypeError:\n"+
@@ -1670,6 +1670,8 @@ var VarData = {};
             "\n\n"+
             "    # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature\n"+
             "    features = cat_vars\n"+
+            "    if privileged_cols in features:\n"+
+            "        features.remove(privileged_cols)\n"+
             "    df_ratio = get_ratio_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_intersection = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)\n"+
@@ -1684,6 +1686,7 @@ var VarData = {};
             "            samples.append(sample)\n"+
             "            samples_short_used = True\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
+            "    results_pos_ratio, results_neg_ratio = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n" +
             "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features)\n"+
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features)\n"+
             "    df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
@@ -1729,8 +1732,10 @@ var VarData = {};
             "df_ratio\n"+
             "df_mode\n"+
             "df_intersection\n"+
-            "pd.DataFrame(results_pos)\n"+
-            "pd.DataFrame(results_neg)\n"+
+            "results_pos\n"+
+            "results_neg\n"+
+            "results_pos_ratio\n"+
+            "results_neg_ratio\n"+
             "pd.DataFrame(df_values_of_1st,index=[0])\n"+
             "pd.DataFrame(df_values_of_2nd,index=[0])\n"+
             "pd.DataFrame(df_values_of_outcome_1st,index=[0])\n"+
