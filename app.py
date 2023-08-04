@@ -178,7 +178,7 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('max_df_edf', 0, (len(line))):
+        elif line.startswith('df_edf', 0, (len(line))):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)

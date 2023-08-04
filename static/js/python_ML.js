@@ -1297,10 +1297,10 @@ var VarData = {};
             "        wedf = edf.copy()\n"+
             "    for i in range(n):\n"+
             "        idx = wedf['disparity'].idxmax()\n"+
-            "    val = wedf['disparity'].max()\n"+
-            "    groups.append((wedf.at[idx, 'group1'], wedf.at[idx, 'group2'], val))\n"+
-            "    if n > 1:\n"+
-            "        wedf.drop([idx], axis = 0, inplace = True)\n"+
+            "        val = wedf['disparity'].max()\n"+
+            "        groups.append((wedf.at[idx, 'group1'], wedf.at[idx, 'group2'], val))\n"+
+            "        if n > 1:\n"+
+            "            wedf.drop([idx], axis = 0, inplace = True)\n"+
             "    return groups\n"+
             "\n\n"+
             "# Create a dataframe from dataset data with modal values and their occurrences of features in features for positive_outcome outcomes\n"+
@@ -1612,8 +1612,6 @@ var VarData = {};
             "    raise Exception(\"The specified privileged column is not in the dataset\")\n"+
             "\n\n"+
             "# Calculate EDF metric\n"+
-            "edf_list = []\n"+
-            "df_edf_list = []\n"+
             "attribute1_set = np.array(dataset[biased_cols[0]].unique()).tolist()\n"+
             "attribute2_set = np.array(dataset[biased_cols[1]].unique()).tolist()\n"+
             "new_privileged_cols = privileged_cols + \"_01\"\n"+
@@ -1623,29 +1621,14 @@ var VarData = {};
             "    edf = get_edf_df(dataset, biased_cols[0], biased_cols[1], attribute1_set, attribute2_set, new_privileged_cols)\n"+
             "except TypeError:\n"+
             "    raise Exception(\"The two biased columns must be of the same type \'string\'\")\n"+
-            "edf_list.append(edf)\n"+
-            "df = pd.DataFrame(read_edf(edf, n = 3))\n"+
-            "df_edf_list.append(df)\n"+
+            "df_edf = pd.DataFrame(read_edf(edf, n = 3))\n"+
             "\n"+
             "# Setting final message\n"+
-            "edf_result = 0\n"+
-            "if not df_edf_list:\n"+
+            "if df_edf.empty:\n"+
             "    result += \" but compatible columns cannot be found to calculate EDF metric\"\n"+
             "    raise Exception(result)\n"+
             "else:\n"+
-            "    max_edf = 0\n"+
-            "    max_df_edf = df_edf_list[0]\n"+
-            "    for elem in df_edf_list:\n"+
-            "        if elem.iloc[0][2] > max_edf:\n"+
-            "            max_edf = elem.iloc[0][2]\n"+
-            "            max_df_edf = elem\n"+
-            "    edf_result = 1\n"+
-            "\n\n"+
-            "if edf_result == 0:\n"+
-            "    result += \" but compatible columns cannot be found to calculate EDF metric\"\n"+
-            "    raise Exception(result)\n"+
-            "else:\n"+
-            "\n\n"+
+            "\n"+
             "    # Calculate intersection, metrics and disparity\n"+
             "    data_copy = get_intersection(dataset, biased_cols[0], biased_cols[1])\n"+
             "    intersect_var = biased_cols[0] + \"_\" + biased_cols[1]\n"+
@@ -1663,7 +1646,7 @@ var VarData = {};
             "            neg_outcome = str(v)\n"+
             "    if not neg_outcome:\n"+
             "        raise ValueError(\"The value of the negative outcome could not be found. Please check that the privilege variable contains exactly two values.\")\n"+
-            "    debias_params = get_debias_params(intersect_var, max_df_edf.iloc[0, 0], max_df_edf.iloc[0, 1], pos_outcome, neg_outcome)\n"+
+            "    debias_params = get_debias_params(intersect_var, df_edf.iloc[0, 0], df_edf.iloc[0, 1], pos_outcome, neg_outcome)\n"+
             "    try:\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)\n"+
             "        df_metrics = get_df_from_metrics(metrics)\n"+
@@ -1688,12 +1671,12 @@ var VarData = {};
             "            sample = dataset.sample(n = 100, ignore_index = True)\n"+
             "            samples.append(sample)\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
-            "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features)\n"+
-            "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features)\n"+
-            "    df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
-            "    df_values_of_outcome_2nd = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
-            "    df_outcome_1st_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
-            "    df_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = max_df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
+            "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features)\n"+
+            "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features)\n"+
+            "    df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
+            "    df_values_of_outcome_2nd = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
+            "    df_outcome_1st_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
+            "    df_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
             "\n"+
             "    # Here starts the features removal to verify any improvements in fairness and equity in the groups\n"+
             "    dataset = df_copy\n"+
@@ -1701,8 +1684,8 @@ var VarData = {};
             "    threshold = [pos_outcome, neg_outcome]\n"+
             "    dataset[privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int)\n"+
             "    conditions = [\n"+
-            "        dataset[intersect_var] == max_df_edf.iloc[0, 0],\n"+
-            "        dataset[intersect_var] == max_df_edf.iloc[0, 1]\n"+
+            "        dataset[intersect_var] == df_edf.iloc[0, 0],\n"+
+            "        dataset[intersect_var] == df_edf.iloc[0, 1]\n"+
             "    ]\n"+
             "    choices = [1, -1]\n"+
             "    dataset[intersect_var] = np.select(conditions, choices, default = 0)\n"+
@@ -1721,7 +1704,7 @@ var VarData = {};
             "    except KeyError: # for little datasets\n"+
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_sshort)\n"+
             "        df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
-            "max_df_edf\n"+
+            "df_edf\n"+
             "df_metrics\n"+
             "df_disparity\n"+
             "df_ratio\n"+
