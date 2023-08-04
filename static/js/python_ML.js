@@ -1577,8 +1577,8 @@ var VarData = {};
             "    valuesToCheck = \"?\\/-\"\n"+
             "    for elem in valuesToCheck:\n"+
             "        if elem in dataset.values:\n"+
-            "            dataset.replace(elem, np.nan)\n"+
-            "    dataset = dataset.dropna()\n"+
+            "            dataset = dataset.replace(elem, np.nan)\n"+
+            "    dataset.dropna(inplace = True)\n"+
             "\n\n"+
             "# Check that the input biased columns are in dataset\n"+
             "error_message = 1\n"+
