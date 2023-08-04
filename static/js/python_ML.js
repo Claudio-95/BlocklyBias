@@ -1687,6 +1687,20 @@ var VarData = {};
             "            samples_short_used = True\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    results_pos_ratio, results_neg_ratio = get_maxOccurrences_ratio_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n" +
+            "    group1 = [biased_cols[1], biased_cols[0], intersect_var]\n"+
+            "    group2 = cat_vars\n"+
+            "    if privileged_cols in group2:\n"+
+            "        group2.remove(privileged_cols)\n"+
+            "    elif biased_cols[0] in group2:\n"+
+            "        group2.remove(biased_cols[0])\n"+
+            "    elif biased_cols[1] in group2:\n"+
+            "        group2.remove(biased_cols[1])\n"+
+            "    left = [attribute1_set, attribute2_set, df_edf.iloc[0, 0], df_edf.iloc[0, 1]]\n"+
+            "    right1 = np.array(dataset[cat_vars[0]].unique()).tolist()\n"+
+            "    right2 = np.array(dataset[cat_vars[1]].unique()).tolist()\n"+
+            "    right3 = np.array(dataset[cat_vars[2]].unique()).tolist()\n"+
+            "    right = right1 + right2 + right3\n"+
+            "    intersections_count = get_intersections_count(samples = samples, features1 = group1, features2 = group2, attributes1 = left, attributes2 = right)\n"+
             "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features)\n"+
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features)\n"+
             "    df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
@@ -1736,6 +1750,7 @@ var VarData = {};
             "results_neg\n"+
             "results_pos_ratio\n"+
             "results_neg_ratio\n"+
+            "intersections_count\n"+
             "pd.DataFrame(df_values_of_1st,index=[0])\n"+
             "pd.DataFrame(df_values_of_2nd,index=[0])\n"+
             "pd.DataFrame(df_values_of_outcome_1st,index=[0])\n"+
