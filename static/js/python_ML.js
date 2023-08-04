@@ -1197,11 +1197,11 @@ var VarData = {};
             "\n\n"+
             "transforms = [Dropna, EncodeLabels]\n"+
             "metrics_bonus = [accuracy,  equal_opportunity,demographic_parity, equal_odds_tpr, equal_odds_tnr, true_neg_rate, true_pos_rate, individual_fairness, individual_fairness_cf]\n"+
-            "metrics_initial = [accuracy,  equal_opportunity,demographic_parity, equal_odds_tnr, individual_fairness]\n"+
+            "metrics_initial = [accuracy,  equal_opportunity, demographic_parity, equal_odds_tnr, individual_fairness]\n"+
             "metrics_short = [accuracy, demographic_parity, equal_opportunity, individual_fairness]\n"+
             "metrics_sshort = [accuracy, demographic_parity, equal_opportunity]\n"+
-            "metrics_list = ['accuracy','demographic_parity','equal_opportunity', 'individual_fairness']\n"+
-            "metrics_list_short = ['accuracy','demographic_parity','equal_opportunity']\n"+
+            "metrics_list = ['accuracy', 'demographic_parity', 'equal_opportunity', 'individual_fairness']\n"+
+            "metrics_list_short = ['accuracy', 'demographic_parity', 'equal_opportunity']\n"+
             "\n"+
             "# Wrapper to avoid having to call the clean classifier, dl and pipe, returns metrics\n"+
             "def etiq_wrapper_run(data, debias_params, cont_val, cat_val, p_feature, metrics):\n"+
@@ -1445,13 +1445,13 @@ var VarData = {};
             "            for f2 in features2:\n"+
             "                if f1 != f2:\n"+
             "                    sample = get_intersection(sample, f1, f2, drop = False)\n"+
-            "    for g in subgs:\n"+
-            "        for t in intersections:\n"+
-            "            n = len(sample[sample[g] == t])\n"+
-            "            if n > 0:\n"+
-            "                if g not in results: results[g] = {}\n"+
-            "                if t not in results[g]: results[g][t] = 0\n"+
-            "                results[g][t] += n\n"+
+            "        for g in subgs:\n"+
+            "            for t in intersections:\n"+
+            "                n = len(sample[sample[g] == t])\n"+
+            "                if n > 0:\n"+
+            "                    if g not in results: results[g] = {}\n"+
+            "                    if t not in results[g]: results[g][t] = 0\n"+
+            "                    results[g][t] += n\n"+
             "    return results\n"+
             "\n\n"+
             "# Dict with modal feature values for the feature's value (bad name for var, sorry)\n"+
@@ -1460,10 +1460,10 @@ var VarData = {};
             "    result = {}\n"+
             "    for sample in samples:\n"+
             "        subset = sample[sample[feature] == value]\n"+
-            "    for ft in features:\n"+
-            "        if ft not in result: result[ft] = None\n"+
-            "        count = subset.groupby(ft).size()\n"+
-            "        if len(count) > 0: result[ft] = count.idxmax()\n"+
+            "        for ft in features:\n"+
+            "            if ft not in result: result[ft] = None\n"+
+            "            count = subset.groupby(ft).size()\n"+
+            "            if len(count) > 0: result[ft] = count.idxmax()\n"+
             "    return result\n"+
             "\n\n"+
             "# Same as above, but filter by the outcome of the p_feature\n"+
@@ -1616,7 +1616,7 @@ var VarData = {};
             "attribute2_set = np.array(dataset[biased_cols[1]].unique()).tolist()\n"+
             "new_privileged_cols = privileged_cols + \"_01\"\n"+
             "threshold = dataset[privileged_cols].unique().tolist()\n"+
-            "dataset[new_privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int) # for each row check if the value is equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
+            "dataset[new_privileged_cols] = (dataset[privileged_cols] != threshold[0]).astype(int) # for each row check if the value is equal to threshold, if yes put 1 in new_privileged_cols, 0 otherwise\n"+
             "try:\n"+
             "    edf = get_edf_df(dataset, biased_cols[0], biased_cols[1], attribute1_set, attribute2_set, new_privileged_cols)\n"+
             "except TypeError:\n"+
