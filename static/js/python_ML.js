@@ -1486,8 +1486,9 @@ var VarData = {};
             "        if i not in relevant_features:\n"+
             "            corr.drop([i], axis = 0, inplace = True)\n"+
             "    idx = corr[p_feature].idxmax()\n"+
+            "    idx_val = corr[p_feature].loc[idx]\n"+
             "    data = data.drop([idx], axis = 1)\n"+
-            "    return (data, idx)\n"+
+            "    return (data, idx, idx_val)\n"+
             "\n\n"+
             "# As above but repeated n times\n"+
             "# Returns a pair with data and indexes removed\n"+
@@ -1733,7 +1734,32 @@ var VarData = {};
             "            cont_vars.append(label)\n"+
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
             "    debias_params = get_debias_params(intersect_var, \'1\', \'-1\', \'1\', \'0\')\n"+
-            "    metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_initial)\n"+
+            "    dataset = dataset.drop([privileged_cols], axis = 1)\n"+
+            "    removed = []\n"+
+            "    removed_values = []\n"+
+            "    columns = list(set(dataset.columns.values.copy()) - set([intersect_var]))\n"+
+            "    dataset, removed_new = remove_max_corr(dataset, columns, new_privileged_cols)\n"+
+            "    removed.append(removed_new)\n"+
+            "    removed_values.append(removed_new_value)\n"+
+            "    remove_corr_metrics_short_used = False\n"+
+            "    try:\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, new_privileged_cols, metrics_short)\n"+
+            "        dis_df = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "    except KeyError:\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, new_privileged_cols, metrics_sshort)\n"+
+            "        dis_df = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
+            "        remove_corr_metrics_short_used = True\n"+
+            "    while True:\n"+
+            "        try:\n"+
+            "            dataset, removed_new, removed_new_value = remove_max_corr(dataset, columns, new_privileged_cols)\n"+
+            "            removed.append(removed_new)\n"+
+            "            removed_values.append(removed_new_value)\n"+
+            "            cont_vars = list(set(cont_vars) - set(removed))\n"+
+            "            cat_vars = list(set(dataset.columns.values) - set(cont_vars) - set(removed))\n"+
+            "            metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, new_privileged_cols, metrics_short)\n"+
+            "            dis_df = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "        except Exception as e:\n"+
+            "            break\n"+
             "    try:\n"+
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_short)\n"+
             "        df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
@@ -1745,7 +1771,7 @@ var VarData = {};
             "if metrics_short_used and samples_short_used and metrics_short_disparity_used:\n"+
             "elif metrics_short_used:\n"+
             "elif samples_short_used:\n"+
-            "elif metrics_short_disparity_used:\n"+
+            "elif metrics_short_disparity_used or remove_corr_metrics_short_used:\n"+
             "df_edf\n"+
             "df_metrics\n"+
             "df_disparity\n"+

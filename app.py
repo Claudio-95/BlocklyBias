@@ -189,7 +189,7 @@ def save_notebook():
             code_markdown_cell = nbformat.v4.new_code_cell(code_block)
             notebook.cells.append(code_markdown_cell)
             code_block = []
-        elif line.startswith('metrics_short_used', 0, (len(line))):
+        elif line.startswith('elif metrics_short_used:', 0, (len(line))):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
@@ -200,7 +200,7 @@ def save_notebook():
             code_markdown_cell = nbformat.v4.new_code_cell(code_block)
             notebook.cells.append(code_markdown_cell)
             code_block = []
-        elif line.startswith('samples_short_used', 0, (len(line))):
+        elif line.startswith('elif samples_short_used:', 0, (len(line))):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
@@ -211,7 +211,7 @@ def save_notebook():
             code_markdown_cell = nbformat.v4.new_code_cell(code_block)
             notebook.cells.append(code_markdown_cell)
             code_block = []
-        elif line.startswith('metrics_short_disparity_used', 0, (len(line))):
+        elif line.startswith('elif metrics_short_disparity_used or remove_corr_metrics_short_used:', 0, (len(line))):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
