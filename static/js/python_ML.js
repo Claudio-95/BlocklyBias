@@ -1737,9 +1737,13 @@ var VarData = {};
             "        metrics_short_disparity_used = True\n"+
             "\n"+
             "if metrics_short_used and samples_short_used and metrics_short_disparity_used:\n"+
+            "    md(\"## Warning<\/h2><br>Fewer metrics were used and limited sampling was performed during the analysis. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
             "elif metrics_short_used:\n"+
+            "    md(\"## Warning<\/h2><br>Fewer metrics were used during the analysis, in particular only: accuracy, demographic_parity, equal_opportunity, individual_fairness were considered. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
             "elif samples_short_used:\n"+
+            "    md(\"## Warning<\/h2><br>Limited sampling was performed during the analysis. If you want to get a more precise analysis and with a larger sampling, please try again with a larger dataset.\")\n"+
             "elif metrics_short_disparity_used or remove_corr_metrics_short_used:\n"+
+            "    md(\"## Warning<\/h2><br>During the analysis, specifically in the calculation of the disparity change, individual fairness was not considered as a metric. If you want to run a full analysis please try again with a larger dataset.\")\n"+
             "df_edf\n"+
             "df_metrics\n"+
             "df_disparity\n"+

@@ -178,50 +178,6 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('if metrics_short_used and samples_short_used and metrics_short_disparity_used:', 0, (len(line))):
-            if code_block:
-                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
-                notebook.cells.append(code_cell)
-                code_block = []
-            code_block.append(line)
-            markdown_code = 'md(\"## Warning</h2><br>Fewer metrics were used and limited sampling was performed during the analysis. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")'
-            code_block.append(markdown_code)
-            code_markdown_cell = nbformat.v4.new_code_cell(code_block)
-            notebook.cells.append(code_markdown_cell)
-            code_block = []
-        elif line.startswith('elif metrics_short_used:', 0, (len(line))):
-            if code_block:
-                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
-                notebook.cells.append(code_cell)
-                code_block = []
-            code_block.append(line)
-            markdown_code = 'md(\"## Warning</h2><br>Fewer metrics were used during the analysis, in particular only: accuracy, demographic_parity, equal_opportunity, individual_fairness were considered. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")'
-            code_block.append(markdown_code)
-            code_markdown_cell = nbformat.v4.new_code_cell(code_block)
-            notebook.cells.append(code_markdown_cell)
-            code_block = []
-        elif line.startswith('elif samples_short_used:', 0, (len(line))):
-            if code_block:
-                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
-                notebook.cells.append(code_cell)
-                code_block = []
-            code_block.append(line)
-            markdown_code = 'md(\"## Warning</h2><br>Limited sampling was performed during the analysis. If you want to get a more precise analysis and with a larger sampling, please try again with a larger dataset.\")'
-            code_block.append(markdown_code)
-            code_markdown_cell = nbformat.v4.new_code_cell(code_block)
-            notebook.cells.append(code_markdown_cell)
-            code_block = []
-        elif line.startswith('elif metrics_short_disparity_used or remove_corr_metrics_short_used:', 0, (len(line))):
-            if code_block:
-                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
-                notebook.cells.append(code_cell)
-                code_block = []
-            code_block.append(line)
-            markdown_code = 'md(\"## Warning</h2><br>During the analysis, specifically in the calculation of the disparity_change, individual fairness was not considered as a metric. If you want to run a full analysis please try again with a larger dataset.\")'
-            code_block.append(markdown_code)
-            code_markdown_cell = nbformat.v4.new_code_cell(code_block)
-            notebook.cells.append(code_markdown_cell)
-            code_block = []
         elif line.startswith('df_edf', 0, (len(line))) and line.endswith("df_edf"):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
