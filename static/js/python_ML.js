@@ -1634,6 +1634,13 @@ var VarData = {};
             "else:\n"+
             "\n"+
             "    # Calculate intersection, metrics and disparity\n"+
+            "    dataset = " + df + "\n"+
+            "    if dropnan == 1:\n"+
+            "        valuesToCheck = \"?\\/-\"\n"+
+            "        for elem in valuesToCheck:\n"+
+            "            if elem in dataset.values:\n"+
+            "                dataset = dataset.replace(elem, np.nan)\n"+
+            "        dataset.dropna(inplace = True)\n"+
             "    data_copy = get_intersection(dataset, biased_cols[0], biased_cols[1])\n"+
             "    intersect_var = biased_cols[0] + \"_\" + biased_cols[1]\n"+
             "    cont_vars = []\n"+
