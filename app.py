@@ -328,7 +328,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('intersections_count', 0, (len(line))):
             #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Intersections count</h2><br>Intersections count between {} and the first three of {}:\".format(group1, group2))'
+            markdown_code = 'md(\"## Intersections count</h2><br>Intersections count between {} and {}:\".format(group1, group2))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)

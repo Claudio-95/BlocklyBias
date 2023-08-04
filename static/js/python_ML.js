@@ -1696,10 +1696,10 @@ var VarData = {};
             "    elif biased_cols[1] in group2:\n"+
             "        group2.remove(biased_cols[1])\n"+
             "    left = [attribute1_set, attribute2_set, df_edf.iloc[0, 0], df_edf.iloc[0, 1]]\n"+
-            "    right1 = np.array(dataset[cat_vars[0]].unique()).tolist()\n"+
-            "    right2 = np.array(dataset[cat_vars[1]].unique()).tolist()\n"+
-            "    right3 = np.array(dataset[cat_vars[2]].unique()).tolist()\n"+
-            "    right = right1 + right2 + right3\n"+
+            "    right = []\n"+
+            "    for elem in cat_vars:\n"+
+            "        this_elem = np.array(dataset[elem].unique()).tolist()\n"+
+            "        right += this_elem\n"+
             "    intersections_count = get_intersections_count(samples = samples, features1 = group1, features2 = group2, attributes1 = left, attributes2 = right)\n"+
             "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features)\n"+
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features)\n"+
@@ -1709,10 +1709,16 @@ var VarData = {};
             "    df_outcome_2nd_neg = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features, p_feature = privileged_cols, outcome = neg_outcome)\n"+
             "\n"+
             "    # Here starts the features removal to verify any improvements in fairness and equity in the groups\n"+
-            "    dataset = df_copy\n"+
+            "    dataset = " + df + "\n"+
+            "    if dropnan == 1:\n"+
+            "        valuesToCheck = \"?\\/-\"\n"+
+            "        for elem in valuesToCheck:\n"+
+            "            if elem in dataset.values:\n"+
+            "                dataset = dataset.replace(elem, np.nan)\n"+
+            "        dataset.dropna(inplace = True)\n"+
             "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
             "    threshold = [pos_outcome, neg_outcome]\n"+
-            "    dataset[privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int)\n"+
+            "    dataset[privileged_cols] = (dataset[privileged_cols] != threshold[0]).astype(int)\n"+
             "    conditions = [\n"+
             "        dataset[intersect_var] == df_edf.iloc[0, 0],\n"+
             "        dataset[intersect_var] == df_edf.iloc[0, 1]\n"+
