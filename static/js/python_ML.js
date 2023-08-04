@@ -1594,7 +1594,7 @@ var VarData = {};
             "\n\n"+
             "try:\n"+
             "    # Correlation calculation (Pearson) and matrix\n"+
-            "    corr = df.corr(numeric_only = True)\n"+
+            "    corr = dataset.corr(numeric_only = True)\n"+
             "    matrix = np.triu(corr)\n"+
             "    corr_done = True\n"+
             "except ValueError:\n"+
