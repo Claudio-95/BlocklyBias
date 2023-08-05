@@ -192,9 +192,9 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_metrics', 0, (len(line))):
+        elif line.startswith('df_metrics_intersect_var', 0, (len(line))):
             #markdown_code = f'## Metrics\nEqual opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\nThe set of all these metrics are defined here as Fairness metrics.\nFairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
-            markdown_code = 'md(\"## Metrics</h2><br>Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.<br>Also it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.<br>Demographic Parity is obtained when all groups have the same Predictive Positive Rate.<br>The set of all these metrics are defined here as Fairness metrics.<br>Fairness metrics for {} and {}:\".format(df_metrics.iloc[0]["class"], df_metrics.iloc[1]["class"]))'
+            markdown_code = 'md(\"## Metrics for {}</h2><br>Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.<br>Also it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.<br>Demographic Parity is obtained when all groups have the same Predictive Positive Rate.<br>The set of all these metrics are defined here as Fairness metrics.<br>Fairness metrics for {} and {} are calculated based on the intersect variable between the two biased columns {} and {}:\".format(intersect_var, df_metrics_intersect_var.iloc[0]["class"], df_metrics_intersect_var.iloc[1]["class"], biased_cols[0], biased_cols[1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -202,9 +202,49 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_disparity', 0, (len(line))):
+        elif line.startswith('df_disparity_intersect_var', 0, (len(line))):
             #markdown_code = f'## Disparity\nDisparity is the ratio of its value to the unprivileged group to its value to the privileged group.\nDisparity on fairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
-            markdown_code = 'md(\"## Disparity</h2><br>Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.<br>Disparity on fairness metrics for {} and {}:\".format(df_metrics.iloc[0]["class"], df_metrics.iloc[1]["class"]))'
+            markdown_code = 'md(\"## Disparity for {}</h2><br>Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.<br>Disparity on fairness metrics for {} and {}, thus the intersect variable between the two biased columns {} and {}:\".format(intersect_var, df_metrics_intersect_var.iloc[0]["class"], df_metrics_intersect_var.iloc[1]["class"], biased_cols[0], biased_cols[1]))'
+            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
+            notebook.cells.append(markdown_cell)
+            code_block.append(line)
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+        elif line.startswith('df_metrics_biased_first', 0, (len(line))):
+            #markdown_code = f'## Metrics\nEqual opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\nThe set of all these metrics are defined here as Fairness metrics.\nFairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
+            markdown_code = 'md(\"## Metrics for {}</h2><br>Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.<br>Also it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.<br>Demographic Parity is obtained when all groups have the same Predictive Positive Rate.<br>The set of all these metrics are defined here as Fairness metrics.<br>Fairness metrics are calculated based on the first biased column {}:\".format(biased_cols[0], biased_cols[0]))'
+            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
+            notebook.cells.append(markdown_cell)
+            code_block.append(line)
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+        elif line.startswith('df_disparity_biased_first', 0, (len(line))):
+            #markdown_code = f'## Disparity\nDisparity is the ratio of its value to the unprivileged group to its value to the privileged group.\nDisparity on fairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
+            markdown_code = 'md(\"## Disparity for {}</h2><br>Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.<br>Disparity on fairness metrics for the first biased column {}:\".format(biased_cols[0], biased_cols[0]))'
+            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
+            notebook.cells.append(markdown_cell)
+            code_block.append(line)
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+        elif line.startswith('df_metrics_biased_second', 0, (len(line))):
+            #markdown_code = f'## Metrics\nEqual opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\nThe set of all these metrics are defined here as Fairness metrics.\nFairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
+            markdown_code = 'md(\"## Metrics for {}</h2><br>Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.<br>Also it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.<br>Demographic Parity is obtained when all groups have the same Predictive Positive Rate.<br>The set of all these metrics are defined here as Fairness metrics.<br>Fairness metrics are calculated based on the second biased column {}:\".format(biased_cols[1], biased_cols[1]))'
+            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
+            notebook.cells.append(markdown_cell)
+            code_block.append(line)
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+        elif line.startswith('df_disparity_biased_second', 0, (len(line))):
+            #markdown_code = f'## Disparity\nDisparity is the ratio of its value to the unprivileged group to its value to the privileged group.\nDisparity on fairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
+            markdown_code = 'md(\"## Disparity for {}</h2><br>Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.<br>Disparity on fairness metrics for the first biased column {}:\".format(biased_cols[1], biased_cols[1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)

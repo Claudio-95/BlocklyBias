@@ -1641,7 +1641,7 @@ var VarData = {};
             "            if elem in dataset.values:\n"+
             "                dataset = dataset.replace(elem, np.nan)\n"+
             "        dataset.dropna(inplace = True)\n"+
-            "    data_copy = get_intersection(dataset, biased_cols[0], biased_cols[1])\n"+
+            "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1])\n"+
             "    intersect_var = biased_cols[0] + \"_\" + biased_cols[1]\n"+
             "    cont_vars = []\n"+
             "    for label in dataset.columns:\n"+
@@ -1650,6 +1650,10 @@ var VarData = {};
             "        elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
             "            cont_vars.append(label)\n"+
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
+            "    if biased_cols[0] in cat_vars:\n"+
+            "        cat_vars.remove(biased_cols[0])\n"+
+            "    elif biased_cols[1] in cat_vars:\n"+
+            "        cat_vars.remove(biased_cols[1])\n"+
             "    privilege_values = dataset[privileged_cols].unique().tolist()\n"+
             "    neg_outcome = \"\"\n"+
             "    for v in privilege_values:\n"+
@@ -1657,24 +1661,106 @@ var VarData = {};
             "            neg_outcome = str(v)\n"+
             "    if not neg_outcome:\n"+
             "        raise ValueError(\"The value of the negative outcome could not be found. Please check that the privilege variable contains exactly two values.\")\n"+
-            "    debias_params = get_debias_params(intersect_var, df_edf.iloc[0, 0], df_edf.iloc[0, 1], pos_outcome, neg_outcome)\n"+
             "    try:\n"+
+            "        debias_params = get_debias_params(intersect_var, df_edf.iloc[0, 0], df_edf.iloc[0, 1], pos_outcome, neg_outcome)\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)\n"+
-            "        df_metrics = get_df_from_metrics(metrics)\n"+
-            "        df_disparity = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "        df_metrics_intersect_var = get_df_from_metrics(metrics)\n"+
+            "        df_disparity_intersect_var = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "        dataset = " + df + "\n"+
+            "        if dropnan == 1:\n"+
+            "            valuesToCheck = \"?\\/-\"\n"+
+            "            for elem in valuesToCheck:\n"+
+            "                if elem in dataset.values:\n"+
+            "                    dataset = dataset.replace(elem, np.nan)\n"+
+            "            dataset.dropna(inplace = True)\n"+
+            "        cont_vars = []\n"+
+            "        for label in dataset.columns:\n"+
+            "            if label == intersect_var or label == privileged_cols:\n"+
+            "                pass\n"+
+            "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
+            "                cont_vars.append(label)\n"+
+            "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
+            "        debias_params = get_debias_params(biased_cols[0], attribute1_set[0], attribute1_set[1], pos_outcome, neg_outcome)\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_initial)\n"+
+            "        df_metrics_biased_first = get_df_from_metrics(metrics)\n"+
+            "        df_disparity_biased_first = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "        dataset = " + df + "\n"+
+            "        if dropnan == 1:\n"+
+            "            valuesToCheck = \"?\\/-\"\n"+
+            "            for elem in valuesToCheck:\n"+
+            "                if elem in dataset.values:\n"+
+            "                    dataset = dataset.replace(elem, np.nan)\n"+
+            "            dataset.dropna(inplace = True)\n"+
+            "        cont_vars = []\n"+
+            "        for label in dataset.columns:\n"+
+            "            if label == intersect_var or label == privileged_cols:\n"+
+            "                pass\n"+
+            "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
+            "                cont_vars.append(label)\n"+
+            "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
+            "        debias_params = get_debias_params(biased_cols[1], attribute2_set[0], attribute2_set[1], pos_outcome, neg_outcome)\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_initial)\n"+
+            "        df_metrics_biased_second = get_df_from_metrics(metrics)\n"+
+            "        df_disparity_biased_second = get_disparity_df(metrics, debias_params, metrics_list)\n"+
             "    except KeyError: # for little datasets\n"+
+            "        debias_params = get_debias_params(intersect_var, df_edf.iloc[0, 0], df_edf.iloc[0, 1], pos_outcome, neg_outcome)\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
-            "        df_metrics = get_df_from_metrics(metrics)\n"+
-            "        df_disparity = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
+            "        df_metrics_intersect_var = get_df_from_metrics(metrics)\n"+
+            "        df_disparity_intersect_var = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
+            "        dataset = " + df + "\n"+
+            "        if dropnan == 1:\n"+
+            "            valuesToCheck = \"?\\/-\"\n"+
+            "            for elem in valuesToCheck:\n"+
+            "                if elem in dataset.values:\n"+
+            "                    dataset = dataset.replace(elem, np.nan)\n"+
+            "            dataset.dropna(inplace = True)\n"+
+            "        cont_vars = []\n"+
+            "        for label in dataset.columns:\n"+
+            "            if label == intersect_var or label == privileged_cols:\n"+
+            "                pass\n"+
+            "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
+            "                cont_vars.append(label)\n"+
+            "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
+            "        debias_params = get_debias_params(biased_cols[0], attribute1_set[0], attribute1_set[1], pos_outcome, neg_outcome)\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
+            "        df_metrics_biased_first = get_df_from_metrics(metrics)\n"+
+            "        df_disparity_biased_first = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
+            "        dataset = " + df + "\n"+
+            "        if dropnan == 1:\n"+
+            "            valuesToCheck = \"?\\/-\"\n"+
+            "            for elem in valuesToCheck:\n"+
+            "                if elem in dataset.values:\n"+
+            "                    dataset = dataset.replace(elem, np.nan)\n"+
+            "            dataset.dropna(inplace = True)\n"+
+            "        cont_vars = []\n"+
+            "        for label in dataset.columns:\n"+
+            "            if label == intersect_var or label == privileged_cols:\n"+
+            "                pass\n"+
+            "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
+            "                cont_vars.append(label)\n"+
+            "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
+            "        debias_params = get_debias_params(biased_cols[1], attribute2_set[0], attribute2_set[1], pos_outcome, neg_outcome)\n"+
+            "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
+            "        df_metrics_biased_second = get_df_from_metrics(metrics)\n"+
+            "        df_disparity_biased_second = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
             "        metrics_short_used = True\n"+
             "\n\n"+
             "    # Calculate modal values, ratio between positive and negative outcome, occurrences of associating values to a datum feature\n"+
+            "    dataset = " + df + "\n"+
+            "    if dropnan == 1:\n"+
+            "        valuesToCheck = \"?\\/-\"\n"+
+            "        for elem in valuesToCheck:\n"+
+            "            if elem in dataset.values:\n"+
+            "                dataset = dataset.replace(elem, np.nan)\n"+
+            "        dataset.dropna(inplace = True)\n"+
+            "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
+            "    df_intersection = dataset\n"+
+            "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
             "    features = cat_vars\n"+
             "    if privileged_cols in features:\n"+
             "        features.remove(privileged_cols)\n"+
             "    df_ratio = get_ratio_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    df_mode = get_mode_df(data = dataset, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
-            "    df_intersection = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)\n"+
             "    samples = []\n"+
             "    try:\n"+
             "        for i in range(50):\n"+
@@ -1745,8 +1831,12 @@ var VarData = {};
             "elif metrics_short_disparity_used or remove_corr_metrics_short_used:\n"+
             "    md(\"## Warning<\/h2><br>During the analysis, specifically in the calculation of the disparity change, individual fairness was not considered as a metric. If you want to run a full analysis please try again with a larger dataset.\")\n"+
             "df_edf\n"+
-            "df_metrics\n"+
-            "df_disparity\n"+
+            "df_metrics_intersect_var\n"+
+            "df_disparity_intersect_var\n"+
+            "df_metrics_biased_first\n"+
+            "df_disparity_biased_first\n"+
+            "df_metrics_biased_second\n"+
+            "df_disparity_biased_second\n"+
             "df_ratio\n"+
             "df_mode\n"+
             "df_intersection\n"+
