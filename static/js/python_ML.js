@@ -1755,7 +1755,7 @@ var VarData = {};
             "            if elem in dataset.values:\n"+
             "                dataset = dataset.replace(elem, np.nan)\n"+
             "        dataset.dropna(inplace = True)\n"+
-            "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
+            "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = False)\n"+
             "    cont_vars = []\n"+
             "    for label in dataset.columns:\n"+
             "        if label == intersect_var or label == privileged_cols:\n"+
