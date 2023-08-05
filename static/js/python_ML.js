@@ -1756,6 +1756,12 @@ var VarData = {};
             "                dataset = dataset.replace(elem, np.nan)\n"+
             "        dataset.dropna(inplace = True)\n"+
             "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
+            "    cont_vars = []\n"+
+            "    for label in dataset.columns:\n"+
+            "        if label == intersect_var or label == privileged_cols:\n"+
+            "            pass\n"+
+            "        elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
+            "            cont_vars.append(label)\n"+
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
             "    features = cat_vars\n"+
             "    if privileged_cols in features:\n"+
@@ -1824,13 +1830,13 @@ var VarData = {};
             "        metrics_short_disparity_used = True\n"+
             "\n"+
             "if metrics_short_used and samples_short_used and metrics_short_disparity_used:\n"+
-            "    md(\"## Warning<\/h2><br>Fewer metrics were used and limited sampling was performed during the analysis. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
+            "    md(\"Warning! Fewer metrics were used and limited sampling was performed during the analysis. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
             "elif metrics_short_used:\n"+
-            "    md(\"## Warning<\/h2><br>Fewer metrics were used during the analysis, in particular only: accuracy, demographic_parity, equal_opportunity, individual_fairness were considered. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
+            "    md(\"Warning! Fewer metrics were used during the analysis, in particular only: accuracy, demographic_parity, equal_opportunity, individual_fairness were considered. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
             "elif samples_short_used:\n"+
-            "    md(\"## Warning<\/h2><br>Limited sampling was performed during the analysis. If you want to get a more precise analysis and with a larger sampling, please try again with a larger dataset.\")\n"+
+            "    md(\"Warning! Limited sampling was performed during the analysis. If you want to get a more precise analysis and with a larger sampling, please try again with a larger dataset.\")\n"+
             "elif metrics_short_disparity_used or remove_corr_metrics_short_used:\n"+
-            "    md(\"## Warning<\/h2><br>During the analysis, specifically in the calculation of the disparity change, individual fairness was not considered as a metric. If you want to run a full analysis please try again with a larger dataset.\")\n"+
+            "    md(\"Warning! During the analysis, specifically in the calculation of the disparity change, individual fairness was not considered as a metric. If you want to run a full analysis please try again with a larger dataset.\")\n"+
             "df_edf\n"+
             "df_metrics_intersect_var\n"+
             "df_disparity_intersect_var\n"+
