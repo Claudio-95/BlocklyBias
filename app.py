@@ -163,7 +163,7 @@ def save_notebook():
             code_cell = nbformat.v4.new_code_cell('\n'.join(print_df_block))
             notebook.cells.append(code_cell)
             print_df_block = []
-        elif line.startswith("if not corr:", 0, (len(line))):
+        elif line.startswith("if not corr_done:", 0, (len(line))):
             if code_block:
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
