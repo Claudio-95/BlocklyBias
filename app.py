@@ -274,7 +274,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_pos', 0, (len(line))):
             #markdown_code = f'## Positive privileged mode\nPositive mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode for {} {}</h2>:\".format(privileged_cols, pos_outcome))'
+            markdown_code = 'md(\"## Mode for {} {}:</h2>\".format(privileged_cols, pos_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -284,7 +284,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_neg', 0, (len(line))):
             #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode for {} {}</h2>:\".format(privileged_cols, neg_outcome))'
+            markdown_code = 'md(\"## Mode for {} {}:</h2>\".format(privileged_cols, neg_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -294,7 +294,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_pos_ratio', 0, (len(line))):
             #markdown_code = f'## Positive privileged mode\nPositive mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode with ratio for {} {}</h2>:\".format(privileged_cols, pos_outcome))'
+            markdown_code = 'md(\"## Mode with ratio for {} {}:</h2>\".format(privileged_cols, pos_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -304,7 +304,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_neg_ratio', 0, (len(line))):
             #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode with ratio for {} {}</h2>:\".format(privileged_cols, neg_outcome))'
+            markdown_code = 'md(\"## Mode with ratio for {} {}:</h2>\".format(privileged_cols, neg_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
