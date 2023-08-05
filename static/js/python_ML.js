@@ -1666,6 +1666,8 @@ var VarData = {};
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_bonus)\n"+
             "        df_metrics_intersect_var = get_df_from_metrics(metrics)\n"+
             "        df_disparity_intersect_var = get_disparity_df(metrics, debias_params, metrics_list)\n"+
+            "        privileged_values = df_metrics_intersect_var.iloc[0][\"class\"].split('_')\n"+
+            "        unprivileged_values = df_metrics_intersect_var.iloc[1][\"class\"].split('_')\n"+
             "        dataset = " + df + "\n"+
             "        if dropnan == 1:\n"+
             "            valuesToCheck = \"?\\/-\"\n"+
@@ -1680,7 +1682,7 @@ var VarData = {};
             "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
             "                cont_vars.append(label)\n"+
             "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
-            "        debias_params = get_debias_params(biased_cols[0], attribute1_set[0], attribute1_set[1], pos_outcome, neg_outcome)\n"+
+            "        debias_params = get_debias_params(biased_cols[0], privileged_values[0], unprivileged_values[0], pos_outcome, neg_outcome)\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_initial)\n"+
             "        df_metrics_biased_first = get_df_from_metrics(metrics)\n"+
             "        df_disparity_biased_first = get_disparity_df(metrics, debias_params, metrics_list)\n"+
@@ -1698,7 +1700,7 @@ var VarData = {};
             "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
             "                cont_vars.append(label)\n"+
             "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
-            "        debias_params = get_debias_params(biased_cols[1], attribute2_set[0], attribute2_set[1], pos_outcome, neg_outcome)\n"+
+            "        debias_params = get_debias_params(biased_cols[1], privileged_values[1], unprivileged_values[1], pos_outcome, neg_outcome)\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_initial)\n"+
             "        df_metrics_biased_second = get_df_from_metrics(metrics)\n"+
             "        df_disparity_biased_second = get_disparity_df(metrics, debias_params, metrics_list)\n"+
@@ -1721,7 +1723,7 @@ var VarData = {};
             "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
             "                cont_vars.append(label)\n"+
             "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
-            "        debias_params = get_debias_params(biased_cols[0], attribute1_set[0], attribute1_set[1], pos_outcome, neg_outcome)\n"+
+            "        debias_params = get_debias_params(biased_cols[0], privileged_values[0], unprivileged_values[0], pos_outcome, neg_outcome)\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
             "        df_metrics_biased_first = get_df_from_metrics(metrics)\n"+
             "        df_disparity_biased_first = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
@@ -1739,7 +1741,7 @@ var VarData = {};
             "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
             "                cont_vars.append(label)\n"+
             "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
-            "        debias_params = get_debias_params(biased_cols[1], attribute2_set[0], attribute2_set[1], pos_outcome, neg_outcome)\n"+
+            "        debias_params = get_debias_params(biased_cols[1], privileged_values[0], unprivileged_values[0], pos_outcome, neg_outcome)\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
             "        df_metrics_biased_second = get_df_from_metrics(metrics)\n"+
             "        df_disparity_biased_second = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
@@ -1754,7 +1756,6 @@ var VarData = {};
             "                dataset = dataset.replace(elem, np.nan)\n"+
             "        dataset.dropna(inplace = True)\n"+
             "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
-            "    df_intersection = dataset\n"+
             "    cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
             "    features = cat_vars\n"+
             "    if privileged_cols in features:\n"+
@@ -1839,7 +1840,6 @@ var VarData = {};
             "df_disparity_biased_second\n"+
             "df_ratio\n"+
             "df_mode\n"+
-            "df_intersection\n"+
             "results_pos\n"+
             "results_neg\n"+
             "results_pos_ratio\n"+
