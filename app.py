@@ -254,7 +254,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('df_ratio', 0, (len(line))):
             #markdown_code = f'## Ratio\nRatio between positive and negative outcomes:'
-            markdown_code = 'md(\"## Ratio</h2><br>Ratio for {} and {} outcomes for {}:\".format(pos_outcome, neg_outcome, privileged_cols))'
+            markdown_code = 'md(\"## Ratio</h2><br>Ratio for {} and {} outcomes for {}\".format(pos_outcome, neg_outcome, privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -264,7 +264,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('df_mode', 0, (len(line))):
             #markdown_code = f'## Mode'
-            markdown_code = 'md(\"## Mode</h2><br>Mode for {} and {} outcomes for {}:\".format(pos_outcome, neg_outcome, privileged_cols))'
+            markdown_code = 'md(\"## Mode</h2><br>Mode for {} and {} outcomes for {}\".format(pos_outcome, neg_outcome, privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -274,7 +274,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_pos', 0, (len(line))):
             #markdown_code = f'## Positive privileged mode\nPositive mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode for {} {}:</h2>\".format(privileged_cols, pos_outcome))'
+            markdown_code = 'md(\"## Mode for {} {}</h2>\".format(privileged_cols, pos_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -284,7 +284,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_neg', 0, (len(line))):
             #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode for {} {}:</h2>\".format(privileged_cols, neg_outcome))'
+            markdown_code = 'md(\"## Mode for {} {}</h2>\".format(privileged_cols, neg_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -294,7 +294,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_pos_ratio', 0, (len(line))):
             #markdown_code = f'## Positive privileged mode\nPositive mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode with ratio for {} {}:</h2>\".format(privileged_cols, pos_outcome))'
+            markdown_code = 'md(\"## Mode with ratio for {} {}</h2>\".format(privileged_cols, pos_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -304,7 +304,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('results_neg_ratio', 0, (len(line))):
             #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
-            markdown_code = 'md(\"## Mode with ratio for {} {}:</h2>\".format(privileged_cols, neg_outcome))'
+            markdown_code = 'md(\"## Mode with ratio for {} {}</h2>\".format(privileged_cols, neg_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -314,7 +314,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('pd.DataFrame(df_values_of_1st,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern #1\nBelow is a list that provides the values most frequently associated with {{{{ df_edf.iloc[0, 0] }}}}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:'
-            markdown_code = 'md(\"## Frequent pattern {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(df_edf.iloc[0, 0], df_edf.iloc[0, 0]))'
+            markdown_code = 'md(\"## Frequent pattern for privileged class {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(df_edf.iloc[0, 0], df_edf.iloc[0, 0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -324,7 +324,7 @@ def save_notebook():
                 code_block = []
         elif line.startswith('pd.DataFrame(df_values_of_2nd,index=[0])', 0, (len(line))):
             #markdown_code = f'## Frequent pattern #2\nBelow is a list that provides the values most frequently associated with {{{{ df_edf.iloc[0, 1] }}}}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:'
-            markdown_code = 'md(\"## Frequent pattern {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(df_edf.iloc[0, 1], df_edf.iloc[0, 1]))'
+            markdown_code = 'md(\"## Frequent pattern for unprivileged class {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(df_edf.iloc[0, 1], df_edf.iloc[0, 1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
