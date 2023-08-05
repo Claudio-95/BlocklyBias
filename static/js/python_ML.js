@@ -1823,10 +1823,10 @@ var VarData = {};
             "        remove_corr_metrics_short_used = True\n"+
             "    try:\n"+
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_short)\n"+
-            "        df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
+            "        #df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r))\n"+
             "    except KeyError: # for little datasets\n"+
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_sshort)\n"+
-            "        df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r)).T\n"+
+            "        #df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r))\n"+
             "        metrics_short_disparity_used = True\n"+
             "\n"+
             "if metrics_short_used and samples_short_used and metrics_short_disparity_used:\n"+
@@ -1856,7 +1856,7 @@ var VarData = {};
             "pd.DataFrame(df_values_of_outcome_2nd,index=[0])\n"+
             "pd.DataFrame(df_outcome_1st_neg,index=[0])\n"+
             "pd.DataFrame(df_outcome_2nd_neg,index=[0])\n"+
-            "df_dis_change_max\n"+
+            "pd.DataFrame(res_r).T\n"+
             "if not corr_done:\n"+
             "    pass\n"+
             "else:\n"+
