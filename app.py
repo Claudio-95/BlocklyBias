@@ -372,15 +372,6 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-        elif line.startswith('df_dis_change_max', 0, (len(line))):
-            markdown_code = 'md(\"## Feature removal and reanalysis</h2><br>Here are the features related to the privilege variable {} whose removal results in the largest change in the value of the privilege variable:\".format(privileged_cols))'
-            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
-            notebook.cells.append(markdown_cell)
-            code_block.append(line)
-            if code_block:
-                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
-                notebook.cells.append(code_cell)
-                code_block = []
         else:
             if import_block:
                 import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
