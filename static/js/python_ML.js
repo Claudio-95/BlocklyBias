@@ -1175,7 +1175,8 @@ var VarData = {};
         var biased_cols = Blockly.Python.valueToCode(a, "BIASEDCOLS", Blockly.Python.ORDER_NONE);
         var privileged_cols = Blockly.Python.valueToCode(a, "PRIVILEGEDCOLS", Blockly.Python.ORDER_NONE);
         var pos_outcome = Blockly.Python.valueToCode(a, "POSOUTCOME", Blockly.Python.ORDER_NONE);
-        var codeString = "# Setting display off warning and info messages\n"+
+        var codeString = "# Intersectional bias analysis\n"+
+            "# Setting display off warning and info messages\n"+
             "warnings.filterwarnings(\"ignore\")\n"+
             "logger = logging.getLogger(\"etiq_core\")\n"+
             "logger.setLevel(level = logging.CRITICAL)\n"+
