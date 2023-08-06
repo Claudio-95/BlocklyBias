@@ -1429,31 +1429,6 @@ var VarData = {};
             "            results_neg[ft][val] += 1\n"+
             "    return (results_pos, results_neg)\n"+
             "\n\n"+
-            "# Not used(?)\n"+
-            "def get_intersections_count(samples, features1, features2, attributes1, attributes2):\n"+
-            "    results = {}\n"+
-            "    subgs = []\n"+
-            "    for f1 in features1:\n"+
-            "        for f2 in features2:\n"+
-            "            if f1 != f2: subgs.append(f1+'_'+f2)\n"+
-            "    intersections = []\n"+
-            "    for a1 in attributes1:\n"+
-            "        for a2 in attributes2:\n"+
-            "            if a1 != a2: intersections.append(a1+'_'+a2)\n"+
-            "    for sample in samples:\n"+
-            "        for f1 in features1:\n"+
-            "            for f2 in features2:\n"+
-            "                if f1 != f2:\n"+
-            "                    sample = get_intersection(sample, f1, f2, drop = False)\n"+
-            "        for g in subgs:\n"+
-            "            for t in intersections:\n"+
-            "                n = len(sample[sample[g] == t])\n"+
-            "                if n > 0:\n"+
-            "                    if g not in results: results[g] = {}\n"+
-            "                    if t not in results[g]: results[g][t] = 0\n"+
-            "                    results[g][t] += n\n"+
-            "    return results\n"+
-            "\n\n"+
             "# Dict with modal feature values for the feature's value (bad name for var, sorry)\n"+
             "# the usage examples in the rest of the notebook are far more helpful than the explanation\n"+
             "def get_values_of(samples, feature, value, features):\n"+
@@ -1476,27 +1451,6 @@ var VarData = {};
             "            count = subset.groupby(ft).size()\n"+
             "            if len(count) > 0: result[ft] = count.idxmax()\n"+
             "    return result\n"+
-            "\n\n"+
-            "# Removes the feature most closely related to the p_feature among the features in relevant_features\n"+
-            "# Returns a pair with the data changed and the index removed\n"+
-            "def remove_max_corr(data, relevant_features, p_feature):\n"+
-            "    corr = data.corr(numeric_only = True).abs()\n"+
-            "    corr.drop([p_feature], axis = 0, inplace = True)\n"+
-            "    for i in corr.index:\n"+
-            "        if i not in relevant_features:\n"+
-            "            corr.drop([i], axis = 0, inplace = True)\n"+
-            "    idx = corr[p_feature].idxmax()\n"+
-            "    data = data.drop([idx], axis = 1)\n"+
-            "    return (data, idx)\n"+
-            "\n\n"+
-            "# As above but repeated n times\n"+
-            "# Returns a pair with data and indexes removed\n"+
-            "def iterative_correlation_removal(n, data, relevant_features, p_feature):\n"+
-            "    removed = []\n"+
-            "    for i in range(n):\n"+
-            "        data, r = remove_max_corr(data, relevant_features, p_feature)\n"+
-            "        removed.append(r)\n"+
-            "    return data, removed\n"+
             "\n\n"+
             "# Iterates the process of removing a feature related to p_feature n times. If reinsert = false the result is cumulative,\n"+
             "# otherwise I reinsert at each step and calculate the next in order of correlation\n"+
@@ -1542,16 +1496,6 @@ var VarData = {};
             "        for c in columns:\n"+
             "            data[c] = columns[c]\n"+
             "    return result\n"+
-            "\n\n"+
-            "# From the above function it extracts the features whose removal modifies the value of p_feature the most\n"+
-            "def disparity_change_get_max(result):\n"+
-            "    out = {}\n"+
-            "    for ft in result:\n"+
-            "        for m in result[ft]:\n"+
-            "            if m not in out: out[m] = (ft, result[ft][m], ft, result[ft][m])\n"+
-            "            if result[ft][m] < out[m][1]: out[m] = (ft, result[ft][m], out[m][2], out[m][3])\n"+
-            "            if result[ft][m] > out[m][3]: out[m] = (out[m][0], out[m][1], ft, result[ft][m])\n"+
-            "    return out\n"+
             "\n\n";
         var codeString2 = "dataset = " + df + "\n"+
             "df_copy = dataset\n"+

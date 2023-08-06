@@ -16,40 +16,9 @@ import os
 import sys
 import platform
 
-
 operating_system = platform.system()
-#if operating_system == "Windows":
-    #activate_this = os.path.abspath(os.path.dirname(__file__)) + '\\blocklybias_venv'
-    #print(activate_this)
-    #new_path = os.path.abspath(os.path.dirname(__file__))
-    #sys.path = [new_path]
-    #paths = ['\Python310', '\Python310\Scripts', '\Python310\python310.zip', '\Python310\DLLs', '\Python310\Lib',
-    #        '\Python310\Lib\site-packages', '\Python310\Lib\site-packages\win32', '\Python310\Lib\site-packages\win32\lib',
-    #        '\Python310\Lib\site-packages\pythonwin', '\Python310\win32', '\Python310\win32\lib', '\Python310\pythonwin',
-    #        '\libs']
-    #for p in paths:
-    #    new_path = os.path.abspath(os.path.dirname(__file__)) + p
-    #    sys.path.insert(0, new_path)
-    #print(sys.path)
-#elif operating_system == "Linux":
-    #activate_this = os.path.abspath(os.path.dirname(__file__)) + '/blocklybias_venv'
-    #new_path = os.path.abspath(os.path.dirname(__file__))
-    #sys.path = [new_path]
-    #paths = ['/Python310', '/Python310/Scripts', '/Python310/lib-dynload', '/Python310/python310.zip', '/Python310/DLLs', '/Python310/Lib',
-    #        '/Python310/Lib/site-packages', '/Python310/Lib/site-packages/win32', '/Python310/Lib/site-packages/win32/lib',
-    #        '/Python310/Lib/site-packages/pythonwin', '/Python310/win32', '/Python310/win32lib', '/Python310/pythonwin',
-    #        '/libs']
-    #for p in paths:
-    #    new_path = os.path.abspath(os.path.dirname(__file__)) + p
-    #    sys.path.insert(0, new_path)
-    #print(sys.path)
-#else:
-    #raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
-
-#exec(open(activate_this).read(), {'__file__': activate_this})
 
 from flask import Flask, render_template, request
-#from flask_cors import CORS
 import dash_bootstrap_components as dbc
 import dash
 from dash import html
@@ -63,7 +32,6 @@ app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
-#CORS(app)
 
 
 DASH_APP = dash.Dash(
@@ -183,7 +151,6 @@ def save_notebook():
                 code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
                 notebook.cells.append(code_cell)
                 code_block = []
-            #markdown_code = f'## EDF\nThe Empirical Differential Fairness (EDF) is the ratio between the ratios between positive and total cases of two groups, calculated on the data, without the contribution of a classifier.\nEDF of the {{{{ biased_cols[0] }}}} and {{{{ biased_cols[1] }}}} intersection on the privileged variable {{{{ privileged_cols }}}}:'
             markdown_code = 'md(\"## EDF</h2><br>The Empirical Differential Fairness (EDF) is the ratio between the ratios between positive and total cases of two groups, calculated on the data, without the contribution of a classifier.<br>EDF of the {} and {} intersection on the privileged variable {}:\".format(biased_cols[0], biased_cols[1], privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -193,7 +160,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_metrics_intersect_var', 0, (len(line))):
-            #markdown_code = f'## Metrics\nEqual opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\nThe set of all these metrics are defined here as Fairness metrics.\nFairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
             markdown_code = 'md(\"## Metrics for {}</h2><br>Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.<br>Also it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.<br>Demographic Parity is obtained when all groups have the same Predictive Positive Rate.<br>The set of all these metrics are defined here as Fairness metrics.<br>Fairness metrics for {} and {} are calculated based on the intersect variable between the two biased columns {} and {}:\".format(intersect_var, df_metrics_intersect_var.iloc[0]["class"], df_metrics_intersect_var.iloc[1]["class"], biased_cols[0], biased_cols[1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -203,7 +169,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_disparity_intersect_var', 0, (len(line))):
-            #markdown_code = f'## Disparity\nDisparity is the ratio of its value to the unprivileged group to its value to the privileged group.\nDisparity on fairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
             markdown_code = 'md(\"## Disparity for {}</h2><br>Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.<br>Disparity on fairness metrics for {} and {}, thus the intersect variable between the two biased columns {} and {}:\".format(intersect_var, df_metrics_intersect_var.iloc[0]["class"], df_metrics_intersect_var.iloc[1]["class"], biased_cols[0], biased_cols[1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -213,7 +178,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_metrics_biased_first', 0, (len(line))):
-            #markdown_code = f'## Metrics\nEqual opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\nThe set of all these metrics are defined here as Fairness metrics.\nFairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
             markdown_code = 'md(\"## Metrics for {}</h2><br>Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.<br>Also it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.<br>Demographic Parity is obtained when all groups have the same Predictive Positive Rate.<br>The set of all these metrics are defined here as Fairness metrics.<br>Fairness metrics are calculated based on the first biased column {}:\".format(biased_cols[0], biased_cols[0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -223,7 +187,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_disparity_biased_first', 0, (len(line))):
-            #markdown_code = f'## Disparity\nDisparity is the ratio of its value to the unprivileged group to its value to the privileged group.\nDisparity on fairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
             markdown_code = 'md(\"## Disparity for {}</h2><br>Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.<br>Disparity on fairness metrics for the first biased column {}:\".format(biased_cols[0], biased_cols[0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -233,7 +196,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_metrics_biased_second', 0, (len(line))):
-            #markdown_code = f'## Metrics\nEqual opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.\nAlso it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.\nDemographic Parity is obtained when all groups have the same Predictive Positive Rate.\nThe set of all these metrics are defined here as Fairness metrics.\nFairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
             markdown_code = 'md(\"## Metrics for {}</h2><br>Equal opportunity is the probability of a privileged individual being classified as such must be the same for everyone. In other words all groups should have similar, or ideally equal, True Positive Rates.<br>Also it is a relaxation of the Equalized Odds, in which it is required that in addition to the same True Positive Rate there is also the same False Positive Rate.<br>Demographic Parity is obtained when all groups have the same Predictive Positive Rate.<br>The set of all these metrics are defined here as Fairness metrics.<br>Fairness metrics are calculated based on the second biased column {}:\".format(biased_cols[1], biased_cols[1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -243,7 +205,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_disparity_biased_second', 0, (len(line))):
-            #markdown_code = f'## Disparity\nDisparity is the ratio of its value to the unprivileged group to its value to the privileged group.\nDisparity on fairness metrics for {{{{ df_metrics.iloc[0]["class"] }}}} and {{{{ df_metrics.iloc[1]["class"] }}}}:'
             markdown_code = 'md(\"## Disparity for {}</h2><br>Disparity is the ratio of its value to the unprivileged group to its value to the privileged group.<br>Disparity on fairness metrics for the first biased column {}:\".format(biased_cols[1], biased_cols[1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -253,7 +214,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_ratio', 0, (len(line))):
-            #markdown_code = f'## Ratio\nRatio between positive and negative outcomes:'
             markdown_code = 'md(\"## Ratio</h2><br>Ratio for {} and {} outcomes for {}\".format(pos_outcome, neg_outcome, privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -263,7 +223,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('df_mode', 0, (len(line))):
-            #markdown_code = f'## Mode'
             markdown_code = 'md(\"## Mode</h2><br>Mode for {} and {} outcomes for {}\".format(pos_outcome, neg_outcome, privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -273,7 +232,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('results_pos', 0, (len(line))):
-            #markdown_code = f'## Positive privileged mode\nPositive mode for {{{{ privileged_cols }}}}:'
             markdown_code = 'md(\"## Mode for {} {}</h2>\".format(privileged_cols, pos_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -283,7 +241,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('results_neg', 0, (len(line))):
-            #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
             markdown_code = 'md(\"## Mode for {} {}</h2>\".format(privileged_cols, neg_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -293,7 +250,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('results_pos_ratio', 0, (len(line))):
-            #markdown_code = f'## Positive privileged mode\nPositive mode for {{{{ privileged_cols }}}}:'
             markdown_code = 'md(\"## Mode with ratio for {} {}</h2>\".format(privileged_cols, pos_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -303,7 +259,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('results_neg_ratio', 0, (len(line))):
-            #markdown_code = f'## Negative privileged mode\nNegative mode for {{{{ privileged_cols }}}}:'
             markdown_code = 'md(\"## Mode with ratio for {} {}</h2>\".format(privileged_cols, neg_outcome))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -313,7 +268,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('pd.DataFrame(df_values_of_1st,index=[0])', 0, (len(line))):
-            #markdown_code = f'## Frequent pattern #1\nBelow is a list that provides the values most frequently associated with {{{{ df_edf.iloc[0, 0] }}}}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:'
             markdown_code = 'md(\"## Frequent pattern for privileged class {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(df_edf.iloc[0, 0], df_edf.iloc[0, 0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -323,7 +277,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('pd.DataFrame(df_values_of_2nd,index=[0])', 0, (len(line))):
-            #markdown_code = f'## Frequent pattern #2\nBelow is a list that provides the values most frequently associated with {{{{ df_edf.iloc[0, 1] }}}}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:'
             markdown_code = 'md(\"## Frequent pattern for unprivileged class {}</h2><br>Below is a list that provides the values most frequently associated with {}, and it\'s useful to observe any differences in modal values between the privileged and the unprivileged group:\".format(df_edf.iloc[0, 1], df_edf.iloc[0, 1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -333,7 +286,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('pd.DataFrame(df_values_of_outcome_1st,index=[0])', 0, (len(line))):
-            #markdown_code = f'## Frequent pattern positive privileged #1\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ df_edf.iloc[0, 0] }}}}:'
             markdown_code = 'md(\"## Frequent pattern for privileged class {} with {} {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with {}, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(df_edf.iloc[0, 0], privileged_cols, pos_outcome, pos_outcome, df_edf.iloc[0, 0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -343,7 +295,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('pd.DataFrame(df_values_of_outcome_2nd,index=[0])', 0, (len(line))):
-            #markdown_code = f'## Frequent pattern positive privileged #2\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with positive outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ df_edf.iloc[0, 1] }}}}:'
             markdown_code = 'md(\"## Frequent pattern for unprivileged class {} with {} {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with {}, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(df_edf.iloc[0, 1], privileged_cols, pos_outcome, pos_outcome, df_edf.iloc[0, 1]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -353,7 +304,6 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('pd.DataFrame(df_outcome_1st_neg,index=[0])', 0, (len(line))):
-            #markdown_code = f'## Frequent pattern negative privileged #1\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ df_edf.iloc[0, 0] }}}}:'
             markdown_code = 'md(\"## Frequent pattern for privileged class {} with {} {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with {}, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(df_edf.iloc[0, 0], privileged_cols, neg_outcome, neg_outcome, df_edf.iloc[0, 0]))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
@@ -363,8 +313,16 @@ def save_notebook():
                 notebook.cells.append(code_cell)
                 code_block = []
         elif line.startswith('pd.DataFrame(df_outcome_2nd_neg,index=[0])', 0, (len(line))):
-            #markdown_code = f'## Frequent pattern negative privileged #2\nInstead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with negative outcome, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {{{{ df_edf.iloc[0, 1] }}}}:'
             markdown_code = 'md(\"## Frequent pattern for unprivileged class {} with {} {}</h2><br>Instead below there is a list like the previous one but it filters the observations based on the result of the privilege feature, with {}, and it\'s useful to observe the differences between the modal values of the privileged and non-privileged individuals for {}:\".format(df_edf.iloc[0, 1], privileged_cols, neg_outcome, neg_outcome, df_edf.iloc[0, 1]))'
+            markdown_cell = nbformat.v4.new_code_cell(markdown_code)
+            notebook.cells.append(markdown_cell)
+            code_block.append(line)
+            if code_block:
+                code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+                notebook.cells.append(code_cell)
+                code_block = []
+        elif line.startswith('pd.DataFrame(res_r).T', 0, (len(line))):
+            markdown_code = 'md(\"## Feature removal and reanalysis</h2><br>Here are the features related to the privilege variable {} whose removal results in the largest change in the value of the privilege variable:\".format(privileged_cols))'
             markdown_cell = nbformat.v4.new_code_cell(markdown_code)
             notebook.cells.append(markdown_cell)
             code_block.append(line)
@@ -405,10 +363,10 @@ def save_notebook():
 
 def run_secondary_script_windows():
     script_path = r'server.py'
-    process = subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
+    subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
 def run_third_script_windows():
     script_path = r'jupyter.py'
-    process = subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
+    subprocess.run(['start', 'cmd', '/k', 'python', script_path], shell=True)
 
 def run_secondary_script_linux():
     subprocess.run(['gnome-terminal', '--', 'python3', 'server.py'])
