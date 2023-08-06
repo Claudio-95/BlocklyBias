@@ -1014,7 +1014,7 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "dataframe_Filter",
-            message0: "DataFrame Filter \n %1 %2 %3 Apply to %4",
+            message0: "DataFrame Filter Column \n %1 %2 %3 Apply to DataFrame %4",
             args0: [
                 { type: "input_value", name: "A" },
                 {
@@ -1033,6 +1033,25 @@
                 { type: "input_value", name: "C" },
             ],
             inputsInline: !0,
+            output: "DataFrame",
+        }
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            type: "dataframe_Values_Contained_Filter",
+            message0: "DataFrame Values Contained in Column %1",
+            args0: [
+                { type: "input_value", name: "COLUMN", check: ["String", "DataFrameSeriesSeries"] },
+            ],
+            message1: "Values to select %1",
+            args1: [
+                { type: "input_value", name: "VALUES", check: ["Array", "String", "Number"] },
+            ],
+            message2: "Apply to DataFrame %1",
+            args2: [
+                { type: "input_value", name: "DATAFRAME", check: "DataFrame" },
+            ],
             output: "DataFrame",
         }
     ]);

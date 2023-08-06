@@ -601,11 +601,26 @@ var VarData = {};
         var d = Blockly.Python.valueToCode(a, "A", c) || "";
         var e = Blockly.Python.valueToCode(a, "C", c) || "";
         a = Blockly.Python.valueToCode(a, "B", c) || "";
+        var codeString = "df = " + e + "[" + d + " " + b + " " + a + "]"
         if (d == "" || e == "" || a == "") {
             return ["", Blockly.Python.ORDER_NONE]
         }
 
-        return [e + "[" + d + " " + b + " " + a + "]", Blockly.Python.ORDER_FUNCTION_CALL];
+        return [codeString, Blockly.Python.ORDER_FUNCTION_CALL];
+    };
+
+    Blockly.Python['dataframe_Values_Contained_Filter'] = function (a) {
+        var c = Blockly.Python.ORDER_RELATIONAL;
+        var column = Blockly.Python.valueToCode(a, "COLUMN", c) || "";
+        var values = Blockly.Python.valueToCode(a, "VALUES", c) || "";
+        var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
+        var codeString = "values_to_search = " + values + "\n"+
+            "df = " + df + "[" + df + "[" + column + "].isin(values_to_search)]"
+        if (column == "" || values == "" || df == "") {
+            return ["", Blockly.Python.ORDER_NONE]
+        }
+
+        return [codeString, Blockly.Python.ORDER_FUNCTION_CALL];
     };
 
 
