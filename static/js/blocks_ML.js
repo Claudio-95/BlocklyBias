@@ -1089,7 +1089,7 @@
             type: "dataframe_Binarization",
             message0: "DataFrame Binarization",
             message1: "Column to Select %1 ",
-            tooltip: "Create a new column with all values from the selected DataFrame column based on the given threshold",
+            tooltip: "Creates a new column with all values from the selected DataFrame column based on the specified thresholds. The thresholds are intended in the format [x,y), i.e. the first extreme is included while the last is not. The minimum number of thresholds in input must be 2.",
 
             args1: [
                 {
@@ -1106,46 +1106,19 @@
                     check: "DataFrame",
                     value: 0
                 }],
-            message3: "Threshold %1 %2",
+            message3: "Thresholds %1",
             args3: [
-                {   type: "field_dropdown",
-                    name: "OP",
-                    options: [
-                        ["=", "EQ"],
-                        ["\u2260", "NEQ"],
-                        ["\u200f<", "LT"],
-                        ["\u200f\u2264", "LTE"],
-                        ["\u200f>", "GT"],
-                        ["\u200f\u2265", "GTE"],
-                    ]
-                },
                 {
                     type: "input_value",
                     name: "VALUE",
-                    check: "Number",
+                    check: "Array",
                     value: 0
                 }],
-            message4: "Value for threshold reached %1",
+            message4: "New column name %1",
             args4: [
                 {
                     type: "input_value",
-                    name: "VALUE1",
-                    check: "String",
-                    value: 0
-                }],
-            message5: "Value for threshold not reached %1",
-            args5: [
-                {
-                    type: "input_value",
                     name: "VALUE2",
-                    check: "String",
-                    value: 0
-                }],
-            message6: "New column name %1",
-            args6: [
-                {
-                    type: "input_value",
-                    name: "VALUE3",
                     check: "String",
                     value: 0
                 }],

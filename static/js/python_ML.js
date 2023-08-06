@@ -654,31 +654,19 @@ var VarData = {};
         var c = Blockly.Python.ORDER_NONE;
         var column = Blockly.Python.valueToCode(a, "COLUMN", c) || "";
         var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
-        var condition = { EQ: "==", NEQ: "!=", LT: "<", LTE: "<=", GT: ">", GTE: ">=" }[a.getFieldValue("OP")];
-        var threshold = Blockly.Python.valueToCode(a, "VALUE", c) || "";
-        var value1 = Blockly.Python.valueToCode(a, "VALUE1", c) || "";
-        var value2 = Blockly.Python.valueToCode(a, "VALUE2", c) || "";
-        var new_column = Blockly.Python.valueToCode(a, "VALUE3", c) || "";
+        var thresholds = Blockly.Python.valueToCode(a, "VALUE", c) || "";
+        var new_column = Blockly.Python.valueToCode(a, "VALUE2", c) || "";
         var codeString = "df = " + df + "\n" +
-            "threshold = " + threshold + "\n" +
-            "condition = '" + condition + "'\n" +
-            df + "[" + new_column + "] = \"\"" +
-            "# Modify the column values based on the user supplied threshold and conditional expression\n" +
-            "mask = None\n" +
-            "if condition == \"<=\":\n" +
-            "    mask = df[" + column + "] <= threshold\n" +
-            "elif condition == \">=\":\n" +
-            "    mask = df[" + column + "] >= threshold\n" +
-            "elif condition == \"<\":\n" +
-            "    mask = df[" + column + "] < threshold\n" +
-            "elif condition == \">\":\n" +
-            "    mask = df[" + column + "] > threshold\n" +
-            "else:\n" +
-            "    raise Exception(\"Invalid conditional expression!\")\n" +
-            "if mask is not None:\n" +
-            "    df.loc[mask, " + new_column + "] = " + value1 + "\n" +
-            "    df.loc[~mask, " + new_column + "] = " + value2
-        if (column == "" || df == "" || condition == "" || threshold == "") {
+            "thresholds = " + thresholds + "\n" +
+            "df[" + new_column + "] = \"\"\n" +
+            "\n" +
+            "def assign_bin(value):\n" +
+            "    for i in range(len(thresholds) - 1):\n" +
+            "        if thresholds[i] <= value < thresholds[i + 1]:\n" +
+            "            return f\"{thresholds[i]}-{thresholds[i+1]}\"\n" +
+            "\n" +
+            "df[" + new_column + "] = df[" + column + "].apply(assign_bin)\n"
+        if (column == "" || df == "" || new_column == "" || thresholds == "") {
             return ["", Blockly.Python.ORDER_NONE]
         }
         return [codeString, Blockly.Python.ORDER_ATOMIC];

@@ -343,9 +343,9 @@ def save_notebook():
         import_cell = nbformat.v4.new_code_cell('\n'.join(import_block))
         notebook.cells.append(import_cell)
 
-    if code_block and len(code_block) != 1 and code_block[0] != '': # this condition prevent to append an empty final cell
-        code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
-        notebook.cells.append(code_cell)
+    #if code_block and len(code_block) != 1 and code_block[0] != '': # this condition prevent to append an empty final cell
+    code_cell = nbformat.v4.new_code_cell('\n'.join(code_block))
+    notebook.cells.append(code_cell)
 
     if operating_system == "Windows":
     	file_path = os.path.abspath(os.path.dirname(__file__)) + '\static\py\\notebooks\\' + notebook_name + '.ipynb'
