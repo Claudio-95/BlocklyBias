@@ -103,9 +103,6 @@ def save_notebook():
     import_block = []
     code_block = []
     print_df_block = []
-    #markdown_code = '# Intersectional bias analysis'
-    #first_cell = nbformat.v4.new_markdown_cell(markdown_code)
-    #notebook.cells.append(first_cell)
 
     for line in lines:
 
