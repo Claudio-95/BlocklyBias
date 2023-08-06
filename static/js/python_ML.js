@@ -1797,7 +1797,7 @@ var VarData = {};
             "        dataset.dropna(inplace = True)\n"+
             "    dataset = get_intersection(dataset, biased_cols[0], biased_cols[1], drop = True)\n"+
             "    threshold = [pos_outcome, neg_outcome]\n"+
-            "    dataset[privileged_cols] = (dataset[privileged_cols] != threshold[0]).astype(int)\n"+
+            "    dataset[privileged_cols] = (dataset[privileged_cols] == threshold[0]).astype(int)\n"+
             "    conditions = [\n"+
             "        dataset[intersect_var] == df_edf.iloc[0, 0],\n"+
             "        dataset[intersect_var] == df_edf.iloc[0, 1]\n"+
@@ -1823,10 +1823,8 @@ var VarData = {};
             "        remove_corr_metrics_short_used = True\n"+
             "    try:\n"+
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_short)\n"+
-            "        #df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r))\n"+
             "    except KeyError: # for little datasets\n"+
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_sshort)\n"+
-            "        #df_dis_change_max = pd.DataFrame(disparity_change_get_max(res_r))\n"+
             "        metrics_short_disparity_used = True\n"+
             "\n"+
             "if metrics_short_used and samples_short_used and metrics_short_disparity_used:\n"+
@@ -1867,17 +1865,7 @@ var VarData = {};
         return codeString + codeString2;
     }
 
-    /*
-    Blockly.Python.anchoringBias = function (a) {
-        var b = Blockly.Python.provideFunction_("do_null", [
-            "pass"
-        ]);
-        return b;
-    }
-    */
-
     Blockly.Python.BIAS_Intersectional = Blockly.Python.intersectionalBias;
-    //Blockly.Python.BIAS_Anchoring = Blockly.Python.anchoringBias;
 
     return Blockly.Python;
 
