@@ -1780,6 +1780,12 @@ var VarData = {};
             "            samples_short_used = True\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
             "    results_pos_ratio, results_neg_ratio = get_maxOccurrences_ratio_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n" +
+            "    if biased_cols[0] in features:\n"+
+            "        features.remove(biased_cols[0])\n"+
+            "    if biased_cols[1] in features:\n"+
+            "        features.remove(biased_cols[1])\n"+
+            "    if intersect_var in features:\n"+
+            "        features.remove(intersect_var)\n"+
             "    df_values_of_1st = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features)\n"+
             "    df_values_of_2nd = get_values_of(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 1], features = features)\n"+
             "    df_values_of_outcome_1st = get_values_of_outcome(samples = [dataset], feature = intersect_var, value = df_edf.iloc[0, 0], features = features, p_feature = privileged_cols, outcome = pos_outcome)\n"+
