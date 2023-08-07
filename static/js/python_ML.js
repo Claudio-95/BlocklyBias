@@ -1719,7 +1719,7 @@ var VarData = {};
             "            samples.append(sample)\n"+
             "    except ValueError: # for little datasets\n"+
             "        for i in range(50):\n"+
-            "            sample = dataset.sample(n = 100, ignore_index = True)\n"+
+            "            sample = dataset.sample(n = 100, ignore_index = True, replace = True)\n"+
             "            samples.append(sample)\n"+
             "            samples_short_used = True\n"+
             "    results_pos, results_neg = get_maxOccurrences_in_samples(samples = samples, features = features, p_feature = privileged_cols, positive_outcome = pos_outcome, negative_outcome = neg_outcome)\n"+
