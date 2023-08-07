@@ -1040,7 +1040,8 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "dataframe_Values_Contained_Filter",
-            message0: "DataFrame Values Contained in Column %1",
+            message0: "DataFrame Select Values in Column %1",
+            tooltip: "",
             args0: [
                 { type: "input_value", name: "COLUMN", check: ["String", "DataFrameSeriesSeries"] },
             ],
@@ -2929,16 +2930,6 @@
             inputsInline: 0
         }
     ]);
-
-    /*
-    Blockly.defineBlocksWithJsonArray([
-        {
-            type: "BIAS_Anchoring",
-            message0: "Check anchoring bias",
-            output: "String" // output anchoring
-        }
-    ]);
-    */
 
     Blockly.Extensions.register("text_indexOf_tooltip", Blockly.Constants.Text.TEXT_INDEXOF_TOOLTIP_EXTENSION);
     Blockly.Extensions.register("text_quotes", Blockly.Constants.Text.TEXT_QUOTES_EXTENSION);

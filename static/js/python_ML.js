@@ -615,7 +615,7 @@ var VarData = {};
         var values = Blockly.Python.valueToCode(a, "VALUES", c) || "";
         var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
         var codeString = "values_to_search = " + values + "\n"+
-            "df = " + df + "[" + df + "[" + column + "].isin(values_to_search)]"
+            df + " = " + df + "[" + df + "[" + column + "].isin(values_to_search)]"
         if (column == "" || values == "" || df == "") {
             return ["", Blockly.Python.ORDER_NONE]
         }
