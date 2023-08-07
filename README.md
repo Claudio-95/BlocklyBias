@@ -2,6 +2,8 @@
 
 BlocklyBias is a visual programming tool that requires no programming knowledge from the user. It generates Python code from the blocks used with the interface and its purpose is to analyze biases in datasets.
 
+Note: If you also have Anaconda or Jupyter Notebook installed on your computer, please do not open it before running BlocklyBias. This is because BlocklyBias already includes Jupyter Notebook, so to run it correctly it needs to occupy a standard address that would otherwise be occupied.
+
 # Index of contents
 
 - [Installing as BlocklyBias App](#installing-as-blocklybias-app)
