@@ -1777,16 +1777,14 @@ var VarData = {};
             "        res_r = disparity_change(dataset, 6, True, cont_vars, privileged_cols, debias_params, cont_vars, cat_vars, metrics_sshort)\n"+
             "        metrics_short_disparity_used = True\n"+
             "\n"+
-            "message = \"Analysis completed.\"\n"+
             "if metrics_short_used and samples_short_used and metrics_short_disparity_used:\n"+
-            "    message = md(\"\\nWarning! Fewer metrics were used and limited sampling was performed during the analysis. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
+            "    print(\"\\nWarning! Fewer metrics were used and limited sampling was performed during the analysis. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
             "elif metrics_short_used:\n"+
-            "    message = md(\"\\nWarning! Fewer metrics were used during the analysis, in particular only: accuracy, demographic_parity, equal_opportunity, individual_fairness were considered. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
+            "    print(\"\\nWarning! Fewer metrics were used during the analysis, in particular only: accuracy, demographic_parity, equal_opportunity, individual_fairness were considered. This may be due to too small a dataset, if you want to get a more complete analysis please try again with a larger dataset.\")\n"+
             "elif samples_short_used:\n"+
-            "    message = md(\"\\nWarning! Limited sampling was performed during the analysis. If you want to get a more precise analysis and with a larger sampling, please try again with a larger dataset.\")\n"+
+            "    print(\"\\nWarning! Limited sampling was performed during the analysis. If you want to get a more precise analysis and with a larger sampling, please try again with a larger dataset.\")\n"+
             "elif metrics_short_disparity_used or remove_corr_metrics_short_used:\n"+
-            "    message = md(\"\\nWarning! During the analysis, specifically in the calculation of the disparity change, individual fairness was not considered as a metric. If you want to run a full analysis please try again with a larger dataset.\")\n"+
-            "message\n"+
+            "    print(\"\\nWarning! During the analysis, specifically in the calculation of the disparity change, individual fairness was not considered as a metric. If you want to run a full analysis please try again with a larger dataset.\")\n"+
             "df_edf\n"+
             "df_metrics_intersect_var\n"+
             "df_disparity_intersect_var\n"+
