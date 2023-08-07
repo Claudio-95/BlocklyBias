@@ -513,12 +513,6 @@ var VarData = {};
         return e;
     }
 
-    Blockly.Python['seaborn_dataset'] = function (a) {
-        Blockly.Python.definitions_.seaborn = "import seaborn as sns";
-        VarData[a.inputList[0].fieldRow[1].value_] = 'sns.load_dataset("' + a.inputList[0].fieldRow[1].value_ + '")', Blockly.Python.ORDER_FUNCTION_CALL;
-        return ['sns.load_dataset("' + a.inputList[0].fieldRow[1].value_ + '")', Blockly.Python.ORDER_FUNCTION_CALL]
-    }
-
     Blockly.Python['pandas_drop_columns'] = function (a) {
         var columns = Blockly.Python.valueToCode(a, "COLUMN", Blockly.Python.ORDER_UNARY_SIGN)
         if (columns == "") {

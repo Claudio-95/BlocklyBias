@@ -59,38 +59,14 @@
             &nbsp;
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" h data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" onclick="blockly.runJS();CloseAllNav();">
-                        File
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle"
-                                onclick="getReport()">DataFrame Visualizer(Sample) </a>
-                            <ul class="dropdown-menu DataFrameReportViewer">
-                                <div class="DataFrameReportViewer" id="DataFrameReportViewer">
-                                    <li><a class="dropdown-item" href="#">Report is loading, please wait...</a></li>
-                                </div>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" onclick="blockly.runJS();CloseAllNav();getDataDownload()">
+                        aria-expanded="false" onclick="blockly.runJS();CloseAllNav();"><!--getDataDownload()-->
                         Download
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
                         <li><a class="dropdown-item" onclick="downloadView()" data-toggle="modal" data-target="#downloadCodeModal">Download Code</a></li>
                         <li><a class="dropdown-item" onclick="blockly.DownloadCode()">Download layout</a></li>
-                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle">Download DataFrames</a>
-                            <ul class="dropdown-menu DataFrameViewer">
-                                <div class="DataFrameDownload" id="DataFrameDownload">
-                                    <li><a class="dropdown-item" href="#">DataFrame is loading, please wait...</a>
-                                    </li>
-                                </div>
-                            </ul>
-                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown active">
@@ -207,7 +183,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" onclick="blockly.UploadFromUrl()" class="btn btn-primary" data-dismiss="modal">Upload</button>
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <!-- onclick="closeForm()" -->
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
@@ -664,13 +640,6 @@
             </block>
         </category>
 
-        <category name=Datasets colour="%{BKY_LOGIC_HUE}">
-
-            <block type="seaborn_dataset">
-                <field name="Dataset">iris</field>
-            </block>
-
-        </category>
         <category name=Dictionary colour="%{BKY_COLOUR_HUE}">
             <block type="create_dict">
             </block>
