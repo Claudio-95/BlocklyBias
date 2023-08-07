@@ -1685,7 +1685,7 @@ var VarData = {};
             "            elif dataset[label].dtype == np.int64 or dataset[label].dtype == np.float64 or dataset[label].dtype == np.complex128 or dataset[label].dtype == np.int32 or dataset[label].dtype == np.float32:\n"+
             "                cont_vars.append(label)\n"+
             "        cat_vars = list(set(dataset.columns.values) - set(cont_vars))\n"+
-            "        debias_params = get_debias_params(biased_cols[1], privileged_values[0], unprivileged_values[0], pos_outcome, neg_outcome)\n"+
+            "        debias_params = get_debias_params(biased_cols[1], privileged_values[1], unprivileged_values[1], pos_outcome, neg_outcome)\n"+
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
             "        df_metrics_biased_second = get_df_from_metrics(metrics)\n"+
             "        df_disparity_biased_second = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
