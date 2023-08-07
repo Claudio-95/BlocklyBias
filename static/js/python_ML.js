@@ -1651,6 +1651,8 @@ var VarData = {};
             "        metrics = etiq_wrapper_run(dataset, debias_params, cont_vars, cat_vars, privileged_cols, metrics_sshort)\n"+
             "        df_metrics_intersect_var = get_df_from_metrics(metrics)\n"+
             "        df_disparity_intersect_var = get_disparity_df(metrics, debias_params, metrics_list_short)\n"+
+            "        privileged_values = df_metrics_intersect_var.iloc[0][\"class\"].split('_')\n"+
+            "        unprivileged_values = df_metrics_intersect_var.iloc[1][\"class\"].split('_')\n"+
             "        dataset = " + df + "\n"+
             "        if dropnan == 1:\n"+
             "            valuesToCheck = \"?\\/-\"\n"+
