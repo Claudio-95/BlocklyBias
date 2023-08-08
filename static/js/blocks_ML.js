@@ -1106,10 +1106,10 @@
 
     Blockly.defineBlocksWithJsonArray([
         {
-            type: "dataframe_Binarization",
-            message0: "DataFrame Binarization",
+            type: "dataframe_Aggregation_num",
+            message0: "DataFrame Aggregation for numerical attributes",
             message1: "Column to Select %1 ",
-            tooltip: "Creates a new column with all values from the selected DataFrame column based on the specified thresholds. The thresholds are intended in the format [x,y), i.e. the first extreme is included while the last is not. The minimum number of thresholds in input must be 2.",
+            tooltip: "Creates a new column with all values aggregated from the selected DataFrame column based on the specified thresholds. The thresholds are intended in the format [x,y), i.e. the first extreme is included while the last is not. The minimum number of thresholds in input must be 2. You can put the same name as the original column, it will be overwritten.",
 
             args1: [
                 {
@@ -1132,6 +1132,48 @@
                     type: "input_value",
                     name: "VALUE",
                     check: "Array",
+                    value: 0
+                }],
+            message4: "New column name %1",
+            args4: [
+                {
+                    type: "input_value",
+                    name: "VALUE2",
+                    check: "String",
+                    value: 0
+                }],
+            output: ["DataFrame", "DataFrameSeries"]
+        }
+    ]);
+
+    Blockly.defineBlocksWithJsonArray([
+        {
+            type: "dataframe_Aggregation",
+            message0: "DataFrame Aggregation for nominal attributes",
+            message1: "Column to Select %1 ",
+            tooltip: "Creates a new column with all values aggregated from the selected DataFrame column based on the specified values. The aggregation values must be expressed as a dictionary. You can put the same name as the original column, it will be overwritten. Unspecified values will be aggregated as 'Other'",
+
+            args1: [
+                {
+                    type: "input_value",
+                    name: "COLUMN",
+                    check: "String",
+                    value: 0
+                }],
+            message2: "Input Dataframe %1",
+            args2: [
+                {
+                    type: "input_value",
+                    name: "DATAFRAME",
+                    check: "DataFrame",
+                    value: 0
+                }],
+            message3: "Aggregation values %1",
+            args3: [
+                {
+                    type: "input_value",
+                    name: "VALUE",
+                    check: "DICT",
                     value: 0
                 }],
             message4: "New column name %1",

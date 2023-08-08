@@ -659,7 +659,7 @@ var VarData = {};
         return [codeString, Blockly.Python.ORDER_ATOMIC];
     };
 
-    Blockly.Python['dataframe_Binarization'] = function (a) {
+    Blockly.Python['dataframe_Aggregation_num'] = function (a) {
         var c = Blockly.Python.ORDER_NONE;
         var column = Blockly.Python.valueToCode(a, "COLUMN", c) || "";
         var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
@@ -667,7 +667,6 @@ var VarData = {};
         var new_column = Blockly.Python.valueToCode(a, "VALUE2", c) || "";
         var codeString = "df = " + df + "\n" +
             "thresholds = " + thresholds + "\n" +
-            "df[" + new_column + "] = \"\"\n" +
             "\n" +
             "def assign_bin(value):\n" +
             "    for i in range(len(thresholds) - 1):\n" +
@@ -676,6 +675,28 @@ var VarData = {};
             "\n" +
             "df[" + new_column + "] = df[" + column + "].apply(assign_bin)\n"
         if (column == "" || df == "" || new_column == "" || thresholds == "") {
+            return ["", Blockly.Python.ORDER_NONE]
+        }
+        return [codeString, Blockly.Python.ORDER_ATOMIC];
+    };
+
+    Blockly.Python['dataframe_Aggregation'] = function (a) {
+        var c = Blockly.Python.ORDER_NONE;
+        var column = Blockly.Python.valueToCode(a, "COLUMN", c) || "";
+        var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
+        var aggregation_values = Blockly.Python.valueToCode(a, "VALUE", c) || "";
+        var new_column = Blockly.Python.valueToCode(a, "VALUE2", c) || "";
+        var codeString = "df = " + df + "\n" +
+            "aggregation_values = " + aggregation_values + "\n" +
+            "\n" +
+            "def custom_aggregation(x):\n" +
+            "    if x in aggregation_values:\n" +
+            "        return aggregation_values[x]\n" +
+            "    else:\n" +
+            "        return 'Other'\n" +
+            "\n" +
+            "df[" + new_column + "] = df[" + column + "].apply(custom_aggregation)\n"
+        if (column == "" || df == "" || new_column == "" || aggregation_values == "") {
             return ["", Blockly.Python.ORDER_NONE]
         }
         return [codeString, Blockly.Python.ORDER_ATOMIC];
