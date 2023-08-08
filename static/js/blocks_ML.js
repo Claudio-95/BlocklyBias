@@ -1064,6 +1064,7 @@
         {
             type: "dataframe_Map",
             message0: "DataFrame Map \n %1 Apply to %2",
+            tooltip: "Map the values of a DataFrame Column based on user input. Unspecified values will be mapped as 'NaN'.",
             args0: [
                 { type: "input_value", name: "Map", check: "DICT" },
                 { type: "input_value", name: "Series", check: "DataFrameSeries" },
@@ -1078,9 +1079,9 @@
             type: "dataframe_change_column_type",
             previousStatement: null,
             nextStatement: null,
-            message0: "DataFrame Change column type",
+            message0: "DataFrame Change Column type",
             message1: "Column to Select %1 ",
-            tooltip: "Change the column type. Possible types are: object, str, mixed, int, float, datetime",
+            tooltip: "Change the column type. Possible types are: str (string), int (integer), float (decimal), datetime (calendar/times format).",
             args1: [
                 {
                     type: "input_value",
@@ -1112,9 +1113,9 @@
             type: "dataframe_Aggregation_num",
             previousStatement: null,
             nextStatement: null,
-            message0: "DataFrame Aggregation for numerical attributes",
+            message0: "DataFrame Aggregation Numerical Column",
             message1: "Column to Select %1 ",
-            tooltip: "Creates a new column with all values aggregated from the selected DataFrame column based on the specified thresholds. The thresholds are intended in the format [x,y), i.e. the first extreme is included while the last is not. The minimum number of thresholds in input must be 2. You can put the same name as the original column, it will be overwritten.",
+            tooltip: "Creates a new column with all values aggregated from the selected DataFrame column based on the specified thresholds. The thresholds are intended in the format [x,y), i.e. the first extreme is included while the last is not. The minimum number of thresholds in input must be 2 and unspecified values will remain the same. You can put the same name as the original column, it will be overwritten.",
 
             args1: [
                 {
@@ -1155,7 +1156,7 @@
             type: "dataframe_Aggregation",
             previousStatement: null,
             nextStatement: null,
-            message0: "DataFrame Aggregation for nominal attributes",
+            message0: "DataFrame Aggregation Nominal Column",
             message1: "Column to Select %1 ",
             tooltip: "Creates a new column with all values aggregated from the selected DataFrame column based on the specified values. The aggregation values must be expressed as a dictionary. You can put the same name as the original column, it will be overwritten. Unspecified values will be aggregated as 'Other'",
 

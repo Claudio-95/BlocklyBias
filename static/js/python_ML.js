@@ -608,7 +608,7 @@ var VarData = {};
         var values = Blockly.Python.valueToCode(a, "VALUES", c) || "";
         var df = Blockly.Python.valueToCode(a, "DATAFRAME", c) || "";
         var codeString = "values_to_search = " + values + "\n"+
-            df + " = " + df + "[" + df + "[" + column + "].isin(values_to_search)]"
+            df + " = " + df + "[" + df + "[" + column + "].isin(values_to_search)]\n"
         if (column == "" || values == "" || df == "") {
             return "";
         }
@@ -651,11 +651,11 @@ var VarData = {};
         "    for label in column:\n" +
         "        change_column_type(df, label, to_change)\n" +
         "else:\n" +
-        "    change_column_type(df, column, to_change)"
+        "    change_column_type(df, column, to_change)\n"
         if (column == "" || df == "" || type == "") {
-            return ["", Blockly.Python.ORDER_NONE];
+            return "";
         }
-        return [codeString, Blockly.Python.ORDER_ATOMIC];
+        return codeString;
     };
 
     Blockly.Python['dataframe_Aggregation_num'] = function (a) {
