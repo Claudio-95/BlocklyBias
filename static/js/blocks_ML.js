@@ -981,8 +981,8 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "pandas_set_columns",
-            message0: "Add Column to DataFrame  ",
-            message1: "Columns to Set %1 ",
+            message0: "Add Column to DataFrame",
+            message1: "Columns to set %1 ",
             previousStatement: null,
             nextStatement: null,
             tooltip: "Select columns mentioned in the list form pandas dataframe",
@@ -1014,7 +1014,8 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "dataframe_Filter",
-            message0: "DataFrame Filter Column \n %1 %2 %3 Apply to DataFrame %4",
+            message0: "DataFrame Filter, Column \n %1 %2 %3 Apply to DataFrame %4",
+            tooltip: "Select a value to filter on the DataFrame Column.",
             args0: [
                 { type: "input_value", name: "A" },
                 {
@@ -1040,8 +1041,10 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "dataframe_Values_Contained_Filter",
-            message0: "DataFrame Select Values in Column %1",
-            tooltip: "",
+            previousStatement: null,
+            nextStatement: null,
+            message0: "DataFrame Filter Multiple Values, Column %1",
+            tooltip: "Select multiple values to filter in the DataFrame Column.",
             args0: [
                 { type: "input_value", name: "COLUMN", check: ["String", "DataFrameSeriesSeries"] },
             ],
@@ -1053,7 +1056,6 @@
             args2: [
                 { type: "input_value", name: "DATAFRAME", check: "DataFrame" },
             ],
-            output: "DataFrame",
         }
     ]);
 
@@ -1074,6 +1076,8 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "dataframe_change_column_type",
+            previousStatement: null,
+            nextStatement: null,
             message0: "DataFrame Change column type",
             message1: "Column to Select %1 ",
             tooltip: "Change the column type. Possible types are: object, str, mixed, int, float, datetime",
@@ -1100,13 +1104,14 @@
                     check: "String",
                     value: 0
                 }],
-            output: ["DataFrame", "DataFrameSeries"]
         }
     ]);
 
     Blockly.defineBlocksWithJsonArray([
         {
             type: "dataframe_Aggregation_num",
+            previousStatement: null,
+            nextStatement: null,
             message0: "DataFrame Aggregation for numerical attributes",
             message1: "Column to Select %1 ",
             tooltip: "Creates a new column with all values aggregated from the selected DataFrame column based on the specified thresholds. The thresholds are intended in the format [x,y), i.e. the first extreme is included while the last is not. The minimum number of thresholds in input must be 2. You can put the same name as the original column, it will be overwritten.",
@@ -1142,13 +1147,14 @@
                     check: "String",
                     value: 0
                 }],
-            output: ["DataFrame", "DataFrameSeries"]
         }
     ]);
 
     Blockly.defineBlocksWithJsonArray([
         {
             type: "dataframe_Aggregation",
+            previousStatement: null,
+            nextStatement: null,
             message0: "DataFrame Aggregation for nominal attributes",
             message1: "Column to Select %1 ",
             tooltip: "Creates a new column with all values aggregated from the selected DataFrame column based on the specified values. The aggregation values must be expressed as a dictionary. You can put the same name as the original column, it will be overwritten. Unspecified values will be aggregated as 'Other'",
@@ -1184,7 +1190,6 @@
                     check: "String",
                     value: 0
                 }],
-            output: ["DataFrame", "DataFrameSeries"]
         }
     ]);
 
@@ -1205,6 +1210,8 @@
 
     Blockly.defineBlocksWithJsonArray([{
         "type": "dataframe_print",
+        "previousStatement": "null",
+        "nextStatement": "null",
         "message0": 'Print DataFrame %1',
         "args0": [
             {
@@ -1213,7 +1220,6 @@
                 "check": "DataFrame"
             }
         ],
-        "output": "DataFrame",
         "tooltip": "Print DataFrame in notebook"
     }]);
 
@@ -1249,7 +1255,7 @@
             type: "pandas_sample",
             message0: "Dataframe Sampling  ",
             message1: "Sample Factor %1 ",
-            tooltip: "Select columns mentioned in the list/string will be dropped pandas dataframe",
+            tooltip: "Return a random sample of items from an axis of object. The sample factor is the fraction of items to return.",
 
             args1: [
                 {
@@ -2899,10 +2905,9 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "BIAS_Intersectional",
-            tooltip: "Read a dataframe as input and produce a final result which is graphs and an explanatory message. The privileged column can be seen as a target variable for classification, it is the column against which bias needs to be analyzed",
-            //setHelpUrl: "",
-            //previousStatement: null,
-            //nextStatement: null,
+            tooltip: "Read a dataframe as input and produce a final result which is graphs and an explanatory message. The privileged column can be seen as a target variable for classification, it is the column against which bias needs to be analyzed.",
+            previousStatement: null,
+            nextStatement: null,
             message0: "Check intersectional bias",
             message1: "Input dataframe %1",
             args1: [
@@ -2940,7 +2945,6 @@
                     name: "SPLIT",
                     options: [["Delete", "dropNa"], ["Leave", "none"]]
                 }],
-            output: "String", // output intersectional
             inputsInline: 0
         }
     ]);
