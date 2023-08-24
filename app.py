@@ -34,7 +34,7 @@ app.config['DEBUG'] = True
 
 @app.route('/', methods=['POST', 'GET'])
 def root():
-    """renders undex.html
+    """renders index.html
 
     Returns:
         _render: rendered html
@@ -347,13 +347,13 @@ if __name__ == '__main__':
     # the code until thread.start() runs two different process as threads, one for the main app.py and one for the server.py, which serves to simulate a Jupyter Notebook on the dedicated tab
     operating_system = platform.system()
     if operating_system == "Windows":
-        server_thread = threading.Thread(target=run_secondary_script_windows(), name='server.py_thread')
-        server_thread.start()
+        #server_thread = threading.Thread(target=run_secondary_script_windows(), name='server.py_thread')
+        #server_thread.start()
         jupyter_thread = threading.Thread(target=run_third_script_windows(), name='jupyter.py_thread')
         jupyter_thread.start()
     elif operating_system == "Linux":
-        server_thread = threading.Thread(target=run_secondary_script_linux(), name='server.py_thread')
-        server_thread.start()
+        #server_thread = threading.Thread(target=run_secondary_script_linux(), name='server.py_thread')
+        #server_thread.start()
         jupyter_thread = threading.Thread(target=run_third_script_linux(), name='jupyter.py_thread')
         jupyter_thread.start()
     else:
