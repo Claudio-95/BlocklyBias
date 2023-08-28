@@ -709,7 +709,7 @@ blockly.notebookCode = function () {
   }
   blockly.attemptCodeGenerationNotebook(Blockly.Python);
   const currentURL = window.location.href;
-  const python_script_URL = currentURL + '/static/py/write_notebook';
+  const python_script_URL = currentURL + '/static/py/';
   // Getting parent node
   var parentElement = document.getElementById("content_python");
   // Check if the parent node has only one child

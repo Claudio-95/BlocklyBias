@@ -42,7 +42,7 @@ def root():
     return render_template('index.html')
 
 
-@app.route('/static/py/write_notebook', methods=['POST'])
+@app.route('/static/py/', methods=['POST'])
 def save_notebook():
     data = request.get_json()
     python_code = data.get('python_code')
