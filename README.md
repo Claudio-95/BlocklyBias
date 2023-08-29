@@ -9,7 +9,7 @@ Note: if you also have Anaconda or Jupyter Notebook installed on your computer, 
 - [Installing as BlocklyBias App](#installing-as-blocklybias-app)
     -  [Windows](#windows)
     -  [Linux](#linux)
-- [How to import/export files into Jupyter Notebook](#how-to-import/export-files-into-jupyter-notebook)
+- [How to import/export files into Jupyter Notebook](#how-to-importexport-files-into-jupyter-notebook)
 - [Tested on](#tested-on)
 - [Thanks to](#thanks-to)
 # Installing as BlocklyBias App
