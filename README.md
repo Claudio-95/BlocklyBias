@@ -9,7 +9,7 @@ Note: if you also have Anaconda or Jupyter Notebook installed on your computer, 
 - [Installing as BlocklyBias App](#installing-as-blocklybias-app)
     -  [Windows](#windows)
     -  [Linux](#linux)
-- [How to import files into Jupyter Notebook](#how-to-import-files-into-jupyter-notebook)
+- [How to import/export files into Jupyter Notebook](#how-to-import-files-into-jupyter-notebook)
 - [Tested on](#tested-on)
 - [Thanks to](#thanks-to)
 # Installing as BlocklyBias App
@@ -119,9 +119,9 @@ python3 app.py
 
 The browser address will be displayed on the main terminal window.
 
-# How to import files into Jupyter Notebook
+# How to import/export files into Jupyter Notebook
 
-To import a file into Jupyter Notebook, for example a .csv dataset or a notebook, simply paste the file into the `./BlocklyBias/static/py/notebooks/` directory on Linux or `.\BlocklyBias\static\py\notebooks\` on Windows.  
+To import/export a file into Jupyter Notebook, for example a .csv dataset or a notebook, simply go to the `./BlocklyBias/static/py/notebooks/` directory on Linux or `.\BlocklyBias\static\py\notebooks\` on Windows.  
 `BlocklyBias` is the folder where you installed BlocklyBias.
 
 # Tested on
