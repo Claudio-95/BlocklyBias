@@ -1196,7 +1196,7 @@
 
     Blockly.defineBlocksWithJsonArray([{
         "type": "pandas_read_csv",
-        "message0": 'Read DataFrame %1',
+        "message0": 'Read DataFrame from %1',
         "args0": [
             {
                 "type": "input_value",
@@ -1205,7 +1205,7 @@
             }
         ],
         "output": "DataFrame",
-        "tooltip": "Read CSV from Url or path",
+        "tooltip": "Read a .CSV file via a text string block",
         "helpUrl": "https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"
     }]);
 
@@ -1213,7 +1213,7 @@
         "type": "dataframe_print",
         "previousStatement": "null",
         "nextStatement": "null",
-        "message0": 'Print DataFrame %1',
+        "message0": 'Print DataFrame from %1',
         "args0": [
             {
                 "type": "input_value",
@@ -1221,7 +1221,7 @@
                 "check": "DataFrame"
             }
         ],
-        "tooltip": "Print DataFrame in notebook"
+        "tooltip": "Visualize DataFrame"
     }]);
 
     Blockly.defineBlocksWithJsonArray([

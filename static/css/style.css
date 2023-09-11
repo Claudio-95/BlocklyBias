@@ -182,6 +182,10 @@ button {
     cursor: pointer;
 }
 
+#notebookButton {
+    background-color: #cc2221;
+}
+
 /* Sprited icons. */
 
 .icon21 {

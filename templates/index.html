@@ -144,6 +144,9 @@
                         <!-- end new part -->
 
                         <td class="tabmax">
+                            <button id="notebookButton" type="button" class="notext" title="Write notebook" data-toggle="modal" data-target="#notebookModal">
+                                <img src='/static/media/notebook.png' class="icon">
+                            </button>
                             <button id="downlaodButton" class="notext" title="Download layout">
                                 <img src='/static/media/download.png' class="icon">
                             </button>
@@ -241,9 +244,6 @@
                             </div>
 
                             <!-- Button trigger modal -->
-                            <button id="notebookButton" type="button" class="notext" title="Write notebook" data-toggle="modal" data-target="#notebookModal">
-                                <img src='/static/media/notebook.png' class="icon">
-                            </button>
                             <button id="copyButton" class="notext" title="Copy python code">
                                 <img src='/static/media/copy.png' class="icon">
                             </button>
@@ -604,10 +604,10 @@
         <category name=DataFrame colour="%{BKY_TEXTS_HUE}">
 
             <block type="pandas_read_csv">
-                <field type="pandas.read_csv">Read DataFrame</field>
+                <field type="pandas.read_csv">Read DataFrame from</field>
             </block>
             <block type="dataframe_print">
-                <field type="dataframe_print">Print DataFrame</field>
+                <field type="dataframe_print">Print DataFrame from</field>
             </block>
             <block type="pandas_select_columns">
                 <field type="pandas_select_columns">Select DataFrame Column</field>
