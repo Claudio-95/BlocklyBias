@@ -739,6 +739,12 @@ blockly.notebookCode = function () {
       })
       .then(data => {
         console.log(data); // Server answer
+        if (data == "Notebook processed and saved.") {
+          $('#successAlert').addClass('show');
+          setTimeout(function () {
+            $('#successAlert').removeClass('show');
+          }, 5000);
+        }
       })
       .catch(error => {
         console.error(error);

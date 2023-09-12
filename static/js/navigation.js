@@ -158,6 +158,12 @@ $(document).keyup(function (e) {
     }
 });
 
+// Close notebook creation alert
+function closeAlert () {
+    $('#successAlert').removeClass('show');
+}
+
+
 function CountBlocks () {
     var count = blockly.workspace.getAllBlocks(false).length;
     if (count == 1) {

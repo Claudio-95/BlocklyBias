@@ -265,6 +265,24 @@ button {
     box-sizing: border-box;
 }
 
+/* alert */
+
+#successAlert {
+    display: inline-block;
+    position: absolute;
+    z-index: 1050;
+    top: 3%;
+    left: 0;
+    right: 0;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#successAlertClose {
+    margin-left: 10px;
+}
+
 /*
 The popup form - hidden by default
 
