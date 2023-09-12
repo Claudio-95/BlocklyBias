@@ -2906,7 +2906,7 @@
     Blockly.defineBlocksWithJsonArray([
         {
             type: "BIAS_Intersectional",
-            tooltip: "Read a dataframe as input and produce a final result which is graphs and an explanatory message. The privileged column can be seen as a target variable for classification, it is the column against which bias needs to be analyzed.",
+            tooltip: "Reads an input dataframe, identifies and analyzes the presence of intersectional biases, also providing mitigation strategies in the final results. The privilege column is the column against which you need to analyze the bias and should only contain two values. The positive outcome is one of the two values that determines the privilege of a category of the reference population",
             previousStatement: null,
             nextStatement: null,
             message0: "Check intersectional bias",
