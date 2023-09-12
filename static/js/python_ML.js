@@ -467,10 +467,10 @@ var VarData = {};
         // it makes compatible the block with both variable and string blocks
         if (String(a).split(" ").length > 3) {
             // string block input
-            return ['pd.read_csv("' + String(a).split(" ")[3] + '")', Blockly.Python.ORDER_FUNCTION_CALL] //Original row: return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL]
+            return ['pd.read_csv("' + String(a).split(" ")[4] + '")', Blockly.Python.ORDER_FUNCTION_CALL] //Original row: return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL]
         } else {
             // variable block input
-            return ['pd.read_csv(' + String(a).split(" ")[2] + ')', Blockly.Python.ORDER_FUNCTION_CALL];
+            return ['pd.read_csv(' + String(a).split(" ")[3] + ')', Blockly.Python.ORDER_FUNCTION_CALL];
         }
     }
 
