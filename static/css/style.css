@@ -281,6 +281,7 @@ button {
 
 #successAlertClose {
     margin-left: 10px;
+    outline: 0;
 }
 
 /*
