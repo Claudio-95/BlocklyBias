@@ -121,6 +121,75 @@
         </div>
     </div>
 
+    <!-- Help modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Help</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Don't know where to start?
+                    </p>
+                    <p>
+                        To build an intersectional bias detection and analysis program you can proceed in this order:
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                Create a variable;
+                            </p>
+                            <img src="/static/media/create_var.png" width="100%" height="auto">
+                        </li>
+                        <li>
+                            <p>
+                                Set the variable to store a dataset;
+                            </p>
+                            <img src="/static/media/set_var.png" width="100%" height="auto">
+                        </li>
+                        <li>
+                            <p>
+                                Specifies the name of the .csv file, with extension, that contains the dataset
+                            </p>
+                            <img src="/static/media/set_file_name.png" width="100%" height="auto">
+                        </li>
+                        <li>
+                            <p>
+                                Stick below the intersectional bias analysis block;
+                            </p>
+                            <img src="/static/media/intersectional_bias.png" width="100%" height="auto">
+                        </li>
+                        <li>
+                            <p>
+                                Follow the tooltip instructions and attach the necessary blocks to all required fields;
+                            </p>
+                            <img src="/static/media/fill_bias_input.png" width="100%" height="auto">
+                        </li>
+                        <li>
+                            <p>
+                                You can perform preprocessing operations on the dataset if necessary, with blocks to be inserted before the intersectional bias analysis. This step is optional but recommended to obtain more precise and reliable results;
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                You can find an example of an intersectional bias analysis program, with also a preprocessing operation, by clicking on the "Update layout" button and loading it from the suggested URL address.
+                            </p>
+                            <img src="/static/media/upload_sample.png" width="100%" height="auto">
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- success alert for notebook creation -->
     <div class="alert alert-success fade" role="alert" id="successAlert">
         Notebook creato con successo!
         <button type="button" class="close" aria-label="Close" id="successAlertClose" onclick="closeAlert()">
@@ -153,6 +222,9 @@
                         <td class="tabmax">
                             <button id="notebookButton" type="button" class="notext" title="Create notebook" data-toggle="modal" data-target="#notebookModal">
                                 <img src='/static/media/notebook.png' class="icon">
+                            </button>
+                            <button id="helpButton" class="notext" title="Help" data-toggle="modal" data-target="#helpModal">
+                                <img src='/static/media/help.png' class="icon">
                             </button>
                             <button id="downlaodButton" class="notext" title="Download layout">
                                 <img src='/static/media/download.png' class="icon">
