@@ -284,6 +284,24 @@ button {
     outline: 0;
 }
 
+/* help modal */
+
+#help-list>li {
+    border-bottom: 1px solid;
+}
+
+#help-list>li:last-child {
+    border-bottom: 0 none;
+}
+
+.help-list-img {
+    margin-bottom: 10px;
+}
+
+.help-list-p {
+    margin-top: 5px;
+}
+
 /*
 The popup form - hidden by default
 
