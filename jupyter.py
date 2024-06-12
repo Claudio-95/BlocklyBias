@@ -11,12 +11,12 @@ operating_system = platform.system()
 def start_LabApp():
     config_dir = jupyter_config_dir()
     if operating_system == "Windows":
-    	config_file_path = os.path.join(config_dir, 'jupyter_server_config.json')
+        config_file_path = os.path.join(config_dir, 'jupyter_server_config.json')
     elif operating_system == "Linux":
-    	current_directory = os.getcwd()
-    	config_file_path = os.path.join(current_directory, 'jupyter_server_config.json')
+        current_directory = os.getcwd()
+        config_file_path = os.path.join(current_directory, 'jupyter_server_config.json')
     else:
-    	raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
+        raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
     new_directory = os.path.abspath(os.path.dirname(__file__))+'\share\jupyter\lab'
     config = {}
     if os.path.exists(config_file_path):
@@ -25,8 +25,14 @@ def start_LabApp():
             config['ServerApp'] = {'root_dir': new_directory}
     else:
         config['ServerApp'] = {'root_dir': new_directory}
-        with open(new_directory, 'w') as f:
-            json.dump(config, f, indent=4)
+        if operating_system == "Windows":
+            with open(config_file_path, 'w') as f:
+                json.dump(config, f, indent=4)
+        elif operating_system == "Linux":
+            with open(new_directory, 'w') as f:
+                json.dump(config, f, indent=4)
+        else:
+            raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
     print('JupyterLab directory modified successfully.')
     #LabApp.default_url = '/share/jupyter/lab' # set the server directory
     #LabApp.launch_instance()
@@ -36,11 +42,11 @@ def start_jupyter():
     jupyter_app.token = ""  # disable token
     jupyter_app.password = ""  # disable password
     if operating_system == "Windows":
-    	jupyter_app.notebook_dir = (os.path.abspath(os.path.dirname(__file__))+"\static\py\\notebooks")  # set the notebook directory
+        jupyter_app.notebook_dir = (os.path.abspath(os.path.dirname(__file__))+"\static\py\\notebooks")  # set the notebook directory
     elif operating_system == "Linux":
-    	jupyter_app.notebook_dir = (os.path.abspath(os.path.dirname(__file__))+"/static/py/notebooks")  # set the notebook directory
+        jupyter_app.notebook_dir = (os.path.abspath(os.path.dirname(__file__))+"/static/py/notebooks")  # set the notebook directory
     else:
-    	raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
+        raise RuntimeError("Operating system not supported. Only Windows and Linux are supported.")
     jupyter_app.open_browser = False  # do not open a web browser on startup
     jupyter_app.tornado_settings = {
         "headers": {
